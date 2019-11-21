@@ -8,7 +8,7 @@ import {
 
 import './App.scss';
 import BottonNav from './components/BottomNav';
-
+// import Favourites from './components/Favourites';
 
 
 export default function App() {
@@ -60,6 +60,7 @@ function Profile() {
     <div>
       <h2 class="header">My Profile</h2>
       <hr></hr>
+      {/* <Favourites /> */}
    
     </div>
   );
