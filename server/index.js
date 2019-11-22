@@ -12,6 +12,11 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+// const db = require("./db");
+
+// const users = require("./routes/users");
+// const pets = require("./routes/pets");
+
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
@@ -22,6 +27,10 @@ const app = express();
 // app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
+
+// Routes
+// app.use("/api/users", usersRoutes(db));
+// app.use("/api/pets", userPetsRoutes(db));
 
 // Use CORS and File Upload modules here
 // app.use(cors());
