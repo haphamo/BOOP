@@ -18,7 +18,7 @@ export default function PetInfo() {
         Labber
       </Typography>
       <Typography component="p">
-        I'm a 5 month yellow lab, and I like photos!
+        I'm a 5 month yellow labbie, and I like to make friends!
       </Typography>
     </Paper>
   );
