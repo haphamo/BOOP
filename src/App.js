@@ -8,7 +8,9 @@ import {
 
 import './App.scss';
 import BottonNav from './components/BottomNav';
-// import Favourites from './components/Favourites';
+import PetInfo from './components/PetInfo';
+import PetProfilePhoto from './components/PetProfilePhoto';
+import PetFav from './components/PetFav';
 
 
 export default function App() {
@@ -51,16 +53,28 @@ function DogsNearby() {
     <div>
       <h2 class="header">DogsNearby</h2>
       <hr></hr>
+     
     </div>
   );
 }
 
+//Must be a nested route in profile to get to pet profile
 function Profile() {
+  const styles = {
+    display: "flex",
+    "justify-content": "center"
+  }
   return (
     <div>
       <h2 class="header">My Profile</h2>
       <hr></hr>
-      {/* <Favourites /> */}
+      <div class="pet-profile-div" >
+      <PetProfilePhoto />
+      </div>
+      
+      <PetInfo />
+      <PetFav />
+      
    
     </div>
   );
