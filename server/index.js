@@ -1,4 +1,4 @@
-// Testing server
+// // Testing server
 const express = require('express');
 const bodyParser = require('body-parser');
 const pino = require('express-pino-logger')();
@@ -13,6 +13,10 @@ app.get('/api/greeting', (req, res) => {
   res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
 });
 
-app.listen(3001, () =>
-  console.log('Express server is running on localhost:3001')
-);
+const port = process.env.PORT || 3001;
+app.listen(port);
+
+console.log('App is listening on port ' + port);
+
+
+
