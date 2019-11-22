@@ -78,8 +78,8 @@ function Profile() {
   // }
   return (
     <div>
-      <div class="profile-header">
-      <h2>My Profile</h2>
+      <div class="my-profile-header">
+      <h2 class="my-profile-text">My Profile</h2>
       {/* <label htmlFor='file'>Your file:</label>{' '} */}
       <div class="upload">
       <Widget 

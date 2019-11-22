@@ -21,13 +21,21 @@
   color: #09d3ac;
 }
 
-.App-profile-header {
+.App-my-profile-header {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
   margin-left: 20%;
 }
 
+.App-my-profile-text {
+  display: inline-flex;
+}
+
 .App-upload {
   display: inline-flex;
+}
+
+.App-uploadcare--widget__button {
+  margin-left: 60%;
 }
