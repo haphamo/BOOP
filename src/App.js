@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,13 +9,14 @@ import {
 import './App.scss';
 import BottonNav from './components/BottomNav';
 // import Favourites from './components/Favourites';
+import { Widget } from "@uploadcare/react-widget";
 
 
 export default function App() {
+ 
   return (
     <Router>
       <div>
-
         {/*
           A <Switch> looks through all its children <Route>
           elements and renders the first one whose path
@@ -58,10 +59,18 @@ function DogsNearby() {
 function Profile() {
   return (
     <div>
-      <h2 class="header">My Profile</h2>
+      <div class="upload">
+      <h2>My Profile</h2>
+      {/* <label htmlFor='file'>Your file:</label>{' '} */}
+      <div>
+      <Widget 
+        publicKey='e409ed1db8c88f8b8083' 
+        previewStep='true'
+        crop='true'
+        />
+      </div>
+      </div>
       <hr></hr>
-      {/* <Favourites /> */}
-   
     </div>
   );
 }
