@@ -8,9 +8,10 @@ import {
 
 import './App.scss';
 import BottonNav from './components/BottomNav';
-// import Favourites from './components/Favourites';
 import { Widget } from "@uploadcare/react-widget";
-
+import PetInfo from './components/PetInfo';
+import PetProfilePhoto from './components/PetProfilePhoto';
+import PetFav from './components/PetFav';
 
 export default function App() {
  
@@ -56,13 +57,18 @@ function DogsNearby() {
   );
 }
 
+//Must be a nested route in profile to get to pet profile
 function Profile() {
+  // const styles = {
+  //   display: "flex",
+  //   "justify-content": "center"
+  // }
   return (
     <div>
-      <div class="upload">
+      <div class="profile-header">
       <h2>My Profile</h2>
       {/* <label htmlFor='file'>Your file:</label>{' '} */}
-      <div>
+      <div class="upload">
       <Widget 
         publicKey='e409ed1db8c88f8b8083' 
         previewStep='true'
@@ -71,6 +77,11 @@ function Profile() {
       </div>
       </div>
       <hr></hr>
+      <div class="pet-profile-div" >
+      <PetProfilePhoto />
+      </div>
+      <PetInfo />
+      <PetFav />
     </div>
   );
 }
