@@ -5,8 +5,12 @@
   "dependencies": {
     "@material-ui/core": "^4.6.1",
     "@material-ui/icons": "^4.5.1",
+    "@uploadcare/react-widget": "^1.2.0",
     "antd": "^3.25.2",
+    "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
+    "cors": "^2.8.5",
+    "express-fileupload": "^1.1.6",
     "node": "^13.1.0",
     "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.16",
@@ -20,7 +24,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "node-env-run server --exec nodemon | pino-colada",
+    "dev": "run-p server start"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,5 +42,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-pino-logger": "^4.0.0",
+    "node-env-run": "^3.0.2",
+    "nodemon": "^2.0.1",
+    "npm-run-all": "^4.1.5",
+    "pino-colada": "^1.5.0"
+  },
+  "proxy": "http://localhost:3001"
 }

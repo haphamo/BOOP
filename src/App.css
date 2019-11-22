@@ -20,3 +20,14 @@
 .App-link {
   color: #09d3ac;
 }
+
+.App-profile-header {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20%;
+}
+
+.App-upload {
+  display: inline-flex;
+}
