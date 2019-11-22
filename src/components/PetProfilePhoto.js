@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 
-
+// pass in props to change the url in src
 export default function PetProfilePhoto() {
   const imgStyle = {
     display: "flex",
