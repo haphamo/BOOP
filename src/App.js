@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  useParams
 } from "react-router-dom";
 
 import './App.scss';
@@ -38,6 +39,9 @@ export default function App() {
           <Route path="/notifications">
             <Notifications />
           </Route>
+          <Route path="/pets/:id">
+            {/* <PetComponent /> */}
+          </Route>
         </Switch>
       </div>
       <BottonNav />
@@ -45,6 +49,15 @@ export default function App() {
   );
 }
 
+// const PetComponent = props => {
+//   let { id } = useParams()
+
+//   console.log("This was the id", id)
+//   useEffect(() => {
+//     //axios.get(`/api/pets/${id}`)
+//   }, [id])
+//   return null
+// }
 // You can think of these components as "pages"
 // in your app.
 
