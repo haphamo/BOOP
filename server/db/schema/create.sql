@@ -20,7 +20,8 @@ CREATE TABLE pets (
   age INTEGER NOT NULL,
   breed VARCHAR(255) NOT NULL,
   quirky_fact VARCHAR(255) NOT NULL,
-  owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+  owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  profile_photo VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE pet_favourites (

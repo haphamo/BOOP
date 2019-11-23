@@ -69,7 +69,7 @@ export default function PetFav() {
   const categoryTextStyle = {
     "text-align": "center"
   }
-  
+
   return (
     <div className={classes.root} >
       <GridList style={listItemStyle} className={classes.gridList} cols={2.5}>
