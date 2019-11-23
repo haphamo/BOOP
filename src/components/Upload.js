@@ -14,10 +14,10 @@ export default function Upload(props) {
       setResults(response.data.results);
     })
     // Store the image in the images table in the database
-    axios.post('/api/users/pets/:id/images')
-    .then((response) => {
+    // axios.post('/api/users/pets/:id/images')
+    // .then((response) => {
       
-    })
+    // })
   }, [uuid]);
 
   return (

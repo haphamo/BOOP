@@ -14,8 +14,8 @@ const app = express();
 
 // const db = require("./db");
 
-// const users = require("./routes/users");
-// const pets = require("./routes/pets");
+const usersRoutes = require("./routes/users");
+const petsRoutes = require("./routes/pets");
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -29,8 +29,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
 
 // Routes
-// app.use("/api", users(db));
-// app.use("/api", pets(db));
+app.use("/api/users", usersRoutes(db));
+app.use("/api/pets", petsRoutes(db));
 
 // Use CORS and File Upload modules here
 // app.use(cors());
