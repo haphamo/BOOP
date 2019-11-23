@@ -29,8 +29,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
 
 // Routes
-// app.use("/api/users", usersRoutes(db));
-// app.use("/api/pets", userPetsRoutes(db));
+// app.use("/api", users(db));
+// app.use("/api", pets(db));
 
 // Use CORS and File Upload modules here
 // app.use(cors());
