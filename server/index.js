@@ -1,15 +1,21 @@
-// // Testing server
+// Web server config
+const PORT = process.env.PORT || 3001;
 const express = require('express');
 const pino = require('express-pino-logger')();
+const bodyParser = require('body-parser');
 // const path = require('path');
 // const favicon = require('serve-favicon');
 // const logger = require('morgan');
 // const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 // const cors = require('cors'); 
 // const fileUpload = require('express-fileupload'); 
 
 const app = express();
+
+// const db = require("./db");
+
+// const users = require("./routes/users");
+// const pets = require("./routes/pets");
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -22,20 +28,25 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
 
+// Routes
+// app.use("/api/users", usersRoutes(db));
+// app.use("/api/pets", userPetsRoutes(db));
+
 // Use CORS and File Upload modules here
 // app.use(cors());
 // app.use(fileUpload());
 
+// Sample route
 app.get('/api/greeting', (req, res) => {
   const name = req.query.name || 'World';
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
 });
 
-const port = process.env.PORT || 3001;
-app.listen(port);
+app.listen(PORT, () => {
+  console.log(`App is listening on port ${PORT}`);
+});
 
-console.log('App is listening on port ' + port);
 
 
 
