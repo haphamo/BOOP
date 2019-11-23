@@ -9,7 +9,7 @@ import {
 
 import './App.scss';
 import BottonNav from './components/BottomNav';
-import { Widget } from "@uploadcare/react-widget";
+import Upload from './components/Upload';
 import PetInfo from './components/PetInfo';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetFav from './components/PetFav';
@@ -84,19 +84,12 @@ function Profile() {
   return (
     <div>
       <div class="my-profile-header">
-      <h2 class="my-profile-text">My Profile</h2>
-      {/* <label htmlFor='file'>Your file:</label>{' '} */}
-      <div class="upload">
-      <Widget 
-        publicKey='e409ed1db8c88f8b8083' 
-        previewStep='true'
-        crop='true'
-        />
-      </div>
+        <h2 class="my-profile-text">My Profile</h2>
+        <Upload />  
       </div>
       <hr></hr>
       <div class="pet-profile-div" >
-      <PetProfilePhoto />
+        <PetProfilePhoto />
       </div>
       <PetInfo />
       <PetFav />

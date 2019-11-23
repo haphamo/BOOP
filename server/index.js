@@ -1,3 +1,6 @@
+// load .env data into process.env
+require('dotenv').config();
+
 // Web server config
 const PORT = process.env.PORT || 3001;
 const express = require('express');
@@ -12,10 +15,14 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-// const db = require("./db");
+// PG database client/connection setup
+const { Pool } = require('pg');
+const dbParams = require('./lib/db.js');
+const db = new Pool(dbParams);
+db.connect();
 
-// const users = require("./routes/users");
-// const pets = require("./routes/pets");
+const usersRoutes = require("./routes/users");
+const petsRoutes = require("./routes/pets");
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -29,8 +36,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
 
 // Routes
-// app.use("/api/users", usersRoutes(db));
-// app.use("/api/pets", userPetsRoutes(db));
+app.use("/api/users", usersRoutes(db));
+app.use("/api/pets", petsRoutes(db));
 
 // Use CORS and File Upload modules here
 // app.use(cors());
