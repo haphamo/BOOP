@@ -43,6 +43,19 @@ app.get('/api/greeting', (req, res) => {
   res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
 });
 
+// GET the uploaded images from Uploadcare
+app.get('https://ucarecdn.com/:uuid/', (req, res) => {
+  console.log("What is req body?", req.body)
+  type: POST
+  result:
+
+})
+
+// POST to /users/pets/id/images
+app.post('/api/users/pets/id/images', (req, res) => {
+  
+})
+
 app.listen(PORT, () => {
   console.log(`App is listening on port ${PORT}`);
 });
