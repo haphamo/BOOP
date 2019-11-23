@@ -20,6 +20,7 @@ VALUES (1, 'Dentastix', 'Treat', 1),
 INSERT INTO connections (id, sender_id, receiver_id, status)
 VALUES (1, 1, 2, 2);
 
+
 -- The one connection is Maria and Ha, Fido should show up on the dashboard since no connections with him is available
 -- The INTEGERS in the STATUS column of CONNECTIONS can be 1 (REQUESTED), 2 (ACCEPTED) or 3 (DECLINED)
 -- Once the user has accepted the request, they show up on each others friends list
