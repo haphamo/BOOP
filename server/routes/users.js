@@ -1,8 +1,9 @@
 const router = require("express").Router();
 
 module.exports = db => {
+  //get all users
   router.get("/", (request, response) => {
-    const user = request.session.user_id;
+    // const user = request.session.user_id;
     db.query(`SELECT * FROM users`)
     .then(result => {
       response.json({result: result.rows})

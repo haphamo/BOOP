@@ -2,7 +2,8 @@
 require('dotenv').config();
 
 // Web server config
-const PORT = process.env.PORT || 3001;
+// const PORT = process.env.PORT || 3001;
+const PORT = 8080;
 const express = require('express');
 const pino = require('express-pino-logger')();
 const bodyParser = require('body-parser');
