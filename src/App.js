@@ -13,6 +13,7 @@ import Upload from './components/Upload';
 import PetInfo from './components/PetInfo';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetFav from './components/PetFav';
+import PetForm from './components/Form';
 
 export default function App() {
  
@@ -32,9 +33,12 @@ export default function App() {
           </Route>
           <Route path="/profile">
             <Profile />
+            
+
           </Route>
           <Route path="/friends">
             <Friends />
+            <PetForm />
           </Route>
           <Route path="/notifications">
             <Notifications />
@@ -58,6 +62,7 @@ export default function App() {
 //   }, [id])
 //   return null
 // }
+
 // You can think of these components as "pages"
 // in your app.
 
