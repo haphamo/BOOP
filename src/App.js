@@ -10,11 +10,11 @@ import {
 import './App.scss';
 import BottonNav from './components/BottomNav';
 import Upload from './components/Upload';
-import PetInfo from './components/PetInfo';
-import PetProfilePhoto from './components/PetProfilePhoto';
-import PetFav from './components/PetFav';
+import PetPage from './components/PetPage';
 import PetForm from './components/Form';
 import UserProfile from './components/UserProfile';
+import PetProfilePhoto from './components/PetProfilePhoto';
+import PetInfo from './components/PetInfo';
 
 export default function App() {
  
@@ -45,7 +45,7 @@ export default function App() {
             <Notifications />
           </Route>
           <Route path="/pets/:id">
-            {/* <PetComponent /> */}
+          <PetPage />
           </Route>
         </Switch>
       </div>
@@ -72,6 +72,8 @@ function DogsNearby() {
     <div>
       <h2 class="header">DogsNearby</h2>
       <hr></hr>
+      <PetProfilePhoto />
+      <PetInfo />
     </div>
   );
 }
@@ -90,11 +92,7 @@ function Profile() {
       <hr></hr>
       <UserProfile />
       {/* Add a conditional render on pet image */}
-      <div class="pet-profile-div" >
-        <PetProfilePhoto />
-      </div>
-      <PetInfo />
-      <PetFav />
+     
     </div>
   );
 }
