@@ -14,6 +14,7 @@ import PetInfo from './components/PetInfo';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetFav from './components/PetFav';
 import PetForm from './components/Form';
+import UserProfile from './components/UserProfile';
 
 export default function App() {
  
@@ -34,7 +35,7 @@ export default function App() {
           <Route path="/profile">
             <Profile />
             
-            {/* Add a conditional render for a form */}
+            {/* Add a conditional render for a pet profile page */}
           </Route>
           <Route path="/friends">
             <Friends />
@@ -75,7 +76,6 @@ function DogsNearby() {
   );
 }
 
-//Must be a nested route in profile to get to pet profile
 function Profile() {
   // const styles = {
   //   display: "flex",
@@ -88,6 +88,8 @@ function Profile() {
         <Upload />  
       </div>
       <hr></hr>
+      <UserProfile />
+      {/* Add a conditional render on pet image */}
       <div class="pet-profile-div" >
         <PetProfilePhoto />
       </div>
