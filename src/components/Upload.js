@@ -11,14 +11,20 @@ export default function Upload(props) {
     const url = `https://ucarecdn.com/${uuid}/`;
     axios.get(url)
     .then(response => {
-      setResults(response.data.results);
-    })
-    // Store the image in the images table in the database
-    // axios.post('/api/users/pets/:id/images')
+      setResults([...results, response.data.results]);
+
+      // return axios.post('/api/images')
+      // Image: { url:, petId: ,}
+      // pg.query('INSERT INTO images (url, pet_id) VALUES ($1, $2)', [req.body.url, req.petId,])
+    }).then()
     // .then((response) => {
-      
     // })
-  }, [uuid]);
+    // Store the image in the images table in the database
+  }, [uuid, results]);
+
+  // useEffect(() => {
+  //   console.log('Results changed: ', results);
+  // }, [results]);
 
   return (
     <Fragment>
