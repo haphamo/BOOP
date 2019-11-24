@@ -3,9 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-// import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-// import tileData from './tileData';
-// import image from '../images/bone.jpg';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,15 +26,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// The example data is structured as follows:
-
-
-
-
- const tileData = [
-   {
-     img: "https://image.flaticon.com/icons/svg/149/149145.svg",
-     category: 'add'
+const petFavData = [
+  {
+    img: "https://image.flaticon.com/icons/svg/149/149145.svg",
+    category: 'add'
   },
   {
     img: "https://image.flaticon.com/icons/svg/1025/1025349.svg",
@@ -55,7 +47,10 @@ const useStyles = makeStyles(theme => ({
  
 export default function PetFav() {
   
-  const action = 
+  const action = function() {
+    alert('it works');
+  }
+  
   const classes = useStyles();
   
   const imgStyle = {
@@ -82,9 +77,9 @@ export default function PetFav() {
     <div className={classes.root} >
       <GridList style={listItemStyle} className={classes.gridList} cols={2.5}>
         
-        {tileData.map(tile => (
+        {petFavData.map(tile => (
           <GridListTile key={tile.img} style={ fixedHeight }>
-            <button><img style={ imgStyle } src={tile.img} alt={tile.category} onClick={action}/></button>
+            <img style={ imgStyle } src={tile.img} alt={tile.category} onClick={action}/>
             <h5 style={ categoryTextStyle }>{tile.category}</h5>
           </GridListTile>
         ))}
