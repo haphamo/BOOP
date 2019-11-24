@@ -34,7 +34,7 @@ export default function App() {
           <Route path="/profile">
             <Profile />
             
-
+            {/* Add a conditional render for a form */}
           </Route>
           <Route path="/friends">
             <Friends />

@@ -54,11 +54,14 @@ const useStyles = makeStyles(theme => ({
 ];
  
 export default function PetFav() {
+  
+  const action = 
   const classes = useStyles();
-
-  const stylesOfFav = {
-    height: '30%',
-    "padding-top": "10%"
+  
+  const imgStyle = {
+    height: '60%',
+    "padding-top": '10%',
+    transform: 'translateY(0%)'
   }
 
   const listItemStyle = {
@@ -70,12 +73,18 @@ export default function PetFav() {
     "text-align": "center"
   }
 
+  const fixedHeight = {
+    height:'100px',
+    width: '30%'
+  }
+
   return (
     <div className={classes.root} >
       <GridList style={listItemStyle} className={classes.gridList} cols={2.5}>
+        
         {tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img style={ stylesOfFav } src={tile.img} alt={tile.category} />
+          <GridListTile key={tile.img} style={ fixedHeight }>
+            <button><img style={ imgStyle } src={tile.img} alt={tile.category} onClick={action}/></button>
             <h5 style={ categoryTextStyle }>{tile.category}</h5>
           </GridListTile>
         ))}
