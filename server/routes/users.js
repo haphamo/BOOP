@@ -2,16 +2,19 @@ const router = require("express").Router();
 
 module.exports = db => {
   //get all users
-  router.get("/", (request, response) => {
+  router.get("/", (req, res) => {
     // const user = request.session.user_id;
     db.query(`SELECT * FROM users`)
     .then(result => {
-      response.json({result: result.rows})
+      res.json({
+        status: 'Success',
+        result: result.rows,
+        message: 'Retrieved all the users'
+      })
     })
     .catch(err => {
-      response
-              .status(500)
-              .json({ error: err.message });
+      res.status(500)
+      res.json({ error: err.message });
     })
   });
 
