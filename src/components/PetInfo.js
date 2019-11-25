@@ -9,16 +9,17 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PetInfo() {
+export default function PetInfo(props) {
   const classes = useStyles();
-
+  console.log('props', props)
   return (
     <Paper className={classes.root}>
       <Typography variant="h5" component="h3">
-        Labber
+        
       </Typography>
       <Typography component="p">
-        I'm a 5 month yellow labbie, and I like to make friends!
+        {props.petInfo}
+
       </Typography>
     </Paper>
   );

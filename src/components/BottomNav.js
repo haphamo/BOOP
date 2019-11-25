@@ -23,14 +23,9 @@ const useStyles = makeStyles({
 
 export default function BottomNav() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
 
   return (
     <BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
       showLabels
       className={classes.stickToBottom}
     >

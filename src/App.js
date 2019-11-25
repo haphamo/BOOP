@@ -9,11 +9,34 @@ import {
 
 import './App.scss';
 import BottonNav from './components/BottomNav';
-import Upload from './components/Upload';
-import PetInfo from './components/PetInfo';
-import PetProfilePhoto from './components/PetProfilePhoto';
-import PetFav from './components/PetFav';
+import PetsIcon from '@material-ui/icons/Pets';
+import PetPage from './components/PetPage';
 import PetForm from './components/Form';
+import UserProfile from './components/UserProfile';
+import PetProfilePhoto from './components/PetProfilePhoto';
+import PetInfo from './components/PetInfo';
+
+//Fixture data
+const userData = {
+  firstName: 'Maria',
+  avatar: 'https://image.flaticon.com/icons/svg/920/920963.svg',
+  alt: 'avatar'
+}
+
+const petData = {
+  petId: '1',
+  petName: 'Labber',
+  img: 'https://pbs.twimg.com/profile_images/962170088941019136/lgpCD8X4_400x400.jpg',
+  info: "I'm a 5 month Labbie and I like to make friends."
+}
+
+const otherDogsNearby = {
+  petId: '4',
+  petName: 'Mikey',
+  img: 'https://pbs.twimg.com/media/EKL01x6XkAItDjx.jpg',
+  info: "I'm a 2 year old Boxer and I like snow."
+}
+
 
 export default function App() {
  
@@ -29,12 +52,17 @@ export default function App() {
         */}
         <Switch>
           <Route exact path="/">
-            <DogsNearby />
+            <DogsNearby 
+            petId={otherDogsNearby.petId}
+            petName={otherDogsNearby.petName}
+            petImg={otherDogsNearby.img}
+            petInfo={otherDogsNearby.info}
+            />
           </Route>
           <Route path="/profile">
-            <Profile />
-            
-
+            <Profile 
+            />
+            {/* Add a conditional render for a pet profile page */}
           </Route>
           <Route path="/friends">
             <Friends />
@@ -44,7 +72,11 @@ export default function App() {
             <Notifications />
           </Route>
           <Route path="/pets/:id">
-            {/* <PetComponent /> */}
+          <PetPage 
+          petId={petData.petId}
+          petName={petData.petName}
+          petImg={petData.img}
+          petInfo={petData.petInfo}/>
           </Route>
         </Switch>
       </div>
@@ -66,33 +98,55 @@ export default function App() {
 // You can think of these components as "pages"
 // in your app.
 
-function DogsNearby() {
+function DogsNearby(props) {
+  const petNameTextStyle = {
+    'text-align': 'center'
+  }
   return (
     <div>
       <h2 class="header">DogsNearby</h2>
       <hr></hr>
+      <h3 style={petNameTextStyle}>{props.petName}</h3>
+      <PetProfilePhoto 
+      petId={props.petId}
+      petImg={props.petImg}/>
+      <PetInfo 
+      petInfo={props.petInfo}/>
     </div>
   );
 }
 
-//Must be a nested route in profile to get to pet profile
-function Profile() {
-  // const styles = {
-  //   display: "flex",
-  //   "justify-content": "center"
-  // }
+
+// The profile page route displays the user's avatar and name as well as the pet(s) avatar and name
+// Users can add a new pet on this page
+// A form will be rendered here
+function Profile(props) {
+  
+  const styles = {
+    display: 'flex',
+    'justify-content': 'space-around',
+    'align-items': 'center'
+  }
+  const hidden = {
+    visibility: 'hidden'
+  }
   return (
     <div>
-      <div class="my-profile-header">
+      <div style={ styles }class="my-profile-header">
+        <PetsIcon style={ hidden }/>
         <h2 class="my-profile-text">My Profile</h2>
-        <Upload />  
+        <PetsIcon />
+        
       </div>
       <hr></hr>
-      <div class="pet-profile-div" >
-        <PetProfilePhoto />
-      </div>
-      <PetInfo />
-      <PetFav />
+      <UserProfile 
+        userFirstName={userData.firstName}
+        userAvatar={userData.avatar}
+        petId={petData.petId}
+        petName={petData.petName}
+        petImg={petData.img}/>
+      {/* Add a conditional render on pet image */}
+     
     </div>
   );
 }
