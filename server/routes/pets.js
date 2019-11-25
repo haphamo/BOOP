@@ -95,7 +95,7 @@ module.exports = db => {
   // Add a new pet
   // Do we need to include owner_id here as well?
   // This will be associated with a form on the front-end
-  // Trying to test with curl command - getting the following error : curl: (1) Protocol " http" not supported or disabled in libcurl
+  // Trying to test with curl command - getting the following error: "duplicate key value violates unique constraint users_pkey"
   router.post("/", (req, res) => {
     req.body.age = parseInt(req.body.age);
     db.query(
@@ -140,7 +140,6 @@ module.exports = db => {
 
   // Edit an existing pet's info
   // Included the owner_id for now
-  // Not tested yet - curl command not working
   router.put("/:id", (req, res) => {
     db.query(
       `UPDATE pets
@@ -153,6 +152,26 @@ module.exports = db => {
         status: 'Success',
         result: result.rows,
         message: 'Updated the info of an existing pet' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Delete an existing pet
+  router.delete("/:id", (req, res) => {
+    const petId = parseInt(req.params.id)
+    db.query(
+      `DELETE FROM pets
+      WHERE id = $1`
+      , [petId])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        message: `Removed ${result.rowCount} pet` 
       })
     })
     .catch(err => {
