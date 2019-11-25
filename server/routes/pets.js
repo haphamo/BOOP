@@ -21,7 +21,11 @@ module.exports = db => {
 
   // Get all pet photos
   router.get("/images", (req, res) => {
-    db.query(`SELECT * FROM images`)
+    db.query(
+      `SELECT pets.name AS name,
+              images.url AS photo 
+      FROM images
+      JOIN pets ON pets.id = pet_id`)
     .then(result => {
       res.status(200)
       res.json({ 
@@ -117,7 +121,7 @@ module.exports = db => {
   })
 
   // Upload a new image
-  // There is an axios.post route to /api/pets/images - do we need a post route here as well?
+  // There is an axios.post route to /api/pets/images/:id
   router.post("/images/:id", (req, res) => {
     const petId = parseInt(req.params.id)
     db.query(
