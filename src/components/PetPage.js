@@ -1,12 +1,15 @@
 import PetProfilePhoto from "./PetProfilePhoto";
 import PetInfo from "./PetInfo";
 import PetFav from "./PetFav";
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import Upload from './Upload';
+import {useParams} from 'react-router-dom';
 
 
 export default function PetPage(props) {
+  let { id } = useParams()
 
+  //useEffect axios get using the id
   const styles = {
     display: 'flex',
     'justify-content': 'space-around',
