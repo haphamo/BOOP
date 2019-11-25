@@ -3,9 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-// import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-// import tileData from './tileData';
-// import image from '../images/bone.jpg';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,15 +26,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// The example data is structured as follows:
-
-
-
-
- const tileData = [
-   {
-     img: "https://image.flaticon.com/icons/svg/149/149145.svg",
-     category: 'add'
+const petFavData = [
+  {
+    img: "https://image.flaticon.com/icons/svg/149/149145.svg",
+    category: 'add'
   },
   {
     img: "https://image.flaticon.com/icons/svg/1025/1025349.svg",
@@ -54,11 +46,17 @@ const useStyles = makeStyles(theme => ({
 ];
  
 export default function PetFav() {
+  
+  const action = function() {
+    alert('it works');
+  }
+  
   const classes = useStyles();
-
-  const stylesOfFav = {
-    height: '30%',
-    "padding-top": "10%"
+  
+  const imgStyle = {
+    height: '60%',
+    "padding-top": '10%',
+    transform: 'translateY(0%)'
   }
 
   const listItemStyle = {
@@ -70,12 +68,18 @@ export default function PetFav() {
     "text-align": "center"
   }
 
+  const fixedHeight = {
+    height:'100px',
+    width: '30%'
+  }
+
   return (
     <div className={classes.root} >
       <GridList style={listItemStyle} className={classes.gridList} cols={2.5}>
-        {tileData.map(tile => (
-          <GridListTile key={tile.img}>
-            <img style={ stylesOfFav } src={tile.img} alt={tile.category} />
+        
+        {petFavData.map(tile => (
+          <GridListTile key={tile.img} style={ fixedHeight }>
+            <img style={ imgStyle } src={tile.img} alt={tile.category} onClick={action}/>
             <h5 style={ categoryTextStyle }>{tile.category}</h5>
           </GridListTile>
         ))}
