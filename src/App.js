@@ -62,7 +62,6 @@ export default function App() {
           <Route path="/profile">
             <Profile 
             />
-            {/* Add a conditional render for a pet profile page */}
           </Route>
           <Route path="/friends">
             <Friends />
@@ -120,8 +119,12 @@ function DogsNearby(props) {
 // The profile page route displays the user's avatar and name as well as the pet(s) avatar and name
 // Users can add a new pet on this page
 // A form will be rendered here
+// 
 function Profile(props) {
   
+  const showForm = function (){
+    alert('showing the form')
+  }
   const styles = {
     display: 'flex',
     'justify-content': 'space-around',
@@ -135,7 +138,7 @@ function Profile(props) {
       <div style={ styles }class="my-profile-header">
         <PetsIcon style={ hidden }/>
         <h2 class="my-profile-text">My Profile</h2>
-        <PetsIcon />
+        <PetsIcon onClick={showForm}/>
         
       </div>
       <hr></hr>
@@ -145,7 +148,6 @@ function Profile(props) {
         petId={petData.petId}
         petName={petData.petName}
         petImg={petData.img}/>
-      {/* Add a conditional render on pet image */}
      
     </div>
   );

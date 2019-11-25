@@ -1,15 +1,36 @@
 import PetProfilePhoto from "./PetProfilePhoto";
 import PetInfo from "./PetInfo";
 import PetFav from "./PetFav";
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect , useState} from "react";
 import Upload from './Upload';
 import {useParams} from 'react-router-dom';
+import axios from "axios";
 
 
 export default function PetPage(props) {
   let { id } = useParams()
 
-  //useEffect axios get using the id
+  // define my states
+  const [petAvatar, setPetAvatar] = useState('')
+  const [petName, setPetName] = useState('')
+  const [petFav, setPetFav] = useState([])
+  const [gallery, setGallery] = useState([])
+  const [petInfo, setPetInfo] = useState('')
+
+  useEffect(() => {
+    axios.get(`/api/pets/${id}`)
+    .then(res => {
+      console.log('response:', res.data.result[0])
+      setPetName(res.data.result[0].name)
+      setPetAvatar(res.data.result[0].profile_photo)
+      setPetInfo(res.data.result[0].quirky_fact)
+    
+    })
+    .catch(err => {
+      console.log('error:', err)
+    })
+  }, [id])
+
   const styles = {
     display: 'flex',
     'justify-content': 'space-around',
@@ -18,21 +39,21 @@ export default function PetPage(props) {
   const hidden = {
     visibility: 'none'
   }
-  console.log('props', props)
+  
   return(
     <Fragment>
       <div class="header" style={ styles }>
         <Upload style={ hidden } />
-        <h2>{props.petName}</h2>
+        <h2>{petName}</h2>
         <Upload />
       </div>
       <hr></hr>
       <div class="pet-profile-div" >
         <PetProfilePhoto 
-        petImg={props.petImg}/>
+        petImg={petAvatar}/>
       </div>
-      <PetInfo petInfo={props.petInfo}/>
-      <PetFav />
+      <PetInfo petInfo={petInfo}/>
+      <PetFav petFav={petFav}/>
     </Fragment>
   )
 }
