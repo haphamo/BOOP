@@ -17,6 +17,10 @@ VALUES (1, 'Dentastix', 'Treat', 1),
 (4, 'Frisbee', 'Toy', 2),
 (5, 'Whipped Cream', 'Treat', 3);
 
+-- TEST DATA
+INSERT INTO images (id, url, pet_id)
+VALUES (1, 'https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage20191114at170028.jpeg', 1);
+
 INSERT INTO connections (id, sender_id, receiver_id, status)
 VALUES (1, 1, 2, 2);
 
