@@ -99,10 +99,14 @@ export default function App() {
 // in your app.
 
 function DogsNearby(props) {
+  const petNameTextStyle = {
+    'text-align': 'center'
+  }
   return (
     <div>
       <h2 class="header">DogsNearby</h2>
       <hr></hr>
+      <h3 style={petNameTextStyle}>{props.petName}</h3>
       <PetProfilePhoto 
       petId={props.petId}
       petImg={props.petImg}/>

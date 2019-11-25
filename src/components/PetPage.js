@@ -5,7 +5,6 @@ import React, { Fragment } from "react";
 import Upload from './Upload';
 
 
-
 export default function PetPage(props) {
 
   const styles = {
