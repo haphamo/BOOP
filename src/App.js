@@ -9,12 +9,33 @@ import {
 
 import './App.scss';
 import BottonNav from './components/BottomNav';
-import Upload from './components/Upload';
+
 import PetPage from './components/PetPage';
 import PetForm from './components/Form';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
+
+const userData = {
+  firstName: 'Maria',
+  avatar: 'https://image.flaticon.com/icons/svg/920/920963.svg',
+  alt: 'avatar'
+}
+
+const petData = {
+  petId: '1',
+  petName: 'Labber',
+  img: 'https://pbs.twimg.com/profile_images/962170088941019136/lgpCD8X4_400x400.jpg',
+  info: "I'm a 5 month Labbie and I like to make friends."
+}
+
+const otherDogsNearby = {
+  petId: '4',
+  petName: 'Mikey',
+  img: 'https://pbs.twimg.com/media/EKL01x6XkAItDjx.jpg',
+  info: "I'm a 2 year old Boxer and I like snow."
+}
+
 
 export default function App() {
  
@@ -30,7 +51,12 @@ export default function App() {
         */}
         <Switch>
           <Route exact path="/">
-            <DogsNearby />
+            <DogsNearby 
+            id={otherDogsNearby.petId}
+            name={otherDogsNearby.petName}
+            img={otherDogsNearby.img}
+            info={otherDogsNearby.info}
+            />
           </Route>
           <Route path="/profile">
             <Profile />
@@ -67,13 +93,16 @@ export default function App() {
 // You can think of these components as "pages"
 // in your app.
 
-function DogsNearby() {
+function DogsNearby(props) {
   return (
     <div>
       <h2 class="header">DogsNearby</h2>
       <hr></hr>
-      <PetProfilePhoto />
-      <PetInfo />
+      <PetProfilePhoto 
+      id={props.id}
+      img={props.img}/>
+      <PetInfo 
+      info={props.info}/>
     </div>
   );
 }
@@ -87,7 +116,6 @@ function Profile() {
     <div>
       <div class="my-profile-header">
         <h2 class="my-profile-text">My Profile</h2>
-        <Upload />  
       </div>
       <hr></hr>
       <UserProfile />
