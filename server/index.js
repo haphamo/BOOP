@@ -2,16 +2,16 @@
 require('dotenv').config();
 
 // Web server config
-// const PORT = process.env.PORT || 3001;
-const PORT = 8080;
+const PORT = process.env.PORT || 3001;
+// const PORT = 8080;
 const express = require('express');
 const pino = require('express-pino-logger')();
 const bodyParser = require('body-parser');
-// const path = require('path');
+const path = require('path');
 // const favicon = require('serve-favicon');
 // const logger = require('morgan');
 // const cookieParser = require('cookie-parser');
-// const cors = require('cors'); 
+const cors = require('cors'); 
 // const fileUpload = require('express-fileupload'); 
 
 const app = express();
@@ -32,7 +32,9 @@ const petsRoutes = require("./routes/pets");
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.use(logger('dev'));
-// app.use(bodyParser.json());
+// app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
 
@@ -41,7 +43,7 @@ app.use("/api/users", usersRoutes(db));
 app.use("/api/pets", petsRoutes(db));
 
 // Use CORS and File Upload modules here
-// app.use(cors());
+app.use(cors());
 // app.use(fileUpload());
 
 // Sample route
@@ -52,7 +54,7 @@ app.get('/api/greeting', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`App is listening on port ${PORT}`);
+  console.log(`Server is listening on port ${PORT}`);
 });
 
 

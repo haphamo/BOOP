@@ -3,22 +3,32 @@ import { Widget } from '@uploadcare/react-widget';
 import axios from 'axios';
 
 export default function Upload(props) {
-  const [uuid, setUuid] = useState("");
+  // const [uuid, setUuid] = useState("");
+  const uuid = "";
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    // Uploading an image to Uploadcare
+    // Upload an image to Uploadcare
     const url = `https://ucarecdn.com/${uuid}/`;
     axios.get(url)
     .then(response => {
-      setResults(response.data.results);
+      setResults([...results, response.data.results]);
+      // Save the image to the database
+      return axios.post('/api/images/:id', {
+        url
+      })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      })
     })
-    // Store the image in the images table in the database
-    // axios.post('/api/users/pets/:id/images')
-    // .then((response) => {
-      
-    // })
-  }, [uuid]);
+  }, [uuid, results]);
+
+  // useEffect(() => {
+  //   console.log('Results changed: ', results);
+  // }, [results]);
 
   return (
     <Fragment>
