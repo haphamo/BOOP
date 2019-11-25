@@ -9,14 +9,14 @@ import {
 
 import './App.scss';
 import BottonNav from './components/BottomNav';
-
+import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
 import PetForm from './components/Form';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
-import PetOnUserPage from './components/PetOnUserPage';
 
+//Fixture data
 const userData = {
   firstName: 'Maria',
   avatar: 'https://image.flaticon.com/icons/svg/920/920963.svg',
@@ -116,15 +116,26 @@ function DogsNearby(props) {
   );
 }
 
+
+// The profile page route displays the user's avatar and name as well as the pet(s) avatar and name
+// Users can add a new pet on this page
+// A form will be rendered here
 function Profile(props) {
-  // const styles = {
-  //   display: "flex",
-  //   "justify-content": "center"
-  // }
+  const styles = {
+    display: 'flex',
+    'justify-content': 'space-around',
+    'align-items': 'center'
+  }
+  const hidden = {
+    visibility: 'hidden'
+  }
   return (
     <div>
-      <div class="my-profile-header">
+      <div style={ styles }class="my-profile-header">
+        <PetsIcon style={ hidden }/>
         <h2 class="my-profile-text">My Profile</h2>
+        <PetsIcon />
+        
       </div>
       <hr></hr>
       <UserProfile 
