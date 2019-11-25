@@ -101,7 +101,7 @@ module.exports = db => {
   // This will be associated with a form on the front-end
   // Trying to test with curl command - getting the following error: "duplicate key value violates unique constraint users_pkey"
   router.post("/", (req, res) => {
-    req.body.age = parseInt(req.body.age);
+    req.body.age = parseInt(req.body.age)
     db.query(
       `INSERT INTO pets (name, age, breed, quirky_fact, owner_id, profile_photo)
       VALUES($1, $2, $3, $4, $5, $6)`
