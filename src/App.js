@@ -121,6 +121,7 @@ function DogsNearby(props) {
 // Users can add a new pet on this page
 // A form will be rendered here
 function Profile(props) {
+  
   const styles = {
     display: 'flex',
     'justify-content': 'space-around',
