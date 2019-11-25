@@ -3,10 +3,10 @@ import PetInfo from "./PetInfo";
 import PetFav from "./PetFav";
 import React, { Fragment } from "react";
 import Upload from './Upload';
-import PetsIcon from '@material-ui/icons/Pets';
 
 
-export default function PetPage() {
+
+export default function PetPage(props) {
 
   const styles = {
     display: 'flex',
@@ -16,18 +16,20 @@ export default function PetPage() {
   const hidden = {
     visibility: 'none'
   }
+  console.log('props', props)
   return(
     <Fragment>
       <div class="header" style={ styles }>
         <Upload style={ hidden } />
-        <h2>Labber</h2>
+        <h2>{props.petName}</h2>
         <Upload />
       </div>
       <hr></hr>
       <div class="pet-profile-div" >
-        <PetProfilePhoto />
+        <PetProfilePhoto 
+        petImg={props.petImg}/>
       </div>
-      <PetInfo />
+      <PetInfo petInfo={props.petInfo}/>
       <PetFav />
     </Fragment>
   )

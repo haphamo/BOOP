@@ -3,12 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import {Link, useParams } from 'react-router-dom';
 
-const petData = {
-  petId: '1',
-  petName: 'Labber',
-  img: 'https://pbs.twimg.com/profile_images/962170088941019136/lgpCD8X4_400x400.jpg',
-  info: "I'm a 5 month Labbie and I like to make friends."
-}
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,17 +20,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PetOnUserPage(prop) {
+export default function PetOnUserPage(props) {
   // I couldn't figure out how to use the id in the url
   let { id } = useParams()
-  const petId = petData.petId
   const classes = useStyles();
   
     return (
       <Fragment>
-      <div key={petData.petId} className={classes.root} >
-      <Link to='pets/1' ><Avatar alt={petData.petName} src={petData.img} className={classes.bigAvatar} /></Link>
-        <em>{petData.petName}</em>
+      <div key={props.petId} className={classes.root} >
+      <Link to='pets/1' ><Avatar alt={props.petName} src={props.petImg} className={classes.bigAvatar} /></Link>
+        <em>{props.petName}</em>
       </div>
       </Fragment>
     );

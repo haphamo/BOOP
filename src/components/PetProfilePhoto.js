@@ -15,7 +15,7 @@ export default function PetProfilePhoto(props) {
   return (
     <React.Fragment >
       <CssBaseline />
-      <Container maxWidth="sm" style={ imgStyle }><img style={ imgFillWidth }src={props.img} alt="cutedog" />
+      <Container maxWidth="sm" style={ imgStyle }><img style={ imgFillWidth }src={props.petImg} alt={props.petId} />
       </Container>
     </React.Fragment>
   );

@@ -15,6 +15,7 @@ import PetForm from './components/Form';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
+import PetOnUserPage from './components/PetOnUserPage';
 
 const userData = {
   firstName: 'Maria',
@@ -52,15 +53,15 @@ export default function App() {
         <Switch>
           <Route exact path="/">
             <DogsNearby 
-            id={otherDogsNearby.petId}
-            name={otherDogsNearby.petName}
-            img={otherDogsNearby.img}
-            info={otherDogsNearby.info}
+            petId={otherDogsNearby.petId}
+            petName={otherDogsNearby.petName}
+            petImg={otherDogsNearby.img}
+            petInfo={otherDogsNearby.info}
             />
           </Route>
           <Route path="/profile">
-            <Profile />
-            
+            <Profile 
+            />
             {/* Add a conditional render for a pet profile page */}
           </Route>
           <Route path="/friends">
@@ -71,7 +72,11 @@ export default function App() {
             <Notifications />
           </Route>
           <Route path="/pets/:id">
-          <PetPage />
+          <PetPage 
+          petId={petData.petId}
+          petName={petData.petName}
+          petImg={petData.img}
+          petInfo={petData.petInfo}/>
           </Route>
         </Switch>
       </div>
@@ -99,15 +104,15 @@ function DogsNearby(props) {
       <h2 class="header">DogsNearby</h2>
       <hr></hr>
       <PetProfilePhoto 
-      id={props.id}
-      img={props.img}/>
+      petId={props.petId}
+      petImg={props.petImg}/>
       <PetInfo 
-      info={props.info}/>
+      petInfo={props.petInfo}/>
     </div>
   );
 }
 
-function Profile() {
+function Profile(props) {
   // const styles = {
   //   display: "flex",
   //   "justify-content": "center"
@@ -118,7 +123,12 @@ function Profile() {
         <h2 class="my-profile-text">My Profile</h2>
       </div>
       <hr></hr>
-      <UserProfile />
+      <UserProfile 
+        userFirstName={userData.firstName}
+        userAvatar={userData.avatar}
+        petId={petData.petId}
+        petName={petData.petName}
+        petImg={petData.img}/>
       {/* Add a conditional render on pet image */}
      
     </div>

@@ -3,12 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import PetsOnUserPage from './PetOnUserPage';
 
-const userData = {
-  firstName: 'Maria',
-  avatar: 'https://image.flaticon.com/icons/svg/920/920963.svg',
-  alt: 'avatar'
-}
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -25,16 +19,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function UserProfile() {
+export default function UserProfile(props) {
   const classes = useStyles();
 
   return (
     <Fragment>
     <div className={classes.root}>
-      <Avatar alt="Remy Sharp" src="https://image.flaticon.com/icons/svg/920/920963.svg" className={classes.bigAvatar} />
-    <strong>{userData.firstName}</strong>
+      <Avatar alt={props.userFirstName} src={props.userAvatar} className={classes.bigAvatar} />
+    <strong>{props.userFirstName}</strong>
     </div>
-    <PetsOnUserPage />
+    <PetsOnUserPage 
+    petId={props.petId}
+    petImg={props.petImg}
+    petName={props.petName}/>
     </Fragment>
   );
 }
