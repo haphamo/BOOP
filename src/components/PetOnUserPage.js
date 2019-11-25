@@ -21,14 +21,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function PetOnUserPage(props) {
-  // I couldn't figure out how to use the id in the url
-  let { id } = useParams()
   const classes = useStyles();
   
     return (
       <Fragment>
       <div key={props.petId} className={classes.root} >
-      <Link to='pets/1' ><Avatar alt={props.petName} src={props.petImg} className={classes.bigAvatar} /></Link>
+      <Link to={`/pets/${props.petId}`} ><Avatar alt={props.petName} src={props.petImg} className={classes.bigAvatar} /></Link>
         <em>{props.petName}</em>
       </div>
       </Fragment>
