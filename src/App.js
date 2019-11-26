@@ -157,8 +157,9 @@ function Notifications() {
   return (
     <div>
       <h2 class="header">Notifications</h2>
-      <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a>
       <hr></hr>
+      <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a>
+        {/* <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div> */}
     </div>
   );
 }
