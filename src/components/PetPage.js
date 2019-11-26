@@ -16,6 +16,7 @@ export default function PetPage(props) {
   const [petFav, setPetFav] = useState([])
   const [gallery, setGallery] = useState([])
   const [petInfo, setPetInfo] = useState('')
+  const [showLoadFile, setShowLoadFile] = useState(false);
 
   useEffect(() => {
     axios.get(`/api/pets/${id}`)
@@ -37,15 +38,15 @@ export default function PetPage(props) {
     'align-items': 'center'
   }
   const hidden = {
-    visibility: 'none'
+    visibility: 'hidden'
   }
   
   return(
     <Fragment>
       <div class="header" style={ styles }>
-        <Upload style={ hidden } />
-        <h2>{petName}</h2>
-        <Upload />
+        {showLoadFile && <Upload />}
+          <h2>{petName}</h2>
+        
       </div>
       <hr></hr>
       <div class="pet-profile-div" >

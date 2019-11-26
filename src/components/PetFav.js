@@ -54,8 +54,7 @@ export default function PetFav() {
   
   const imgStyle = {
     height: '60%',
-    "padding-top": '10%',
-    transform: 'translateY(0%)'
+    "padding-top": '10%'
   }
 
   const listItemStyle = {
