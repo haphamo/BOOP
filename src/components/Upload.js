@@ -32,7 +32,7 @@ export default function Upload(props) {
 
   return (
     <Fragment>
-      <div class="upload">
+      <div className="upload">
         <Widget 
           publicKey='e409ed1db8c88f8b8083'
           onChange={results} 
