@@ -34,8 +34,8 @@ export default function PetPage(props) {
 
   const styles = {
     display: 'flex',
-    'justify-content': 'space-around',
-    'align-items': 'center'
+    'justifyContent': 'space-around',
+    'alignItems': 'center'
   }
   const hidden = {
     visibility: 'hidden'

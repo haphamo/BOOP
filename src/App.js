@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  useParams
+  Route
 } from "react-router-dom";
 
 import './App.scss';
@@ -99,7 +97,7 @@ export default function App() {
 
 function DogsNearby(props) {
   const petNameTextStyle = {
-    'text-align': 'center'
+    'textAlign': 'center'
   }
   return (
     <div>
@@ -127,17 +125,17 @@ function Profile(props) {
   }
   const styles = {
     display: 'flex',
-    'justify-content': 'space-around',
-    'align-items': 'center'
+    'justifyContent': 'space-around',
+    'alignItems': 'center'
   }
   const hidden = {
     visibility: 'hidden'
   }
   return (
     <div>
-      <div style={ styles }class="my-profile-header">
+      <div style={ styles }className="my-profile-header">
         <PetsIcon style={ hidden }/>
-        <h2 class="my-profile-text">My Profile</h2>
+        <h2 className="my-profile-text">My Profile</h2>
         <PetsIcon onClick={showForm}/>
         
       </div>
