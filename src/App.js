@@ -82,16 +82,6 @@ export default function App() {
   );
 }
 
-// const PetComponent = props => {
-//   let { id } = useParams()
-
-//   console.log("This was the id", id)
-//   useEffect(() => {
-//     //axios.get(`/api/pets/${id}`)
-//   }, [id])
-//   return null
-// }
-
 // You can think of these components as "pages"
 // in your app.
 
