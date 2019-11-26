@@ -54,15 +54,12 @@ let data = {
  
 export default function PetFav(props) {
   
-  const action = function() {
-    alert('it works');
-  }
-  
   const classes = useStyles();
   
   const imgStyle = {
     height: '60%',
-    "paddingTop": '10%'
+    "paddingTop": '10%',
+    transform: "translateY(0%)"
   }
 
   const listItemStyle = {
@@ -85,8 +82,8 @@ export default function PetFav(props) {
         
         {props.petFav.map(tile => (
           <GridListTile style={ fixedHeight }>
-            <img style={ imgStyle } src={data[tile.category.toLowerCase()]} alt={tile.category} onClick={action}/>
-            <h5 style={ categoryTextStyle }>{tile.favourite_item}</h5>
+            <img style={ imgStyle } src={data[tile.category.toLowerCase()]} alt={tile.category} />
+            <h3 style={ categoryTextStyle }>{tile.favourite_item}</h3>
           </GridListTile>
         ))}
       </GridList>

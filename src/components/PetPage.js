@@ -12,9 +12,7 @@ export default function PetPage(props) {
   // initial state of fav bar will always have an add button
 
   const addFav = { category: 'Add'}
-
- 
-
+  
   // define my states
   const [petAvatar, setPetAvatar] = useState('')
   const [petName, setPetName] = useState('')
