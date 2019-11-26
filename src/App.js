@@ -63,7 +63,6 @@ export default function App() {
           </Route>
           <Route path="/friends">
             <Friends />
-            <PetForm />
           </Route>
           <Route path="/notifications">
             <Notifications />
