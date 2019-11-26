@@ -10,8 +10,9 @@ const pino = require('express-pino-logger')();
 const bodyParser = require('body-parser');
 const path = require('path');
 // const favicon = require('serve-favicon');
-// const logger = require('morgan');
-// const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const cors = require('cors'); 
 // const fileUpload = require('express-fileupload'); 
 
@@ -23,8 +24,10 @@ const dbParams = require('./lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
 
+// Routes
 const usersRoutes = require("./routes/users");
 const petsRoutes = require("./routes/pets");
+const authRoutes = require("./routes/auth-routes");
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -32,16 +35,22 @@ const petsRoutes = require("./routes/pets");
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// app.use(logger('dev'));
-// app.use(cookieParser());
+app.use(logger('dev'));
+app.use(cookieParser());
+app.use(cookieSession({
+  name: 'session',
+  keys: ["WOOF"],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(pino);
 
 // Routes
 app.use("/api/users", usersRoutes(db));
 app.use("/api/pets", petsRoutes(db));
+app.use("/api/auth-routes", authRoutes(db));
 
 // Use CORS and File Upload modules here
 app.use(cors());
@@ -50,7 +59,8 @@ app.use(cors());
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_CLIENT_ID,
   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/facebook/callback"
+  callbackURL: "http://localhost:3000/",
+  enableProof: true
 },
 function(accessToken, refreshToken, profile, cb) {
   User.findOrCreate({ facebookId: profile.id }, function (err, user) {
@@ -72,12 +82,17 @@ passport.deserializeUser(function(obj, cb) {
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Define routes
-app.get('/auth/facebook', passport.authenticate('facebook'));
+// Define routes - moved to auth-routes.js
+// app.get('/auth/facebook', 
+//   passport.authenticate('facebook', { session: false }),
+//   function(req, res) {
+//     res.json({ id: req.user.id, username: req.user.username });
+//   }
+//   );
 
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/login' }));
+// app.get('/auth/facebook/callback',
+//   passport.authenticate('facebook', { successRedirect: '/',
+//                                       failureRedirect: '/login' }));
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
