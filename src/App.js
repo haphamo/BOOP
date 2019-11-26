@@ -15,6 +15,7 @@ import PetForm from './components/Form';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
+import PetFavForm from './components/petFavForm';
 
 //Fixture data
 const userData = {
@@ -122,9 +123,6 @@ function DogsNearby(props) {
 // 
 function Profile(props) {
   
-  const showForm = function (){
-    alert('showing the form')
-  }
   const styles = {
     display: 'flex',
     'justify-content': 'space-around',
@@ -138,7 +136,7 @@ function Profile(props) {
       <div style={ styles }class="my-profile-header">
         <PetsIcon style={ hidden }/>
         <h2 class="my-profile-text">My Profile</h2>
-        <PetsIcon onClick={showForm}/>
+        <PetsIcon />
         
       </div>
       <hr></hr>
@@ -159,6 +157,7 @@ function Notifications() {
       <h2 class="header">Notifications</h2>
       <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a>
       <hr></hr>
+      <PetFavForm />  
     </div>
   );
 }
