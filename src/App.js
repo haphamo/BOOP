@@ -157,6 +157,7 @@ function Notifications() {
   return (
     <div>
       <h2 class="header">Notifications</h2>
+      <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a>
       <hr></hr>
     </div>
   );
