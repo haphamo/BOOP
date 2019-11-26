@@ -99,7 +99,6 @@ function DogsNearby(props) {
   );
 }
 
-
 // The profile page route displays the user's avatar and name as well as the pet(s) avatar and name
 // Users can add a new pet on this page
 
