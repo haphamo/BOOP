@@ -7,7 +7,7 @@ import {useParams} from 'react-router-dom';
 import axios from "axios";
 
 
-export default function PetPage(props) {
+export default function PetPage() {
   let { id } = useParams()
 
   // define my states

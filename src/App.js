@@ -4,6 +4,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import axios from "axios";
 
 import './App.scss';
 import BottonNav from './components/BottomNav';
@@ -13,6 +14,7 @@ import PetForm from './components/Form';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
+import Axios from 'axios';
 
 //Fixture data
 const userData = {
@@ -58,22 +60,16 @@ export default function App() {
             />
           </Route>
           <Route path="/profile">
-            <Profile 
-            />
+            <Profile />
           </Route>
           <Route path="/friends">
             <Friends />
-            <PetForm />
           </Route>
           <Route path="/notifications">
             <Notifications />
           </Route>
           <Route path="/pets/:id">
-          <PetPage 
-          petId={petData.petId}
-          petName={petData.petName}
-          petImg={petData.img}
-          petInfo={petData.petInfo}/>
+          <PetPage />
           </Route>
         </Switch>
       </div>
@@ -108,10 +104,17 @@ function DogsNearby(props) {
 // Users can add a new pet on this page
 
 function Profile() {
-
+  //set states
   const [showForm, setShowForm] = useState(false)
-  
+  const [userAvatar, setUserAvatar] = useState('')
+  const [pets, setPets] = useState('')
+  const [petNames, setPetNames] = useState('')
 
+  // axios call to retrieve user data, using user id 1 for now
+  // checks the cookie to the userId
+  useEffect(()=> {
+    axios.get(``)
+  })
   const styles = {
     display: 'flex',
     'justifyContent': 'space-around',
