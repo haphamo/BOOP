@@ -11,7 +11,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 // const favicon = require('serve-favicon');
 // const logger = require('morgan');
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const cors = require('cors'); 
 // const fileUpload = require('express-fileupload'); 
@@ -27,7 +27,7 @@ db.connect();
 // Routes
 const usersRoutes = require("./routes/users");
 const petsRoutes = require("./routes/pets");
-const authRoutes = require("./routes/auth-routes");
+// const authRoutes = require("./routes/auth-routes");
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
@@ -36,12 +36,16 @@ const authRoutes = require("./routes/auth-routes");
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.use(logger('dev'));
-// app.use(cookieParser());
+
 app.use(cookieSession({
   name: 'session',
   keys: ["WOOF"],
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
+
+// Parse cookies
+app.use(cookieParser());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -50,7 +54,12 @@ app.use(pino);
 // Routes
 app.use("/api/users", usersRoutes(db));
 app.use("/api/pets", petsRoutes(db));
-app.use("/api/auth-routes", authRoutes(db));
+// app.use("/api/auth", authRoutes(db));
+
+// Initialize Passport
+app.use(passport.initialize());
+// Deserialize cookie from the browser
+app.use(passport.session());
 
 // Use CORS and File Upload modules here
 app.use(cors());
@@ -77,12 +86,8 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
-// Initialize Passport and restore authentication state, if any, from the
-// session.
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Define routes - moved to auth-routes.js
+// Define routes
+// Move to auth-routes.js later
 app.get('/auth/facebook', 
   passport.authenticate('facebook', { session: false }),
   function(req, res) {

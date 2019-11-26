@@ -34,7 +34,7 @@ module.exports = db => {
   router.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/login' }),
     function(req, res) {
-      res.redirect('/')
+      res.redirect('http://localhost:3000/')
     })
   
   return router;
