@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from "react-router-dom";
 
 import './App.scss';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import BottonNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
@@ -74,6 +76,9 @@ export default function App() {
           petImg={petData.img}
           petInfo={petData.petInfo}/>
           </Route>
+          <Route>
+            <Login path="/login"/>
+          </Route>
         </Switch>
       </div>
       <BottonNav />
@@ -92,6 +97,7 @@ function DogsNearby(props) {
     <div>
       <h2 className="header">DogsNearby</h2>
       <hr></hr>
+      <Link to='/login'><LockOpenIcon /></Link>
       <h3 style={petNameTextStyle}>{props.petName}</h3>
       <PetProfilePhoto 
       petId={props.petId}
@@ -145,8 +151,8 @@ function Notifications() {
     <div>
       <h2 className="header">Notifications</h2>
       <hr></hr>
-      <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a>
-        {/* <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div> */}
+      
+     
     </div>
   );
 }
@@ -156,6 +162,19 @@ function Friends() {
     <div className="header">
       <h2>Friends</h2>
       <hr></hr>
+    </div>
+  );
+}
+
+
+function Login () {
+
+  return (
+    <div className="header">
+      <h2>Login</h2>
+      <hr></hr>
+      <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a>
+         {/* <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div> */}
     </div>
   );
 }
