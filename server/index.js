@@ -62,7 +62,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Use CORS and File Upload modules here
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000/",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  optionsSuccessStatus: 204
+}));
 // app.use(fileUpload());
 
 passport.use(new FacebookStrategy({
