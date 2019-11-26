@@ -4,8 +4,8 @@ require('dotenv').config();
 // Web server config
 const PORT = process.env.PORT || 3001;
 const express = require('express');
-// const passport = require('passport');
-// const FacebookStrategy = require('passport-facebook').Strategy;
+const passport = require('passport');
+const FacebookStrategy = require('passport-facebook').Strategy;
 const pino = require('express-pino-logger')();
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -47,20 +47,37 @@ app.use("/api/pets", petsRoutes(db));
 app.use(cors());
 // app.use(fileUpload());
 
-// passport.use(new FacebookStrategy({
-//   clientID: process.env.FACEBOOK_APP_ID,
-//   clientSecret: process.env.FACEBOOK_APP_SECRET,
-//   callbackURL: "http://localhost:3000/auth"
-// },
-// function(accessToken, refreshToken, profile, done) {
-//   User.findOrCreate(function(err, user) {
-//     if (err) { return done(err); }
-//     done(null, user);
-//   });
-//   }
-// ));
+passport.use(new FacebookStrategy({
+  clientID: process.env.FACEBOOK_CLIENT_ID,
+  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/auth/facebook/callback"
+},
+function(accessToken, refreshToken, profile, cb) {
+  User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+    return cb(err, user);
+  });
+}
+));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Define routes
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { successRedirect: '/',
+                                      failureRedirect: '/login' }));
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
