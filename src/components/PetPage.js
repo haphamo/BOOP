@@ -50,8 +50,8 @@ export default function PetPage(props) {
   return(
     <Fragment>
       <div className="header" style={ styles }>
-        {showLoadFile && <Upload />}
           <h2>{petName}</h2>
+        
         
       </div>
       <hr></hr>
@@ -61,6 +61,8 @@ export default function PetPage(props) {
       </div>
       <PetInfo petInfo={petInfo}/>
       <PetFav petFav={petFav}/>
+      <Upload />
     </Fragment>
+    
   )
 }
