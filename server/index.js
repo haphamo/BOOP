@@ -83,16 +83,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Define routes - moved to auth-routes.js
-// app.get('/auth/facebook', 
-//   passport.authenticate('facebook', { session: false }),
-//   function(req, res) {
-//     res.json({ id: req.user.id, username: req.user.username });
-//   }
-//   );
+app.get('/auth/facebook', 
+  passport.authenticate('facebook', { session: false }),
+  function(req, res) {
+    res.json({ id: req.user.id, username: req.user.username });
+  }
+  );
 
-// app.get('/auth/facebook/callback',
-//   passport.authenticate('facebook', { successRedirect: '/',
-//                                       failureRedirect: '/login' }));
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { successRedirect: '/',
+                                      failureRedirect: '/login' }));
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
