@@ -118,11 +118,11 @@ function DogsNearby(props) {
 // Users can add a new pet on this page
 // A form will be rendered here
 // 
-function Profile(props) {
+function Profile() {
+
+  const [showForm, setShowForm] = useState(false)
   
-  const showForm = function (){
-    alert('showing the form')
-  }
+
   const styles = {
     display: 'flex',
     'justifyContent': 'space-around',
@@ -136,16 +136,17 @@ function Profile(props) {
       <div style={ styles }className="my-profile-header">
         <PetsIcon style={ hidden }/>
         <h2 className="my-profile-text">My Profile</h2>
-        <PetsIcon onClick={showForm}/>
-        
-      </div>
+        <PetsIcon onClick={()=> setShowForm(true)}/>
+    </div>
       <hr></hr>
+      {showForm ? <PetForm setShowForm={setShowForm}/> : 
       <UserProfile 
         userFirstName={userData.firstName}
         userAvatar={userData.avatar}
         petId={petData.petId}
         petName={petData.petName}
         petImg={petData.img}/>
+      }
      
     </div>
   );
