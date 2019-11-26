@@ -101,7 +101,7 @@ function DogsNearby(props) {
   }
   return (
     <div>
-      <h2 class="header">DogsNearby</h2>
+      <h2 className="header">DogsNearby</h2>
       <hr></hr>
       <h3 style={petNameTextStyle}>{props.petName}</h3>
       <PetProfilePhoto 
@@ -118,11 +118,11 @@ function DogsNearby(props) {
 // Users can add a new pet on this page
 // A form will be rendered here
 // 
-function Profile(props) {
+function Profile() {
+
+  const [showForm, setShowForm] = useState(false)
   
-  const showForm = function (){
-    alert('showing the form')
-  }
+
   const styles = {
     display: 'flex',
     'justifyContent': 'space-around',
@@ -136,16 +136,17 @@ function Profile(props) {
       <div style={ styles }className="my-profile-header">
         <PetsIcon style={ hidden }/>
         <h2 className="my-profile-text">My Profile</h2>
-        <PetsIcon onClick={showForm}/>
-        
-      </div>
+        <PetsIcon onClick={()=> setShowForm(true)}/>
+    </div>
       <hr></hr>
+      {showForm ? <PetForm setShowForm={setShowForm}/> : 
       <UserProfile 
         userFirstName={userData.firstName}
         userAvatar={userData.avatar}
         petId={petData.petId}
         petName={petData.petName}
         petImg={petData.img}/>
+      }
      
     </div>
   );
@@ -154,7 +155,7 @@ function Profile(props) {
 function Notifications() {
   return (
     <div>
-      <h2 class="header">Notifications</h2>
+      <h2 className="header">Notifications</h2>
       <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a>
       <hr></hr>
     </div>
@@ -163,7 +164,7 @@ function Notifications() {
 
 function Friends() {
   return (
-    <div class="header">
+    <div className="header">
       <h2>Friends</h2>
       <hr></hr>
     </div>

@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+
 const petFavData = [
   {
     img: "https://image.flaticon.com/icons/svg/149/149145.svg",
@@ -54,7 +55,7 @@ export default function PetFav() {
   
   const imgStyle = {
     height: '60%',
-    "padding-top": '10%'
+    "paddingTop": '10%'
   }
 
   const listItemStyle = {
@@ -63,7 +64,7 @@ export default function PetFav() {
   }
 
   const categoryTextStyle = {
-    "text-align": "center"
+    "textAlign": "center"
   }
 
   const fixedHeight = {
