@@ -4,8 +4,8 @@ require('dotenv').config();
 // Web server config
 const PORT = process.env.PORT || 3001;
 const express = require('express');
-const passport = require('passport')
-  , FacebookStrategy = require('passport-facebook').Strategy;
+// const passport = require('passport');
+// const FacebookStrategy = require('passport-facebook').Strategy;
 const pino = require('express-pino-logger')();
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -47,19 +47,20 @@ app.use("/api/pets", petsRoutes(db));
 app.use(cors());
 // app.use(fileUpload());
 
+// passport.use(new FacebookStrategy({
+//   clientID: process.env.FACEBOOK_APP_ID,
+//   clientSecret: process.env.FACEBOOK_APP_SECRET,
+//   callbackURL: "http://localhost:3000/auth"
+// },
+// function(accessToken, refreshToken, profile, done) {
+//   User.findOrCreate(function(err, user) {
+//     if (err) { return done(err); }
+//     done(null, user);
+//   });
+//   }
+// ));
+
 // Define routes
-passport.use(new FacebookStrategy({
-  clientID: process.env.FACEBOOK_APP_ID,
-  clientSecret: process.env.FACEBOOK_APP_SECRET,
-  callbackURL: "http://localhost:3000/"
-},
-function(accessToken, refreshToken, profile, done) {
-  User.findOrCreate(function(err, user) {
-    if (err) { return done(err); }
-    done(null, user);
-  });
-  }
-));
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
