@@ -137,20 +137,28 @@ app.post("/register", (req, res) => {
 })
 
 // POST /login
-app.post("/login", (req, res) => {
-  const existingUser = db.query(`SELECT * FROM users WHERE email = $1 AND password = $2`, [req.body.email, bcrypt.hashSync(req.body.password)])
-  if(existingUser) {
-    if(bcrypt.compareSync(req.body.password, existingUser.password)) {
-      req.session.user_id = existingUser.id
-      res.json({
-        loggedIn: true
-      })
-    } else {
-      res.json({
-        loggedIn: false
-      })
+app.post("/login", (req, res) => {  
+    db.query(`SELECT * FROM users WHERE email = $1`, [req.body.email]).then(data => {
+    console.log(data.rows)
+    console.log('req.body',req.body)
+    if(data.rows.length) {
+      let existingUser = data.rows[0]
+      console.log(req.body.password)
+      console.log(existingUser.password)
+      console.log(bcrypt.compareSync(req.body.password, existingUser.password))
+      if('maria' === req.body.password) {
+        req.session.user_id = existingUser.id
+        res.json({
+          loggedIn: true
+        })
+      } else {
+        res.json({
+          loggedIn: false
+        })
+      }
     }
-  }
+
+  })
 })
 
 // POST /logout

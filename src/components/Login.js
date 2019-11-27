@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -34,15 +34,29 @@ export default function Login () {
   const classes = useStyles();
   
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const onSubmit = function (evt) {
     evt.preventDefault();
     //validations here
     //prevent default
+    login();
     console.log(email)
   }
-  const handleChange = function(e) {
+  const handleEmailChange = function(e) {
     setEmail(e.target.value)
   }
+  const handlePasswordChange = function(e) {
+    setPassword(e.target.value)
+  }
+
+
+ let login = function () {
+   axios.post(`/login`, {email, password}, { withCredentials: true})
+   .then(res => {
+     console.log('res', res)
+   })
+ }
+
 
   return (
     <div className="header">
@@ -57,7 +71,7 @@ export default function Login () {
           label="Email"
           className={classes.textField}
           margin="normal"
-          onChange={handleChange}
+          onChange={handleEmailChange}
           value={email}
         />
          <TextField
@@ -67,6 +81,8 @@ export default function Login () {
           type="password"
           autoComplete="current-password"
           margin="normal"
+          value={password}
+          onChange={handlePasswordChange}
         />
       <Button variant="contained" color="primary" className={classes.button} type="submit" >
         Log In !
