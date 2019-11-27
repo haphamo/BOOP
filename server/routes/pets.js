@@ -104,7 +104,7 @@ module.exports = db => {
     req.body.age = parseInt(req.body.age)
     db.query(
       `INSERT INTO pets (name, age, breed, quirky_fact, owner_id, profile_photo)
-      VALUES($1, $2, $3, $4, $5, $6)`
+      VALUES ($1, $2, $3, $4, $5, $6)`
       , [req.body.name, req.body.age, req.body.breed, req.body.quirky_fact, req.body.owner_id, req.body.profile_photo])
     .then(result => {
       res.status(200)
