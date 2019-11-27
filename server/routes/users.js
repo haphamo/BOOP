@@ -45,6 +45,7 @@ module.exports = db => {
   })
 
   // Create a new user
+  // POST /register
   router.post("/register", (req, res) => {
     db.query(
       `INSERT INTO users (first_name, last_name, email, city, post_code, profile_photo)
