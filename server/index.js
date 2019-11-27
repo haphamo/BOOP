@@ -13,6 +13,8 @@ const cookieSession = require('cookie-session');
 const path = require('path');
 const cors = require('cors'); 
 const app = express();
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 // const session = require('express-session');
 // const config = require('../configuration/config');
 // const favicon = require('serve-favicon');
@@ -98,24 +100,48 @@ passport.deserializeUser(function(obj, cb) {
 
 // Create a new user
 // POST /register
-// Add password logic
 app.post("/register", (req, res) => {
-  db.query(
-    `INSERT INTO users (first_name, last_name, email, city, post_code, profile_photo)
-    VALUES ($1, $2, $3, $4, $5, $6)`
-    , [req.body.first_name, req.body.last_name, req.body.email, req.body.city, req.body.post_code, req.body.profile_photo])
-    .then(result => {
-      res.status(201)
-      res.json({ 
-        status: 'Success',
-        result: result.rows,
-        message: 'Created a new user' 
+  // Check if the user exists in the the database
+  const existingUser = db.query(`SELECT * FROM users WHERE email = $1`, [req.body.email])
+  if(existingUser) {
+    res.status(400).send("Email already exists!");
+  } else {
+    db.query(
+      `INSERT INTO users (first_name, last_name, email, password, city, post_code, profile_photo)
+      VALUES ($1, $2, $3, $4, $5, $6)`
+      , [req.body.first_name, 
+         req.body.last_name, 
+         req.body.email, 
+         bcrypt.hashSync(req.body.password, 10), 
+         req.body.city, 
+         req.body.post_code, 
+         req.body.profile_photo])
+      .then(result => {
+        res.status(201)
+        res.json({ 
+          status: 'Success',
+          result: result.rows,
+          message: 'Created a new user' 
+      })
     })
-  })
-    .catch(err => {
-      res.status(500)
-      res.json({ error: err.message })
-  })
+      .catch(err => {
+        res.status(500)
+        res.json({ error: err.message })
+    })
+  }
+})
+
+// POST /login
+app.post("/login", (req, res) => {
+  const existingUser = db.query(`SELECT * FROM users WHERE email = $1 AND password = $2`, [req.body.email, bcrypt.hashSync(req.body.password)])
+  if(existingUser) {
+    if(bcrypt.compareSync(req.body.password, existingUser.password)) {
+      req.session.user_id = existingUser.id
+      res.redirect('http://localhost:3000/')
+    } else {
+      res.status(403).send("The email or password you entered is incorrect.")
+    }
+  }
 })
 
 // Route for authenticating with Facebook 
