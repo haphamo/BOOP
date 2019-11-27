@@ -6,17 +6,19 @@ import axios from 'axios';
 export default function Upload(props) {
   // const [uuid, setUuid] = useState("");
   const uuid = "";
-  const [results, setResults] = useState([]);
+  // const [results, setResults] = useState([]);
   const { id } = useParams()
 
   useEffect(() => {
     // Upload an image to Uploadcare
+    // What is the response we get from the upload???
     const url = `https://ucarecdn.com/${uuid}/`;
-    axios.get(url)
-    .then(response => {
-      setResults([...results, response.data.results]);
+    // May not need an axios.get at this point
+    // axios.get(url)
+    // .then(response => {
+      // setResults([...results, response.data.results]);
       // Save the image to the database
-      return axios.post(`/api/pets/images/${id}`, {
+      axios.post(`/api/pets/images/${id}`, {
         url
       })
       .then(response => {
@@ -25,8 +27,8 @@ export default function Upload(props) {
       .catch(error => {
         console.log(error);
       })
-    })
-  }, [id, uuid, results]);
+    // })
+  }, [id, uuid]);
 
   // useEffect(() => {
   //   console.log('Results changed: ', results);
@@ -37,7 +39,7 @@ export default function Upload(props) {
       <div className="upload">
         <Widget 
           publicKey='e409ed1db8c88f8b8083'
-          onChange={results} 
+          // onChange={results} 
           clearable
           previewStep='true'
           crop='true'
