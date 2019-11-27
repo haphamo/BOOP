@@ -7,17 +7,17 @@ const express = require('express');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const pino = require('express-pino-logger')();
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const path = require('path');
 const cors = require('cors'); 
-const config = require('../configuration/config');
 const app = express();
+// const session = require('express-session');
+// const config = require('../configuration/config');
 // const favicon = require('serve-favicon');
 // const logger = require('morgan');
 // const fileUpload = require('express-fileupload'); 
-
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -46,7 +46,6 @@ app.use(cookieSession({
 
 // Parse cookies
 app.use(cookieParser());
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -70,6 +69,20 @@ app.use(cors({
 }));
 // app.use(fileUpload());
 
+passport.use(new FacebookStrategy({
+  clientID: process.env.FACEBOOK_CLIENT_ID,
+  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/",
+  profileFields: ['id', 'displayName','email'],
+  enableProof: true
+},
+function(accessToken, refreshToken, profile, cb) {
+  User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+    return cb(err, user);
+  });
+}
+));
+
 passport.serializeUser(function(user, cb) {
   cb(null, user);
 });
@@ -78,33 +91,12 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
-passport.use(new FacebookStrategy({
-  clientID: process.env.FACEBOOK_CLIENT_ID,
-  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-  callbackURL: "http://localhost:3001/auth/facebook/callback",
-  profileFields: ['id', 'displayName','email'],
-  enableProof: true
-},
-function(accessToken, refreshToken, user, cb) {
-  return cb(null,user);
-}
-// function(accessToken, refreshToken, profile, cb) {
-//   User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-//     return cb(err, user);
-//   });
-// }
-));
-
 // Route for authenticating with Facebook 
 // Move to auth-routes.js later
 app.get('/auth/facebook', 
   passport.authenticate('facebook', { session: false }),
   function(req, res) {
-    console.log("What is the response from Facebook?", res)
-    res.json({ 
-      id: req.user.id, 
-      username: req.user.username 
-    });
+    res.json({ id: req.user.id, username: req.user.username });
   }
 );
 
