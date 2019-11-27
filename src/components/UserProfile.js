@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import PetsOnUserPage from './PetOnUserPage';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -19,19 +20,38 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function UserProfile(props) {
+export default function UserProfile() {
+
+  //define states
+  const [userAvatar, setUserAvatar] = useState('')
+  const [userName, setUserName] = useState('')
+  const [petData, setPetData] = useState({})
+
+  useEffect(()=> {
+    // id is the user_id that comes from the cookie
+    //right now it is hardcoded
+    axios.get(`/api/users/pets/2`)
+    .then(res => {
+      // console.log('res:', res.data.result)
+      setUserAvatar(res.data.result[0].user_avatar)
+      setUserName(res.data.result[0].owner)
+      setPetData(res.data.result)
+      
+    })
+    .catch(err => {
+      console.log('error:', err)
+    })
+  }, [])
+
   const classes = useStyles();
 
   return (
     <Fragment>
     <div className={classes.root}>
-      <Avatar alt={props.userFirstName} src={props.userAvatar} className={classes.bigAvatar} />
-    <strong>{props.userFirstName}</strong>
+      <Avatar alt={userName} src={userAvatar} className={classes.bigAvatar} />
+    <strong>{userName}</strong>
     </div>
-    <PetsOnUserPage 
-    petId={props.petId}
-    petImg={props.petImg}
-    petName={props.petName}/>
+    <PetsOnUserPage />
     </Fragment>
   );
 }

@@ -16,13 +16,8 @@ import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
 import Login from './components/Login';
-
+import PetFavForm from './components/petFavForm';
 //Fixture data
-const userData = {
-  firstName: 'Maria',
-  avatar: 'https://image.flaticon.com/icons/svg/920/920963.svg',
-  alt: 'avatar'
-}
 
 const petData = {
   petId: '1',
@@ -61,8 +56,7 @@ export default function App() {
             />
           </Route>
           <Route path="/profile">
-            <Profile 
-            />
+            <Profile />
           </Route>
           <Route path="/friends">
             <Friends />
@@ -117,7 +111,6 @@ function Profile() {
 
   const [showForm, setShowForm] = useState(false)
   
-
   const styles = {
     display: 'flex',
     'justifyContent': 'space-around',
@@ -135,12 +128,7 @@ function Profile() {
     </div>
       <hr></hr>
       {showForm ? <PetForm setShowForm={setShowForm}/> : 
-      <UserProfile 
-        userFirstName={userData.firstName}
-        userAvatar={userData.avatar}
-        petId={petData.petId}
-        petName={petData.petName}
-        petImg={petData.img}/>
+      <UserProfile />
       }
      
     </div>
@@ -152,8 +140,7 @@ function Notifications() {
     <div>
       <h2 className="header">Notifications</h2>
       <hr></hr>
-      
-     
+      <PetFavForm />  
     </div>
   );
 }

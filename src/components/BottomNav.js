@@ -7,10 +7,7 @@ import PetsIcon from '@material-ui/icons/Pets';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
 import GroupIcon from '@material-ui/icons/Group';
-import {
-  
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   stickToBottom: {

@@ -19,12 +19,12 @@ export default function PetPage(props) {
   const [petFav, setPetFav] = useState([addFav])
   const [gallery, setGallery] = useState([])
   const [petInfo, setPetInfo] = useState('')
-  const [showLoadFile, setShowLoadFile] = useState(false);
+  // const [showLoadFile, setShowLoadFile] = useState(false);
 
   useEffect(() => {
     axios.get(`/api/pets/${id}`)
     .then(res => {
-      console.log('response:', res.data.result)
+      // console.log('response:', res.data.result[0])
       setPetName(res.data.result[0].name)
       setPetAvatar(res.data.result[0].profile_photo)
       setPetInfo(res.data.result[0].quirky_fact)
@@ -32,11 +32,8 @@ export default function PetPage(props) {
       let category = res.data.result
       const fav = {}
       category.map(item => {fav[item.category]=item.favourite_item}) 
-      console.log('the setState:',fav)
+      // console.log('the setState:',fav)
       setPetFav([addFav, ...res.data.result])
-      
-      
-      
       
     })
     .catch(err => {
@@ -57,8 +54,6 @@ export default function PetPage(props) {
     <Fragment>
       <div className="header" style={ styles }>
           <h2>{petName}</h2>
-        
-        
       </div>
       <hr></hr>
       <div className="pet-profile-div" >
@@ -67,7 +62,10 @@ export default function PetPage(props) {
       </div>
       <PetInfo petInfo={petInfo}/>
       <PetFav petFav={petFav}/>
-      <Upload />
+      <div>
+      {/* <Upload /> */}
+
+      </div>
     </Fragment>
     
   )
