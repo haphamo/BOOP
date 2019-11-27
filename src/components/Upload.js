@@ -16,7 +16,7 @@ export default function Upload(props) {
     // May not need an axios.get at this point
     // axios.get(url)
     // .then(response => {
-      // setResults([...results, response.data.results]);
+    //   setResults([...results, response.data.results]);
       // Save the image to the database
       axios.post(`/api/pets/images/${id}`, {
         url
