@@ -40,6 +40,28 @@ module.exports = db => {
     })
   })
 
+  // Get all pet favourites
+  router.get("/favourites", (req, res) => {
+    db.query(
+      `SELECT pets.name AS pet,
+              pet_favourites.category AS category, 
+              pet_favourites.name AS name
+      FROM pet_favourites
+      JOIN pets ON pets.id = pet_id`)
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        result: result.rows,
+        message: 'Retrieved all the pet favourites' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
   // Get a single pet and its favourite things 
   router.get("/:id", (req, res) => {
     const petId = parseInt(req.params.id)
@@ -112,6 +134,28 @@ module.exports = db => {
         status: 'Success',
         result: result.rows,
         message: 'Added a new pet' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Add a new favourite thing
+  // Included pet_id for now
+  router.post("/favourites/:id", (req, res) => {
+    const petId = parseInt(req.params.id)
+    db.query(
+      `INSERT INTO pet_favourites (name, category, pet_id)
+      VALUES($1, $2, $3)`
+      , [req.body.name, req.body.category, petId])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        result: result.rows,
+        message: 'Added a new favourite item' 
       })
     })
     .catch(err => {

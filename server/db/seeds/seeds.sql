@@ -18,8 +18,8 @@ VALUES (1, 'Dentastix', 'Treat', 1),
 (4, 'Frisbee', 'Toy', 2),
 (5, 'Whipped Cream', 'Treat', 3),
 (6, 'Tennis Ball', 'Toy', 4),
-(7, 'Berczy Park', 'Park', 4);
-
+(7, 'Berczy Park', 'Park', 4),
+(8, 'Trinity Bellwoods Dog Bowl', 'Park', 3);
 -- TEST DATA
 INSERT INTO images (id, url, pet_id)
 VALUES (1, 'https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage20191114at170028.jpeg', 1);
