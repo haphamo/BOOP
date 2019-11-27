@@ -13,6 +13,7 @@ const cookieSession = require('cookie-session');
 const path = require('path');
 const cors = require('cors'); 
 const app = express();
+const bcrypt = require('bcrypt');
 // const session = require('express-session');
 // const config = require('../configuration/config');
 // const favicon = require('serve-favicon');
@@ -76,11 +77,11 @@ passport.use(new FacebookStrategy({
   profileFields: ['id', 'displayName','email'],
   enableProof: true
 },
-function(accessToken, refreshToken, profile, cb) {
-  User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-    return cb(err, user);
-  });
-}
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
 ));
 
 passport.serializeUser(function(user, cb) {
@@ -91,8 +92,65 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
+// Register, Login and Logout Routes
+// GET /register - Do I need to create this?
+// GET /login - Do I need to create this?
+
+// Create a new user
+// POST /register
+app.post("/register", (req, res) => {
+  // Check if the user exists in the the database
+  const existingUser = db.query(`SELECT * FROM users WHERE email = $1`, [req.body.email])
+  if(existingUser) {
+    res.status(400).send("Email already exists!");
+  } else {
+    db.query(
+      `INSERT INTO users (first_name, last_name, email, password, city, post_code, profile_photo)
+      VALUES ($1, $2, $3, $4, $5, $6)`
+      , [req.body.first_name, 
+         req.body.last_name, 
+         req.body.email, 
+         bcrypt.hashSync(req.body.password, 10), 
+         req.body.city, 
+         req.body.post_code, 
+         req.body.profile_photo])
+      .then(result => {
+        res.status(201)
+        res.json({ 
+          status: 'Success',
+          result: result.rows,
+          message: 'Created a new user' 
+      })
+    })
+      .catch(err => {
+        res.status(500)
+        res.json({ error: err.message })
+    })
+  }
+})
+
+// POST /login
+app.post("/login", (req, res) => {
+  const existingUser = db.query(`SELECT * FROM users WHERE email = $1 AND password = $2`, [req.body.email, bcrypt.hashSync(req.body.password)])
+  if(existingUser) {
+    if(bcrypt.compareSync(req.body.password, existingUser.password)) {
+      req.session.user_id = existingUser.id
+      res.redirect('http://localhost:3000/')
+    } else {
+      res.status(403).send("The email or password you entered is incorrect.")
+    }
+  }
+})
+
+// POST /logout
+// Redirect the user back to the login page
+app.post("/logout", (req, res) => {
+  req.session = null;
+  res.redirect("/login");
+});
+
 // Route for authenticating with Facebook 
-// Move to auth-routes.js later
+// In auth-routes.js - will test to see if it works from there before deleting
 app.get('/auth/facebook', 
   passport.authenticate('facebook', { session: false }),
   function(req, res) {
@@ -107,6 +165,8 @@ app.get('/auth/facebook/callback',
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
+
+
 
 
 
