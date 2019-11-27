@@ -76,11 +76,11 @@ passport.use(new FacebookStrategy({
   profileFields: ['id', 'displayName','email'],
   enableProof: true
 },
-function(accessToken, refreshToken, profile, cb) {
-  User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-    return cb(err, user);
-  });
-}
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
 ));
 
 passport.serializeUser(function(user, cb) {
@@ -91,8 +91,35 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
+// Register, Login and Logout Routes
+// GET /register
+// GET /login
+// POST /logout
+
+// Create a new user
+// POST /register
+// Add password logic
+app.post("/register", (req, res) => {
+  db.query(
+    `INSERT INTO users (first_name, last_name, email, city, post_code, profile_photo)
+    VALUES ($1, $2, $3, $4, $5, $6)`
+    , [req.body.first_name, req.body.last_name, req.body.email, req.body.city, req.body.post_code, req.body.profile_photo])
+    .then(result => {
+      res.status(201)
+      res.json({ 
+        status: 'Success',
+        result: result.rows,
+        message: 'Created a new user' 
+    })
+  })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+  })
+})
+
 // Route for authenticating with Facebook 
-// Move to auth-routes.js later
+// In auth-routes.js - will test to see if it works
 app.get('/auth/facebook', 
   passport.authenticate('facebook', { session: false }),
   function(req, res) {
@@ -107,6 +134,8 @@ app.get('/auth/facebook/callback',
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
+
+
 
 
 
