@@ -1,11 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Widget } from '@uploadcare/react-widget';
+import {useParams} from 'react-router-dom';
 import axios from 'axios';
 
 export default function Upload(props) {
   // const [uuid, setUuid] = useState("");
   const uuid = "";
   const [results, setResults] = useState([]);
+  const { id } = useParams()
 
   useEffect(() => {
     // Upload an image to Uploadcare
@@ -14,7 +16,7 @@ export default function Upload(props) {
     .then(response => {
       setResults([...results, response.data.results]);
       // Save the image to the database
-      return axios.post('/api/pets/images/:id', {
+      return axios.post(`/api/pets/images/${id}`, {
         url
       })
       .then(response => {
@@ -24,7 +26,7 @@ export default function Upload(props) {
         console.log(error);
       })
     })
-  }, [uuid, results]);
+  }, [id, uuid, results]);
 
   // useEffect(() => {
   //   console.log('Results changed: ', results);
