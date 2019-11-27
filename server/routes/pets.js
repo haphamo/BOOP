@@ -129,7 +129,7 @@ module.exports = db => {
       VALUES ($1, $2, $3, $4, $5, $6)`
       , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, parseInt(req.body.owner_id), req.body.profile_photo])
     .then(result => {
-      res.status(200)
+      res.status(200) 
       res.json({ 
         status: 'Success',
         result: result.rows,
