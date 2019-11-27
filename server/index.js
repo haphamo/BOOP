@@ -101,7 +101,7 @@ app.get('/auth/facebook',
 );
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/',
+  passport.authenticate('facebook', { successRedirect: 'http://localhost:3000/',
                                       failureRedirect: '/login' }));
 
 app.listen(PORT, () => {
