@@ -44,5 +44,25 @@ module.exports = db => {
     })
   })
 
+  // Create a new user
+  router.post("/register", (req, res) => {
+    db.query(
+      `INSERT INTO users (first_name, last_name, email, city, post_code, profile_photo)
+      VALUES ($1, $2, $3, $4, $5, $6)`
+      , [req.body.first_name, req.body.last_name, req.body.email, req.body.city, req.body.post_code, req.body.profile_photo])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        result: result.rows,
+        message: 'Created a new user' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
   return router;
 };
