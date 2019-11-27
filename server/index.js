@@ -14,7 +14,6 @@ const path = require('path');
 const cors = require('cors'); 
 const app = express();
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
 // const session = require('express-session');
 // const config = require('../configuration/config');
 // const favicon = require('serve-favicon');
@@ -94,9 +93,8 @@ passport.deserializeUser(function(obj, cb) {
 });
 
 // Register, Login and Logout Routes
-// GET /register
-// GET /login
-// POST /logout
+// GET /register - Do I need to create this?
+// GET /login - Do I need to create this?
 
 // Create a new user
 // POST /register
@@ -144,8 +142,15 @@ app.post("/login", (req, res) => {
   }
 })
 
+// POST /logout
+// Redirect the user back to the login page
+app.post("/logout", (req, res) => {
+  req.session = null;
+  res.redirect("/login");
+});
+
 // Route for authenticating with Facebook 
-// In auth-routes.js - will test to see if it works
+// In auth-routes.js - will test to see if it works from there before deleting
 app.get('/auth/facebook', 
   passport.authenticate('facebook', { session: false }),
   function(req, res) {
