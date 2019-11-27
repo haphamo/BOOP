@@ -15,6 +15,7 @@ import PetForm from './components/Form';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
+import Login from './components/Login';
 
 //Fixture data
 const userData = {
@@ -167,14 +168,3 @@ function Friends() {
 }
 
 
-function Login () {
-
-  return (
-    <div className="header">
-      <h2>Login</h2>
-      <hr></hr>
-      <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a>
-         {/* <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div> */}
-    </div>
-  );
-}
