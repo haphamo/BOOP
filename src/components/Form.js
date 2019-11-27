@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Upload from './Upload';
 import Avatar from '@material-ui/core/Avatar';
 
+
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
@@ -36,7 +37,7 @@ const avatarStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PetForm() {
+export default function PetForm(props) {
   const classes = useStyles();
   const avatarClasses = avatarStyles();
 
@@ -75,7 +76,7 @@ export default function PetForm() {
           'aria-label': 'description',
         }}
       />
-      <Button variant="outlined" className={classes.button}>
+      <Button variant="outlined" className={classes.button} onClick={() => props.setShowForm(false)}>
         Cancel
       </Button>
       <Button variant="outlined" className={classes.button}>

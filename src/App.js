@@ -3,11 +3,11 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useParams
+  Link
 } from "react-router-dom";
 
 import './App.scss';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import BottonNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
@@ -61,7 +61,6 @@ export default function App() {
           </Route>
           <Route path="/friends">
             <Friends />
-            <PetForm />
           </Route>
           <Route path="/notifications">
             <Notifications />
@@ -73,6 +72,9 @@ export default function App() {
           petImg={petData.img}
           petInfo={petData.petInfo}/>
           </Route>
+          <Route>
+            <Login path="/login"/>
+          </Route>
         </Switch>
       </div>
       <BottonNav />
@@ -80,27 +82,18 @@ export default function App() {
   );
 }
 
-// const PetComponent = props => {
-//   let { id } = useParams()
-
-//   console.log("This was the id", id)
-//   useEffect(() => {
-//     //axios.get(`/api/pets/${id}`)
-//   }, [id])
-//   return null
-// }
-
 // You can think of these components as "pages"
 // in your app.
 
 function DogsNearby(props) {
   const petNameTextStyle = {
-    'text-align': 'center'
+    'textAlign': 'center'
   }
   return (
     <div>
-      <h2 class="header">DogsNearby</h2>
+      <h2 className="header">DogsNearby</h2>
       <hr></hr>
+      <Link to='/login'><LockOpenIcon /></Link>
       <h3 style={petNameTextStyle}>{props.petName}</h3>
       <PetProfilePhoto 
       petId={props.petId}
@@ -114,9 +107,10 @@ function DogsNearby(props) {
 
 // The profile page route displays the user's avatar and name as well as the pet(s) avatar and name
 // Users can add a new pet on this page
-// A form will be rendered here
-// 
-function Profile(props) {
+
+function Profile() {
+
+  const [showForm, setShowForm] = useState(false)
   
   const styles = {
     display: 'flex',
@@ -128,13 +122,15 @@ function Profile(props) {
   }
   return (
     <div>
-      <div style={ styles } className="my-profile-header">
+      <div style={ styles }className="my-profile-header">
         <PetsIcon style={ hidden }/>
         <h2 className="my-profile-text">My Profile</h2>
-        <PetsIcon />  
-      </div>
+        <PetsIcon onClick={()=> setShowForm(true)}/>
+    </div>
       <hr></hr>
-      <UserProfile/>
+      {showForm ? <PetForm setShowForm={setShowForm}/> : 
+      <UserProfile />
+      }
      
     </div>
   );
@@ -143,8 +139,7 @@ function Profile(props) {
 function Notifications() {
   return (
     <div>
-      <h2 class="header">Notifications</h2>
-      <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a>
+      <h2 className="header">Notifications</h2>
       <hr></hr>
       <PetFavForm />  
     </div>
@@ -153,9 +148,26 @@ function Notifications() {
 
 function Friends() {
   return (
-    <div class="header">
+    <div className="header">
       <h2>Friends</h2>
       <hr></hr>
+    </div>
+  );
+}
+
+
+function Login () {
+
+  return (
+    <div className="header">
+      <h2>Login</h2>
+      <hr></hr>
+      <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a>
+         {/* <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div> */}
+
+        <form>
+          <input></input>
+        </form>
     </div>
   );
 }

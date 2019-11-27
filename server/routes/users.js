@@ -19,7 +19,7 @@ module.exports = db => {
   })
 
   // Get all the pets of a single user
-  router.get("/pets/:id", (req, res) => {
+  router.get("/:id/pets", (req, res) => {
     const userId = parseInt(req.params.id)
     db.query(
       `SELECT users.first_name AS owner,
