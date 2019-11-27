@@ -67,7 +67,7 @@ app.use(cors({
   origin: "http://localhost:3000/",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   optionsSuccessStatus: 204
-}));
+}))
 // app.use(fileUpload());
 
 passport.use(new FacebookStrategy({
@@ -80,17 +80,17 @@ passport.use(new FacebookStrategy({
   function(accessToken, refreshToken, profile, cb) {
     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
       return cb(err, user);
-    });
+    })
   }
-));
+))
 
 passport.serializeUser(function(user, cb) {
-  cb(null, user);
-});
+  cb(null, user)
+})
 
 passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
-});
+  cb(null, obj)
+})
 
 // Register, Login and Logout Routes
 // GET /register - Do I need to create this?
@@ -102,7 +102,11 @@ app.post("/register", (req, res) => {
   // Check if the user exists in the the database
   const existingUser = db.query(`SELECT * FROM users WHERE email = $1`, [req.body.email])
   if(existingUser) {
-    res.status(400).send("Email already exists!");
+    res.status(400)
+    res.json({
+      status: 400,
+      message: 'Email already exists!'
+    })
   } else {
     db.query(
       `INSERT INTO users (first_name, last_name, email, password, city, post_code, profile_photo)
@@ -124,7 +128,10 @@ app.post("/register", (req, res) => {
     })
       .catch(err => {
         res.status(500)
-        res.json({ error: err.message })
+        res.json({ 
+          status: 500,
+          error: err.message 
+      })
     })
   }
 })
@@ -135,9 +142,13 @@ app.post("/login", (req, res) => {
   if(existingUser) {
     if(bcrypt.compareSync(req.body.password, existingUser.password)) {
       req.session.user_id = existingUser.id
-      res.redirect('http://localhost:3000/')
+      res.json({
+        loggedIn: true
+      })
     } else {
-      res.status(403).send("The email or password you entered is incorrect.")
+      res.json({
+        loggedIn: false
+      })
     }
   }
 })
@@ -145,26 +156,31 @@ app.post("/login", (req, res) => {
 // POST /logout
 // Redirect the user back to the login page
 app.post("/logout", (req, res) => {
-  req.session = null;
-  res.redirect("/login");
-});
+  req.session = null
+  res.json({
+    loggedOut: true
+  })
+})
 
 // Route for authenticating with Facebook 
 // In auth-routes.js - will test to see if it works from there before deleting
 app.get('/auth/facebook', 
   passport.authenticate('facebook', { session: false }),
   function(req, res) {
-    res.json({ id: req.user.id, username: req.user.username });
+    res.json({ 
+      id: req.user.id, 
+      username: req.user.username 
+    })
   }
-);
+)
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { successRedirect: 'http://localhost:3000/',
-                                      failureRedirect: '/login' }));
+                                      failureRedirect: '/login' }))
 
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-});
+  console.log(`Server is listening on port ${PORT}`)
+})
 
 
 
