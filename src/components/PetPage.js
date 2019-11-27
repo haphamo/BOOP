@@ -16,12 +16,12 @@ export default function PetPage(props) {
   const [petFav, setPetFav] = useState([])
   const [gallery, setGallery] = useState([])
   const [petInfo, setPetInfo] = useState('')
-  const [showLoadFile, setShowLoadFile] = useState(false);
+  // const [showLoadFile, setShowLoadFile] = useState(false);
 
   useEffect(() => {
     axios.get(`/api/pets/${id}`)
     .then(res => {
-      console.log('response:', res.data.result[0])
+      // console.log('response:', res.data.result[0])
       setPetName(res.data.result[0].name)
       setPetAvatar(res.data.result[0].profile_photo)
       setPetInfo(res.data.result[0].quirky_fact)
@@ -44,9 +44,7 @@ export default function PetPage(props) {
   return(
     <Fragment>
       <div class="header" style={ styles }>
-        {showLoadFile && <Upload />}
           <h2>{petName}</h2>
-        
       </div>
       <hr></hr>
       <div class="pet-profile-div" >

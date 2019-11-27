@@ -20,23 +20,22 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function UserProfile(props) {
+export default function UserProfile() {
 
   //define states
   const [userAvatar, setUserAvatar] = useState('')
   const [userName, setUserName] = useState('')
-  const [petAvatars, setPetAvatars] = useState('')
-  const [petNames, setPetNames]= useState('')
+  const [petData, setPetData] = useState({})
 
   useEffect(()=> {
     // id is the user_id that comes from the cookie
     //right now it is hardcoded
-    axios.get(`/api/users/pets/1`)
+    axios.get(`/api/users/pets/2`)
     .then(res => {
-      console.log('res:', res.data.result)
-      console.log('this one:', res.data.result[0].user_avatar)
+      // console.log('res:', res.data.result)
       setUserAvatar(res.data.result[0].user_avatar)
       setUserName(res.data.result[0].owner)
+      setPetData(res.data.result)
       
     })
     .catch(err => {
@@ -49,13 +48,10 @@ export default function UserProfile(props) {
   return (
     <Fragment>
     <div className={classes.root}>
-      <Avatar alt={props.userFirstName} src={userAvatar} className={classes.bigAvatar} />
+      <Avatar alt={userName} src={userAvatar} className={classes.bigAvatar} />
     <strong>{userName}</strong>
     </div>
-    <PetsOnUserPage 
-    petId={props.petId}
-    petImg={props.petImg}
-    petName={props.petName}/>
+    <PetsOnUserPage />
     </Fragment>
   );
 }

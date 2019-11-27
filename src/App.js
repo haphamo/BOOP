@@ -18,11 +18,7 @@ import PetInfo from './components/PetInfo';
 import PetFavForm from './components/petFavForm';
 
 //Fixture data
-const userData = {
-  firstName: 'Maria',
-  avatar: 'https://image.flaticon.com/icons/svg/920/920963.svg',
-  alt: 'avatar'
-}
+
 
 const petData = {
   petId: '1',
@@ -135,16 +131,10 @@ function Profile(props) {
       <div style={ styles } className="my-profile-header">
         <PetsIcon style={ hidden }/>
         <h2 className="my-profile-text">My Profile</h2>
-        <PetsIcon />
-        
+        <PetsIcon />  
       </div>
       <hr></hr>
-      <UserProfile 
-        userFirstName={userData.firstName}
-        userAvatar={userData.avatar}
-        petId={petData.petId}
-        petName={petData.petName}
-        petImg={petData.img}/>
+      <UserProfile/>
      
     </div>
   );

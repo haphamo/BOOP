@@ -22,14 +22,30 @@ const useStyles = makeStyles(theme => ({
 
 export default function PetOnUserPage(props) {
   const classes = useStyles();
+
+  console.log('AllPets', props)
+  // const allPets = pets.map(pet => {
+  //   return (
+  //     <Fragment>
+  //     <div key={pet.pet_id} className={classes.root} >
+  //     <Link to={`/pets/${pet.pet_id}`} ><Avatar alt={pet.pet} src={pet.pet_avatar} className={classes.bigAvatar} /></Link>
+  //       <em>{pet.pet}</em>
+  //     </div>
+  //     </Fragment>
+  //   )
+  // })
+
+
   
     return (
-      <Fragment>
-      <div key={props.petId} className={classes.root} >
-      <Link to={`/pets/${props.petId}`} ><Avatar alt={props.petName} src={props.petImg} className={classes.bigAvatar} /></Link>
-        <em>{props.petName}</em>
-      </div>
-      </Fragment>
+      // <Fragment>
+      // <div key={props.petId} className={classes.root} >
+      // <Link to={`/pets/${props.petId}`} ><Avatar alt={props.petName} src={props.petImg} className={classes.bigAvatar} /></Link>
+      //   <em>{props.petName}</em>
+      // </div>
+      // </Fragment>
+        <h1>Test</h1>
+
     );
 
 }
