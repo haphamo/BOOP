@@ -3,7 +3,6 @@ const router = require("express").Router();
 module.exports = db => {
   // Get all users
   router.get("/", (req, res) => {
-    // const user = request.session.user_id;
     db.query(`SELECT * FROM users`)
     .then(result => {
       res.json({
@@ -19,6 +18,7 @@ module.exports = db => {
   })
 
   // Get all the pets of a single user
+  // const user = request.session.user_id;
   router.get("/:id/pets", (req, res) => {
     const userId = parseInt(req.params.id)
     db.query(
@@ -65,6 +65,7 @@ module.exports = db => {
   })
 
   // Edit an existing user's info by id
+  // const user = request.session.user_id;
   router.put("/:id", (req, res) => {
     db.query(
       `UPDATE users
@@ -86,6 +87,7 @@ module.exports = db => {
   })
 
   // Delete an existing user by id
+  // const user = request.session.user_id;
   router.delete("/:id", (req, res) => {
     const userId = parseInt(req.params.id)
     db.query(
