@@ -9,11 +9,14 @@ import axios from "axios";
 
 export default function PetPage(props) {
   let { id } = useParams()
+  // initial state of fav bar will always have an add button
 
+  const addFav = { category: 'Add'}
+  
   // define my states
   const [petAvatar, setPetAvatar] = useState('')
   const [petName, setPetName] = useState('')
-  const [petFav, setPetFav] = useState([])
+  const [petFav, setPetFav] = useState([addFav])
   const [gallery, setGallery] = useState([])
   const [petInfo, setPetInfo] = useState('')
   const [showLoadFile, setShowLoadFile] = useState(false);
@@ -25,11 +28,14 @@ export default function PetPage(props) {
       setPetName(res.data.result[0].name)
       setPetAvatar(res.data.result[0].profile_photo)
       setPetInfo(res.data.result[0].quirky_fact)
-      // these are the keys
+     
       let category = res.data.result
-      category.map(item => {console.log('category:', item.category)})
-      // values
-      category.map(item => {console.log('value:', item.favourite_item)}) 
+      const fav = {}
+      category.map(item => {fav[item.category]=item.favourite_item}) 
+      console.log('the setState:',fav)
+      setPetFav([addFav, ...res.data.result])
+      
+      
       
       
     })
