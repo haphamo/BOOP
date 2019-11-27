@@ -3,7 +3,6 @@ const router = require("express").Router();
 module.exports = db => {
   // Get all pets
   router.get("/", (req, res) => {
-    // const user = request.session.user_id;
     db.query(`SELECT * FROM pets`)
     .then(result => {
       res.status(200)
@@ -62,7 +61,7 @@ module.exports = db => {
     })
   })
 
-  // Get a single pet and its favourite things 
+  // Get a single pet and its favourite things by id
   router.get("/:id", (req, res) => {
     const petId = parseInt(req.params.id)
     db.query(
@@ -94,7 +93,7 @@ module.exports = db => {
     })
   })
 
-  // Get a single pet's photos
+  // Get a single pet's photos by id
   router.get("/images/:id", (req, res) => {
     const petId = parseInt(req.params.id)
     db.query(
@@ -143,8 +142,8 @@ module.exports = db => {
 
   // Add a new favourite thing
   // Included pet_id for now
+  // This will be associated with a form on the front-end
   router.post("/favourites/:id", (req, res) => {
-    // Change req.params to req.body when user has been authenticated
     const petId = parseInt(req.params.id)
     db.query(
       `INSERT INTO pet_favourites (name, category, pet_id)
@@ -230,3 +229,12 @@ module.exports = db => {
 
   return router;
 };
+
+/**
+
+Once we have implemented the logic for user login:
+
+- const user = request.session.user_id;
+- Change req.params.id to req.body.id when user has been authenticated
+
+ **/  
