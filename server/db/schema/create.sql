@@ -9,9 +9,10 @@ CREATE TABLE users (
   first_name VARCHAR(255) NOT NULL,
   last_name VARCHAR(255) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
   city VARCHAR(255) NOT NULL,
   post_code VARCHAR(255) NOT NULL,
-  profile_photo VARCHAR(255) NOT NULL
+  profile_photo VARCHAR(255)
 );
 
 CREATE TABLE pets (
