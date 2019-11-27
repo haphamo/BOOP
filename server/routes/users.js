@@ -24,6 +24,7 @@ module.exports = db => {
     db.query(
       `SELECT users.first_name AS owner,
               pets.name AS pet,
+              pets.id as pet_id,
               users.city AS home,
               users.profile_photo AS user_avatar,
               pets.profile_photo AS pet_avatar

@@ -61,8 +61,7 @@ export default function App() {
             />
           </Route>
           <Route path="/profile">
-            <Profile 
-            />
+            <Profile />
           </Route>
           <Route path="/friends">
             <Friends />
@@ -125,17 +124,17 @@ function Profile(props) {
   
   const styles = {
     display: 'flex',
-    'justify-content': 'space-around',
-    'align-items': 'center'
+    'justifyContent': 'space-around',
+    'alignItems': 'center'
   }
   const hidden = {
     visibility: 'hidden'
   }
   return (
     <div>
-      <div style={ styles }class="my-profile-header">
+      <div style={ styles } className="my-profile-header">
         <PetsIcon style={ hidden }/>
-        <h2 class="my-profile-text">My Profile</h2>
+        <h2 className="my-profile-text">My Profile</h2>
         <PetsIcon />
         
       </div>
