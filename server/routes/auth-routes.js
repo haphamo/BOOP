@@ -7,6 +7,8 @@ const passport = require('passport');
 // /auth/logout — logout and redirects to client home page
 // /auth/facebook/redirect — redirect to home page if login succeeded or to /auth/login/failed if failed
 
+// Still need to save the user info into the database
+
 module.exports = db => {
   // When login is successful, retrieve user info
   router.get("/login/success", (req, res) => {
