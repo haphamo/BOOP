@@ -64,7 +64,7 @@ module.exports = db => {
     })
   })
 
-  // Edit an existing user's info
+  // Edit an existing user's info by id
   router.put("/:id", (req, res) => {
     db.query(
       `UPDATE users
@@ -77,6 +77,26 @@ module.exports = db => {
         status: 'Success',
         result: result.rows,
         message: 'Updated the info of an existing user' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Delete an existing user by id
+  router.delete("/:id", (req, res) => {
+    const userId = parseInt(req.params.id)
+    db.query(
+      `DELETE FROM users
+      WHERE id = $1`
+      , [userId])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        message: `Removed ${result.rowCount} user` 
       })
     })
     .catch(err => {
