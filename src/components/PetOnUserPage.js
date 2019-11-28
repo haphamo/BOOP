@@ -22,7 +22,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function PetOnUserPage(props) {
   const classes = useStyles();
-  console.log('pets of user props', props.petData)
 
   const allPets = props.petData.map(pet => {
     return(

@@ -16,8 +16,7 @@ import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
 import Login from './components/Login';
 import PetFavForm from './components/petFavForm';
-import Upload from './components/Upload';
-import Gallery from './components/Gallery';
+
 //Fixture data
 
 const petData = {
@@ -102,7 +101,6 @@ function DogsNearby(props) {
       petImg={props.petImg}/>
       <PetInfo 
       petInfo={props.petInfo}/>
-      <Upload />
     </div>
   );
 }

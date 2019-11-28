@@ -2,8 +2,6 @@ import React , { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import axios from 'axios';
-import { useParams } from 'react-router-dom'
 
 
 const useStyles = makeStyles(theme => ({

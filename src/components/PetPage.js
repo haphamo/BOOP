@@ -6,6 +6,22 @@ import Upload from './Upload';
 import {useParams} from 'react-router-dom';
 import axios from "axios";
 import Gallery from './Gallery';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
+
+
+const useStyles = makeStyles(theme => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+  input: {
+    display: 'none',
+  },
+}));
+const hidden = {
+  visibility: 'hidden'
+}
 
 export default function PetPage(props) {
   // this id is of the pet
@@ -13,6 +29,9 @@ export default function PetPage(props) {
 
   // initial state of fav bar will always have an add button
   const addFav = { category: 'Add'}
+
+  // hidden button style
+  const classes = useStyles();
   
   // define my states
   const [petAvatar, setPetAvatar] = useState('')
@@ -21,7 +40,8 @@ export default function PetPage(props) {
   const [petInfo, setPetInfo] = useState('')
   const [petGallery, setPetGallery] = useState([])
   // const [showLoadFile, setShowLoadFile] = useState(false);
-
+  const [lastUploaded, setLastUploaded] = useState('');
+  
   useEffect(() => {
     Promise.all([
       axios.get(`/api/pets/${id}`),
@@ -38,14 +58,14 @@ export default function PetPage(props) {
       let category = all[0].data.result
       const fav = {}
       category.map(item => {fav[item.category]=item.favourite_item}) 
-      setPetFav([addFav, ...category])
+      setPetFav([addFav, ...category]);
       
     })
     .catch(err => {
       console.log('error:', err)
     })
     
-  }, [id])
+  }, [lastUploaded])
 
   const styles = {
     display: 'flex',
@@ -59,7 +79,11 @@ export default function PetPage(props) {
   return(
     <Fragment>
       <div className="header" style={ styles }>
+      <Button variant="contained" style={hidden} className={classes.button}>
+        Default
+      </Button>
           <h2>{petName}</h2>
+          <Upload setLastUploaded={setLastUploaded}/>
       </div>
       <hr></hr>
       <div className="pet-profile-div" >
