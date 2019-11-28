@@ -1,12 +1,27 @@
 const router = require("express").Router();
 
 module.exports = db => {
+  // Get all users
+  router.get("/", (req, res) => {
+    db.query(`SELECT * FROM users`)
+    .then(result => {
+      res.json({
+        status: 'Success',
+        result: result.rows,
+        message: 'Retrieved all the users'
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
   // Get all users with pets you haven't made a connection with
   // A connection status is either requested(1), accepted(2), or declined(3)
   // Is declining a request the same thing as pass?
   // Should this be a pet route instead?
   // Assisted by Ahmed, Victoria, and Mikias(mentors)
-  router.get("/", (req, res) => {
+  router.get("/:id", (req, res) => {
     const userId = parseInt(req.params.id)
     db.query(
       `SELECT pets.name AS pet, 
