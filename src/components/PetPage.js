@@ -7,7 +7,18 @@ import {useParams} from 'react-router-dom';
 import axios from "axios";
 
 
+//Fixture data
+
+const gallery = [
+  {url: 'https://www.petlandkennesaw.com/wp-content/uploads/2017/03/maltipoo-puppies-for-sale.jpg'},
+  {url: 'https://www.dallaspetland.com/wp-content/uploads/2017/07/923895_800.jpg'},
+  {url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/teddy-bear-dog-breeds-maltipoo-1570409269.jpg'},
+  {url: 'https://data.whicdn.com/images/106070832/original.jpg'}
+
+]
+
 export default function PetPage(props) {
+
   let { id } = useParams()
   // initial state of fav bar will always have an add button
 
@@ -64,7 +75,7 @@ export default function PetPage(props) {
       <PetFav petFav={petFav}/>
       <div>
       {/* <Upload /> */}
-
+      
       </div>
     </Fragment>
     
