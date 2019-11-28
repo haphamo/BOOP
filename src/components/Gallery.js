@@ -24,7 +24,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Gallery(props) {
-  console.log('Here!', props)
   const classes = useStyles();
 
   return (
