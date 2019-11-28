@@ -13,7 +13,7 @@ const cookieSession = require('cookie-session');
 const path = require('path');
 const cors = require('cors'); 
 const app = express();
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 // const session = require('express-session');
 // const config = require('../configuration/config');
 // const favicon = require('serve-favicon');
@@ -93,13 +93,10 @@ passport.deserializeUser(function(obj, cb) {
 })
 
 // Register, Login and Logout Routes
-// GET /register - Do I need to create this?
-// GET /login - Do I need to create this?
-
 // Create a new user
 // POST /register
 app.post("/register", (req, res) => {
-  // Check if the user exists in the the database
+  // Check if the user exists in the the database, if not create a new user
   const existingUser = db.query(`SELECT * FROM users WHERE email = $1`, [req.body.email])
   if(existingUser) {
     res.status(400)
@@ -114,7 +111,7 @@ app.post("/register", (req, res) => {
       , [req.body.first_name, 
          req.body.last_name, 
          req.body.email, 
-         bcrypt.hashSync(req.body.password, 10), 
+         req.body.password, 
          req.body.city, 
          req.body.post_code, 
          req.body.profile_photo])
@@ -137,16 +134,13 @@ app.post("/register", (req, res) => {
 })
 
 // POST /login
+// Will implement bcrypt later
 app.post("/login", (req, res) => {  
-    db.query(`SELECT * FROM users WHERE email = $1`, [req.body.email]).then(data => {
-    console.log(data.rows)
-    console.log('req.body',req.body)
+    db.query(`SELECT * FROM users WHERE email = $1`, [req.body.email])
+    .then(data => {
     if(data.rows.length) {
       let existingUser = data.rows[0]
-      // console.log(req.body.password)
-      // console.log(existingUser.password)
-      // console.log(bcrypt.compareSync(req.body.password, existingUser.password))
-      if('maria' === req.body.password) {
+      if(req.body.password === existingUser.password) {
         req.session.user_id = existingUser.id
         res.json({
           loggedIn: true, userId: existingUser.id
@@ -165,7 +159,6 @@ app.post("/login", (req, res) => {
 // })
 
 // POST /logout
-// Redirect the user back to the login page
 app.post("/logout", (req, res) => {
   req.session = null
   res.json({

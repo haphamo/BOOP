@@ -24,7 +24,7 @@ export default function PetPage(props) {
   useEffect(() => {
     axios.get(`/api/pets/${id}`)
     .then(res => {
-      // console.log('response:', res.data.result[0])
+      console.log('response:', res.data.result[0])
       setPetName(res.data.result[0].name)
       setPetAvatar(res.data.result[0].profile_photo)
       setPetInfo(res.data.result[0].quirky_fact)
