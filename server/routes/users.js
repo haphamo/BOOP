@@ -19,14 +19,15 @@ module.exports = db => {
   // Get all users with pets you haven't made a connection with
   // By user.id
   // A connection status is either requested(1), accepted(2), or declined(3)
-  // Is declining a request the same thing as pass?
+  // Is declining a request the same thing as pass? Yes
   // Should this be a pet route instead?
   // Assisted by Ahmed, Victoria, and Mikias(mentors)
   router.get("/:id", (req, res) => {
     // const userId = parseInt(req.params.id)
     const userId = req.session.user_id
     db.query(
-      `SELECT pets.name AS pet, 
+      `SELECT pets.id AS pet_id,
+              pets.name AS pet, 
               pets.quirky_fact AS quirky_fact, 
               pets.profile_photo AS photo,
               users.first_name AS owner 
