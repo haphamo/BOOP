@@ -1,13 +1,15 @@
 import React, { Fragment } from 'react';
 import { Widget } from '@uploadcare/react-widget';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 // id parameter is hard-coded for now
 // Assisted by Guy Tonye(mentor)
 export default function Upload() {
+  const { id } = useParams()
   const onUpload = (info) => {
     // Save the image to the database
-    axios.post('/api/pets/images/1', { 
+    axios.post(`/api/pets/images/${id}`, { 
       url: info.originalUrl 
     })
   }
