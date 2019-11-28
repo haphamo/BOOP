@@ -17,6 +17,7 @@ module.exports = db => {
     })
   })
   // Get all users with pets you haven't made a connection with
+  // By user.id
   // A connection status is either requested(1), accepted(2), or declined(3)
   // Is declining a request the same thing as pass?
   // Should this be a pet route instead?
@@ -43,6 +44,7 @@ module.exports = db => {
     .then(result => {
       res.json({
         status: 'Success',
+        user: userId,
         result: result.rows,
         message: 'Retrieved all the pets you have not connected with'
       })
@@ -72,6 +74,7 @@ module.exports = db => {
     .then(result => {
       res.json({
         status: 'Success',
+        user: userId,
         result: result.rows,
         message: 'Retrieved all the pets of a single user'
       })
@@ -95,6 +98,7 @@ module.exports = db => {
       res.status(200)
       res.json({ 
         status: 'Success',
+        user: userId,
         result: result.rows,
         message: 'Updated the info of an existing user' 
       })
@@ -118,6 +122,7 @@ module.exports = db => {
       res.status(200)
       res.json({ 
         status: 'Success',
+        user: userId,
         message: `Removed ${result.rowCount} user` 
       })
     })
