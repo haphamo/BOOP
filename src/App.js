@@ -17,6 +17,7 @@ import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
 import Login from './components/Login';
 import PetFavForm from './components/petFavForm';
+import Upload from './components/Upload';
 //Fixture data
 
 const petData = {
@@ -83,7 +84,7 @@ export default function App() {
 
 // You can think of these components as "pages"
 // in your app.
-
+// Added the Upload component for testing 
 function DogsNearby(props) {
   const petNameTextStyle = {
     'textAlign': 'center'
@@ -99,6 +100,7 @@ function DogsNearby(props) {
       petImg={props.petImg}/>
       <PetInfo 
       petInfo={props.petInfo}/>
+      <Upload />
     </div>
   );
 }

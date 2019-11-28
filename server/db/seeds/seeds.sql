@@ -42,11 +42,11 @@ VALUES (1, 2, 2);
 -- WHERE users.id = 1;
 
 ------- Get all users excluding connections
-SELECT users.first_name as sender_name, friends.first_name as receiver_name
-FROM users
-JOIN connections ON connections.sender_id = users.id 
-JOIN users AS friends ON receiver_id = friends.id
-WHERE users.id = 1;
+-- SELECT users.first_name as sender_name, friends.first_name as receiver_name
+-- FROM users
+-- JOIN connections ON connections.sender_id = users.id 
+-- JOIN users AS friends ON receiver_id = friends.id
+-- WHERE users.id = 1;
 
 
 -- users.first_name as sender_name, friends.first_name as receiver_name from users join connections ON connections.sender_id = users.id join users as friends on receiver_id = friends.id where users.id = 1
