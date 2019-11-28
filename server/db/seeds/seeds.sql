@@ -1,9 +1,8 @@
 INSERT INTO users (first_name, last_name, email, password, city, post_code, profile_photo)
-VALUES ('Maria', 'Fern', 'mariafern@gmail.com', '$2y$10$ksP7YR5c6UOTkxWrtIGu3.siPHsCp6lc9YEn99EMuFSs/NMaxQKTG', 'Toronto', 'M6G3X4', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
-('Ha', 'Pham', 'hapham@gmail.com', '$2y$10$vGy7TfLkK2iSU0dfNeXpoeRVpS24rmOH/VKwmB/U3SKSDnFD3yx7.', 'Toronto', 'M5T3A4', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
-('John', 'Smith', 'johnsmith@gmail.com', '$2y$10$3l22J5HcrvQqJpADS4.Zg.tEO1p3yV0wHhISZXkS1ZlCaZFzRY/UW
-', 'Toronto', 'M5T4A4', 'https://image.flaticon.com/icons/svg/920/920955.svg'),
-('Barack', 'Obama', 'bobama@gmail.com', '$2y$10$i.uXKyUGbOc1iN7ZlMGYNuzG9l.6B1RmPUIj8RgmETYH4hWvYuF0u', 'Toronto', 'M6G1J5', 'https://image.flaticon.com/icons/svg/920/920955.svg');
+VALUES ('Maria', 'Fern', 'mariafern@gmail.com', 'maria', 'Toronto', 'M6G3X4', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
+('Ha', 'Pham', 'hapham@gmail.com', 'ha', 'Toronto', 'M5T3A4', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
+('John', 'Smith', 'johnsmith@gmail.com', 'john', 'Toronto', 'M5T4A4', 'https://image.flaticon.com/icons/svg/920/920955.svg'),
+('Barack', 'Obama', 'bobama@gmail.com', 'barack', 'Toronto', 'M6G1J5', 'https://image.flaticon.com/icons/svg/920/920955.svg');
 
 INSERT INTO pets (name, age, breed, quirky_fact, owner_id, profile_photo)
 VALUES ('Yoyo', 5, 'Maltese', 'I do not like belly rubs.', 1, 'https://www.rover.com/blog/wp-content/uploads/2018/07/animal-753418_1280-960x540.jpg'),
