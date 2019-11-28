@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 
 import './App.scss';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
 import BottonNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
@@ -18,6 +17,7 @@ import PetInfo from './components/PetInfo';
 import Login from './components/Login';
 import PetFavForm from './components/petFavForm';
 import Upload from './components/Upload';
+import Gallery from './components/Gallery';
 //Fixture data
 
 const petData = {

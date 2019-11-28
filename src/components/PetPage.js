@@ -5,51 +5,46 @@ import React, { Fragment, useEffect , useState} from "react";
 import Upload from './Upload';
 import {useParams} from 'react-router-dom';
 import axios from "axios";
-
-
-//Fixture data
-
-const gallery = [
-  {url: 'https://www.petlandkennesaw.com/wp-content/uploads/2017/03/maltipoo-puppies-for-sale.jpg'},
-  {url: 'https://www.dallaspetland.com/wp-content/uploads/2017/07/923895_800.jpg'},
-  {url: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/teddy-bear-dog-breeds-maltipoo-1570409269.jpg'},
-  {url: 'https://data.whicdn.com/images/106070832/original.jpg'}
-
-]
+import Gallery from './Gallery';
 
 export default function PetPage(props) {
-
+  // this id is of the pet
   let { id } = useParams()
-  // initial state of fav bar will always have an add button
 
+  // initial state of fav bar will always have an add button
   const addFav = { category: 'Add'}
   
   // define my states
   const [petAvatar, setPetAvatar] = useState('')
   const [petName, setPetName] = useState('')
   const [petFav, setPetFav] = useState([addFav])
-  const [gallery, setGallery] = useState([])
   const [petInfo, setPetInfo] = useState('')
+  const [petGallery, setPetGallery] = useState([])
   // const [showLoadFile, setShowLoadFile] = useState(false);
 
   useEffect(() => {
-    axios.get(`/api/pets/${id}`)
-    .then(res => {
-      console.log('response:', res.data.result[0])
-      setPetName(res.data.result[0].name)
-      setPetAvatar(res.data.result[0].profile_photo)
-      setPetInfo(res.data.result[0].quirky_fact)
-     
-      let category = res.data.result
+    Promise.all([
+      axios.get(`/api/pets/${id}`),
+      axios.get(`/api/pets/images/${id}`)
+
+    ])
+    .then(all => {
+      // console.log('all', all)
+      setPetName(all[0].data.result[0].name)
+      setPetAvatar(all[0].data.result[0].profile_photo)
+      setPetInfo(all[0].data.result[0].quirky_fact)
+      setPetGallery(all[1].data.result)
+      
+      let category = all[0].data.result
       const fav = {}
       category.map(item => {fav[item.category]=item.favourite_item}) 
-      // console.log('the setState:',fav)
-      setPetFav([addFav, ...res.data.result])
+      setPetFav([addFav, ...category])
       
     })
     .catch(err => {
       console.log('error:', err)
     })
+    
   }, [id])
 
   const styles = {
@@ -75,7 +70,7 @@ export default function PetPage(props) {
       <PetFav petFav={petFav}/>
       <div>
       {/* <Upload /> */}
-      
+      <Gallery petGallery={petGallery}/>
       </div>
     </Fragment>
     

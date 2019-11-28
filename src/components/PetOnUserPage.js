@@ -32,20 +32,9 @@ export default function PetOnUserPage(props) {
       </div>
     )
   })
-
-      // <Fragment>
-      // <div key={props.petId} className={classes.root} >
-      // <Link to={`/pets/${props.userId}`} ><Avatar alt={props.petName} src={props.petImg} className={classes.bigAvatar} /></Link>
-      //   <em>{props.petName}</em>
-      // </div>
-      // </Fragment>
   return(
     <div>
       {allPets}
     </div>
-    
-
   )
-    
-
 }
