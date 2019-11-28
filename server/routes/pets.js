@@ -21,7 +21,9 @@ module.exports = db => {
   // Get all pet photos
   router.get("/images", (req, res) => {
     db.query(
-      `SELECT pets.name AS name,
+      `SELECT pets.id AS pet_id,
+              pets.name AS name,
+              images.id AS image_id,
               images.url AS photo 
       FROM images
       JOIN pets ON pets.id = pet_id`)
@@ -100,8 +102,10 @@ module.exports = db => {
     const userId = req.session.user_id
     const petId = parseInt(req.params.id)
     db.query(
-      `SELECT pets.name AS name,
-              images.url AS picture
+      `SELECT pets.id AS pet_id,
+              pets.name AS name,
+              images.id AS image_id,
+              images.url AS photo 
       FROM pets
       JOIN images ON images.pet_id = pets.id
       WHERE pets.id = $1`
