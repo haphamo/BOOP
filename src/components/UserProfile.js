@@ -30,7 +30,6 @@ export default function UserProfile(props) {
 
   useEffect(()=> {
     // id is the user_id that comes from the cookie
-    //right now it is hardcoded
     axios.get(`/api/users/${props.userId}/pets`)
     .then(res => {
       setUserAvatar(res.data.result[0].user_avatar)
