@@ -151,9 +151,12 @@ app.post("/login", (req, res) => {
         })
       }
     }
-
   })
 })
+
+// app.get(`/session`, (req, res) => {
+//   console.log('')
+// })
 
 // POST /logout
 app.post("/logout", (req, res) => {

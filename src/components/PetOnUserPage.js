@@ -22,30 +22,30 @@ const useStyles = makeStyles(theme => ({
 
 export default function PetOnUserPage(props) {
   const classes = useStyles();
+  console.log('pets of user props', props.petData)
 
-  console.log('AllPets', props)
-  // const allPets = pets.map(pet => {
-  //   return (
-  //     <Fragment>
-  //     <div key={pet.pet_id} className={classes.root} >
-  //     <Link to={`/pets/${pet.pet_id}`} ><Avatar alt={pet.pet} src={pet.pet_avatar} className={classes.bigAvatar} /></Link>
-  //       <em>{pet.pet}</em>
-  //     </div>
-  //     </Fragment>
-  //   )
-  // })
+  const allPets = props.petData.map(pet => {
+    return(
+      <div key={pet.pet} className={classes.root} >
+      <Link to={`/pets/${pet.pet_id}`} ><Avatar alt={pet.pet} src={pet.pet_avatar} className={classes.bigAvatar} /></Link>
+      <em>{pet.pet}</em>
+      </div>
+    )
+  })
 
-
-  
-    return (
       // <Fragment>
       // <div key={props.petId} className={classes.root} >
-      // <Link to={`/pets/${props.petId}`} ><Avatar alt={props.petName} src={props.petImg} className={classes.bigAvatar} /></Link>
+      // <Link to={`/pets/${props.userId}`} ><Avatar alt={props.petName} src={props.petImg} className={classes.bigAvatar} /></Link>
       //   <em>{props.petName}</em>
       // </div>
       // </Fragment>
-        <h1>Test</h1>
+  return(
+    <div>
+      {allPets}
+    </div>
+    
 
-    );
+  )
+    
 
 }
