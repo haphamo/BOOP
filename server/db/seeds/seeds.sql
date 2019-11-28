@@ -33,7 +33,13 @@ VALUES ('Dentastix', 'Treat', 1),
 ('Pizza', 'Treat', 9);
 
 INSERT INTO images (url, pet_id)
-VALUES ('https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage20191114at170028.jpeg', 1);
+VALUES ('https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage20191114at170028.jpeg', 1),
+('https://www.petlandkennesaw.com/wp-content/uploads/2017/03/maltipoo-puppies-for-sale.jpg', 1),
+('https://www.dallaspetland.com/wp-content/uploads/2017/07/923895_800.jpg', 1),
+('https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/teddy-bear-dog-breeds-maltipoo-1570409269.jpg', 1),
+('https://data.whicdn.com/images/106070832/original.jpg', 1);
+
+
 
 INSERT INTO connections (sender_id, receiver_id, status)
 VALUES (1, 2, 2),
