@@ -4,6 +4,8 @@ import Avatar from '@material-ui/core/Avatar';
 import PetsOnUserPage from './PetOnUserPage';
 import axios from 'axios';
 
+
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -26,17 +28,16 @@ export default function UserProfile() {
   const [userAvatar, setUserAvatar] = useState('')
   const [userName, setUserName] = useState('')
   const [petData, setPetData] = useState({})
-
+  
   useEffect(()=> {
     // id is the user_id that comes from the cookie
     //right now it is hardcoded
-    axios.get(`/api/users/pets/2`)
+    axios.get(`/api/users/:id/pets`)
     .then(res => {
-      // console.log('res:', res.data.result)
+      console.log('res:', res)
       setUserAvatar(res.data.result[0].user_avatar)
       setUserName(res.data.result[0].owner)
       setPetData(res.data.result)
-      
     })
     .catch(err => {
       console.log('error:', err)

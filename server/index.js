@@ -149,7 +149,7 @@ app.post("/login", (req, res) => {
       if('maria' === req.body.password) {
         req.session.user_id = existingUser.id
         res.json({
-          loggedIn: true
+          loggedIn: true, userId: existingUser.id
         })
       } else {
         res.json({

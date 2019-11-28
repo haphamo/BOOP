@@ -27,20 +27,18 @@ const formStyle = {
   flexDirection: 'column',
   alignItems: 'center'
 }
-// Add onClick to post login route to check cookie and set!!
-// login function
 
-export default function Login () {
+export default function Login (props) {
   const classes = useStyles();
   
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [login, setLogin] = useState('')
+
   const onSubmit = function (evt) {
     evt.preventDefault();
     //validations here
-    //prevent default
-    login();
-    console.log(email)
+    userLogin();
   }
   const handleEmailChange = function(e) {
     setEmail(e.target.value)
@@ -49,14 +47,19 @@ export default function Login () {
     setPassword(e.target.value)
   }
 
+  //make a call to the server if theres a session id (stretch)
+  // useEffect(()=> {
+  // }, [])
 
- let login = function () {
+
+ let userLogin = function () {
    axios.post(`/login`, {email, password}, { withCredentials: true})
    .then(res => {
-     console.log('res', res)
+    
+      console.log('res', res.data.userId)
+      props.onLogin(res.data.userId)
    })
  }
-
 
   return (
     <div className="header">

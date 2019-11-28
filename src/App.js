@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -35,7 +35,12 @@ const otherDogsNearby = {
 
 
 export default function App() {
- 
+ const [userId, setUserId] = useState(undefined)
+  console.log('the user id:', userId)
+
+ const handleLogin = function(id){
+  setUserId(id)
+ }
   return (
     <Router>
       <div>
@@ -48,12 +53,13 @@ export default function App() {
         */}
         <Switch>
           <Route exact path="/">
-            <DogsNearby 
+          {userId ?  <DogsNearby 
             petId={otherDogsNearby.petId}
             petName={otherDogsNearby.petName}
             petImg={otherDogsNearby.img}
             petInfo={otherDogsNearby.info}
-            />
+            /> : <Login onLogin={handleLogin} />}
+           
           </Route>
           <Route path="/profile">
             <Profile />
@@ -70,9 +76,6 @@ export default function App() {
           petName={petData.petName}
           petImg={petData.img}
           petInfo={petData.petInfo}/>
-          </Route>
-          <Route>
-            <Login path="/login"/>
           </Route>
         </Switch>
       </div>
@@ -102,10 +105,6 @@ function DogsNearby(props) {
     </div>
   );
 }
-
-
-// The profile page route displays the user's avatar and name as well as the pet(s) avatar and name
-// Users can add a new pet on this page
 
 function Profile() {
 
