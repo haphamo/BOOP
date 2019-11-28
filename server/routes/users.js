@@ -16,11 +16,91 @@ module.exports = db => {
       res.json({ error: err.message })
     })
   })
+  
+  // Get a single user
+  router.get("/:id", (req, res) => {
+    const userId = parseInt(req.params.id)
+    db.query(`SELECT * FROM users WHERE users.id = $1`, [userId])
+    .then(result => {
+      res.json({
+        status: 'Success',
+        result: result.rows,
+        message: 'Retrieved a single user'
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Get all users with pets you haven't made a connection with by user.id
+  // A connection status is either requested(1), accepted(2), or declined(3)
+  // Is declining a request the same thing as pass? Yes
+  // Assisted by Ahmed, Victoria, and Mikias(mentors)
+  router.get("/:id/dashboard", (req, res) => {
+    // const userId = parseInt(req.params.id)
+    const userId = req.session.user_id
+    db.query(
+      `SELECT pets.id AS pet_id,
+              pets.name AS pet, 
+              pets.quirky_fact AS quirky_fact, 
+              pets.profile_photo AS photo,
+              users.first_name AS owner,
+              users.id as owner_id
+      FROM users 
+      JOIN pets ON users.id = pets.owner_id
+      WHERE users.id 
+      NOT IN (SELECT sender_id AS id 
+              FROM connections
+              WHERE receiver_id = $1 
+              UNION SELECT receiver_id AS id 
+              FROM connections 
+              WHERE sender_id = $1) 
+      AND users.id != $1;`
+      , [userId])
+    .then(result => {
+      res.json({
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Retrieved all the pets you have not connected with'
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // A connection status is either requested(1) or declined(3)
+  // Only the owner that is logged in can make a connection
+  router.get("/:id/connection/:rid/action/:action_code", (req, res) => {
+    // const userId = parseInt(req.params.id)
+    const userId = req.session.user_id
+    const receiverId = req.params.receiver_id
+    const action = req.params.action_code
+    db.query( 
+      `INSERT INTO connections (sender_id, receiver_id, status)
+      VALUES ($1, $2, $3)`
+      , [userId, receiverId, action])
+    .then(result => {
+      res.json({
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Made a connection...'
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
 
   // Get all the pets of a single user
-  // const user = request.session.user_id;
   router.get("/:id/pets", (req, res) => {
-    const userId = parseInt(req.params.id)
+    const userId = req.session.user_id
     db.query(
       `SELECT users.first_name AS owner,
               pets.name AS pet,
@@ -35,6 +115,7 @@ module.exports = db => {
     .then(result => {
       res.json({
         status: 'Success',
+        user: userId,
         result: result.rows,
         message: 'Retrieved all the pets of a single user'
       })
@@ -45,18 +126,93 @@ module.exports = db => {
     })
   })
 
+  // Get all pending friend requests 
+  // If a user has more than one pet - the request will include all pets
+  // Only the user that is logged in can see their friend requests
+  // Status: 1 = Friend Request
+  router.get("/:id/notifications", (req, res) => {
+    const userId = req.session.user_id
+    db.query(
+      `SELECT pets.id AS pet_id,
+              pets.name AS pet, 
+              pets.profile_photo AS pet_photo,
+              users.first_name AS owner,
+              users.profile_photo AS owner_photo
+     FROM users 
+     JOIN pets ON users.id = pets.owner_id
+     WHERE users.id 
+     IN (SELECT sender_id AS id
+             FROM connections
+             WHERE receiver_id = $1
+             AND connections.status = $2) 
+     AND users.id != $1`
+      , [userId, 1])
+    .then(result => {
+      res.json({
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Retrieved all the friend requests of a single user'
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Get all your friends
+  // If a user has more than one pet - you will be friends with all of their pets
+  // Only the user that is logged in can see their friends
+  // Status: 2 = Friend Request Accepted
+  router.get("/:id/friends", (req, res) => {
+    const userId = req.session.user_id
+    db.query(
+      `SELECT pets.id AS pet_id,
+              pets.name AS pet, 
+              pets.profile_photo AS pet_photo,
+              users.first_name AS owner,
+              users.profile_photo AS owner_photo
+      FROM users 
+      JOIN pets ON users.id = pets.owner_id
+      WHERE users.id 
+      IN (SELECT sender_id AS id
+          FROM connections
+          WHERE receiver_id = $1
+          AND connections.status = $2
+          UNION SELECT receiver_id AS id 
+          FROM connections 
+          WHERE sender_id = $1
+          AND connections.status = $2) 
+      AND users.id != $1`
+      , [userId, 2])
+    .then(result => {
+      res.json({
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Retrieved all the best friends of a single user'
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
   // Edit an existing user's info by id
-  // const user = request.session.user_id;
   router.put("/:id", (req, res) => {
+    const userId = req.session.user_id
     db.query(
       `UPDATE users
       SET first_name=$1, last_name=$2, email=$3, city=$4, post_code=$5, profile_photo=$6
       WHERE id=$7`
-      , [req.body.first_name, req.body.last_name, req.body.email, req.body.city, req.body.post_code, req.body.profile_photo, parseInt(req.params.id)])
+      , [req.body.first_name, req.body.last_name, req.body.email, req.body.city, req.body.post_code, req.body.profile_photo, userId])
     .then(result => {
       res.status(200)
       res.json({ 
         status: 'Success',
+        user: userId,
         result: result.rows,
         message: 'Updated the info of an existing user' 
       })
@@ -68,9 +224,8 @@ module.exports = db => {
   })
 
   // Delete an existing user by id
-  // const user = request.session.user_id;
   router.delete("/:id", (req, res) => {
-    const userId = parseInt(req.params.id)
+    const userId = req.session.user_id
     db.query(
       `DELETE FROM users
       WHERE id = $1`
@@ -79,6 +234,7 @@ module.exports = db => {
       res.status(200)
       res.json({ 
         status: 'Success',
+        user: userId,
         message: `Removed ${result.rowCount} user` 
       })
     })

@@ -21,7 +21,9 @@ module.exports = db => {
   // Get all pet photos
   router.get("/images", (req, res) => {
     db.query(
-      `SELECT pets.name AS name,
+      `SELECT pets.id AS pet_id,
+              pets.name AS name,
+              images.id AS image_id,
               images.url AS photo 
       FROM images
       JOIN pets ON pets.id = pet_id`)
@@ -63,6 +65,7 @@ module.exports = db => {
 
   // Get a single pet and its favourite things by id
   router.get("/:id", (req, res) => {
+    const userId = req.session.user_id
     const petId = parseInt(req.params.id)
     db.query(
       `SELECT pets.name AS name, 
@@ -83,6 +86,7 @@ module.exports = db => {
       res.status(200)
       res.json({ 
         status: 'Success',
+        user: userId,
         result: result.rows,
         message: 'Retrieved all the information about a single pet' 
       })
@@ -95,10 +99,13 @@ module.exports = db => {
 
   // Get a single pet's photos by id
   router.get("/images/:id", (req, res) => {
+    const userId = req.session.user_id
     const petId = parseInt(req.params.id)
     db.query(
-      `SELECT pets.name AS name,
-              images.url AS picture
+      `SELECT pets.id AS pet_id,
+              pets.name AS name,
+              images.id AS image_id,
+              images.url AS photo 
       FROM pets
       JOIN images ON images.pet_id = pets.id
       WHERE pets.id = $1`
@@ -107,6 +114,7 @@ module.exports = db => {
       res.status(200)
       res.json({ 
         status: 'Success',
+        user: userId,
         result: result.rows,
         message: 'Retrieved the images of a single pet' 
       })
@@ -118,18 +126,19 @@ module.exports = db => {
   })
 
   // Add a new pet
-  // Do we need to include owner_id here as well?
-  // This will be associated with a form on the front-end
-  // Trying to test with curl command - getting the following error: "duplicate key value violates unique constraint users_pkey"
+  // Removed the owner_id since we are using req.session.user_id now
+  // Only the owner that is logged in can add a new pet on their profile
   router.post("/", (req, res) => {
+    const userId = req.session.user_id
     db.query(
-      `INSERT INTO pets (name, age, breed, quirky_fact, owner_id, profile_photo)
-      VALUES ($1, $2, $3, $4, $5, $6)`
-      , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, parseInt(req.body.owner_id), req.body.profile_photo])
+      `INSERT INTO pets (name, age, breed, quirky_fact, profile_photo)
+      VALUES ($1, $2, $3, $4, $5)`
+      , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, req.body.profile_photo])
     .then(result => {
       res.status(201) 
       res.json({ 
         status: 'Success',
+        user: userId,
         result: result.rows,
         message: 'Added a new pet' 
       })
@@ -141,9 +150,10 @@ module.exports = db => {
   })
 
   // Add a new favourite thing
-  // Included pet_id for now
   // This will be associated with a form on the front-end
+  // Only the owner that is logged in can add a favourite thing for their pet
   router.post("/favourites/:id", (req, res) => {
+    const userId = req.session.user_id
     const petId = parseInt(req.params.id)
     db.query(
       `INSERT INTO pet_favourites (name, category, pet_id)
@@ -153,6 +163,7 @@ module.exports = db => {
       res.status(200)
       res.json({ 
         status: 'Success',
+        user: userId,
         result: result.rows,
         message: 'Added a new favourite item' 
       })
@@ -164,8 +175,9 @@ module.exports = db => {
   })
 
   // Upload a new image
-  // There is an axios.post route to /api/pets/images/:id
+  // Only the owner that is logged in can upload photos of their pet
   router.post("/images/:id", (req, res) => {
+    const userId = req.session.user_id
     const petId = parseInt(req.params.id)
     db.query(
       `INSERT INTO images (url, pet_id)
@@ -175,6 +187,7 @@ module.exports = db => {
       res.status(200)
       res.json({ 
         status: 'Success',
+        user: userId,
         result: result.rows,
         message: 'Added a new image' 
       })
@@ -186,17 +199,21 @@ module.exports = db => {
   })
 
   // Edit an existing pet's info by id
-  // Included the owner_id for now
+  // Changed owner_id as a value to userId since we are using req.session.user_id now
+  // Only the owner that is logged in can edit the info of their pets
   router.put("/:id", (req, res) => {
+    const userId = req.session.user_id
+    const petId = parseInt(req.params.id)
     db.query(
       `UPDATE pets
-      SET name=$1, age=$2, breed=$3, quirky_fact=$4, owner_id=$5, profile_photo=$6
-      WHERE id=$7`
-      , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, req.body.owner_id, req.body.profile_photo, parseInt(req.params.id)])
+      SET name=$1, age=$2, breed=$3, quirky_fact=$4, profile_photo=$5
+      WHERE id=$6`
+      , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, req.body.profile_photo, petId])
     .then(result => {
       res.status(200)
       res.json({ 
         status: 'Success',
+        user: userId,
         result: result.rows,
         message: 'Updated the info of an existing pet' 
       })
@@ -208,7 +225,9 @@ module.exports = db => {
   })
 
   // Delete an existing pet by id
+  // Only the owner that is logged in can delete their pets
   router.delete("/:id", (req, res) => {
+    const userId = req.session.user_id
     const petId = parseInt(req.params.id)
     db.query(
       `DELETE FROM pets
@@ -218,6 +237,7 @@ module.exports = db => {
       res.status(200)
       res.json({ 
         status: 'Success',
+        user: userId,
         message: `Removed ${result.rowCount} pet` 
       })
     })
@@ -230,11 +250,3 @@ module.exports = db => {
   return router;
 };
 
-/**
-
-Once we have implemented the logic for user login:
-
-- const user = request.session.user_id;
-- Change req.params.id to req.body.id when user has been authenticated
-
- **/  
