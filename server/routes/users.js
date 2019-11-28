@@ -16,13 +16,29 @@ module.exports = db => {
       res.json({ error: err.message })
     })
   })
-  // Get all users with pets you haven't made a connection with
-  // By user.id
+  
+  // Get a single user
+  router.get("/:id", (req, res) => {
+    const userId = parseInt(req.params.id)
+    db.query(`SELECT * FROM users WHERE users.id = $1`, [userId])
+    .then(result => {
+      res.json({
+        status: 'Success',
+        result: result.rows,
+        message: 'Retrieved a single user'
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Get all users with pets you haven't made a connection with by user.id
   // A connection status is either requested(1), accepted(2), or declined(3)
   // Is declining a request the same thing as pass? Yes
-  // Should this be a pet route instead?
   // Assisted by Ahmed, Victoria, and Mikias(mentors)
-  router.get("/:id", (req, res) => {
+  router.get("/:id/dashboard", (req, res) => {
     // const userId = parseInt(req.params.id)
     const userId = req.session.user_id
     db.query(
@@ -78,6 +94,41 @@ module.exports = db => {
         user: userId,
         result: result.rows,
         message: 'Retrieved all the pets of a single user'
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Get all pending friend requests 
+  // Only the user that is logged in can see their friend requests
+  // Status: 1 = Friend Request
+  router.get("/:id/notifications", (req, res) => {
+    // const userId = parseInt(req.params.id)
+    const userId = req.session.user_id
+    db.query(
+      `SELECT pets.id AS pet_id,
+              pets.name AS pet, 
+              pets.profile_photo AS pet_photo,
+              users.first_name AS owner,
+              users.profile_photo AS owner_photo
+     FROM users 
+     JOIN pets ON users.id = pets.owner_id
+     WHERE users.id 
+     IN (SELECT sender_id AS id
+             FROM connections
+             WHERE receiver_id = $1
+             AND connections.status = $2) 
+     AND users.id != $1`
+      , [userId, 1])
+    .then(result => {
+      res.json({
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Retrieved all the friend requests of a single user'
       })
     })
     .catch(err => {
