@@ -181,7 +181,7 @@ module.exports = db => {
     const petId = parseInt(req.params.id)
     db.query(
       `INSERT INTO images (url, pet_id)
-      VALUES($1, $2)`
+      VALUES($1, $2) RETURNING *`
       , [req.body.url, petId])
     .then(result => {
       res.status(200)
