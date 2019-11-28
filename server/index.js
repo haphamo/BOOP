@@ -143,7 +143,8 @@ app.post("/login", (req, res) => {
       if(req.body.password === existingUser.password) {
         req.session.user_id = existingUser.id
         res.json({
-          loggedIn: true, userId: existingUser.id
+          loggedIn: true, 
+          userId: existingUser.id
         })
       } else {
         res.json({
@@ -165,11 +166,13 @@ app.post("/logout", (req, res) => {
 
 // Route for authenticating with Facebook 
 // In auth-routes.js - will test to see if it works from there before deleting
+// Session cookie is not being recognized in the log in
 app.get('/auth/facebook', 
-  passport.authenticate('facebook', { session: false }),
+  passport.authenticate('facebook'),
   function(req, res) {
     res.json({ 
-      id: req.user.id, 
+      loggedIn: true,
+      id: req.session.user_id, 
       username: req.user.username 
     })
   }
