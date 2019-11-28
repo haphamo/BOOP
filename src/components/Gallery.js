@@ -33,6 +33,7 @@ export default function Gallery(props) {
         {props.petGallery.map(img => (
           <GridListTile key={img.image_id} cols={img.cols || 1} >
             <img src={img.photo} alt={img.image_id} />
+
           </GridListTile>
         ))}
       </GridList>
