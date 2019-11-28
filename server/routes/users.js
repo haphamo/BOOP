@@ -22,7 +22,8 @@ module.exports = db => {
   // Should this be a pet route instead?
   // Assisted by Ahmed, Victoria, and Mikias(mentors)
   router.get("/:id", (req, res) => {
-    const userId = parseInt(req.params.id)
+    // const userId = parseInt(req.params.id)
+    const userId = req.session.user_id
     db.query(
       `SELECT pets.name AS pet, 
               pets.quirky_fact AS quirky_fact, 
@@ -55,7 +56,8 @@ module.exports = db => {
   // Get all the pets of a single user
   // const user = request.session.user_id;
   router.get("/:id/pets", (req, res) => {
-    const userId = parseInt(req.params.id)
+    // const userId = parseInt(req.params.id)
+    const userId = req.session.user_id
     db.query(
       `SELECT users.first_name AS owner,
               pets.name AS pet,
@@ -83,11 +85,12 @@ module.exports = db => {
   // Edit an existing user's info by id
   // const user = request.session.user_id;
   router.put("/:id", (req, res) => {
+    const userId = req.session.user_id
     db.query(
       `UPDATE users
       SET first_name=$1, last_name=$2, email=$3, city=$4, post_code=$5, profile_photo=$6
       WHERE id=$7`
-      , [req.body.first_name, req.body.last_name, req.body.email, req.body.city, req.body.post_code, req.body.profile_photo, parseInt(req.params.id)])
+      , [req.body.first_name, req.body.last_name, req.body.email, req.body.city, req.body.post_code, req.body.profile_photo, userId])
     .then(result => {
       res.status(200)
       res.json({ 
@@ -105,7 +108,8 @@ module.exports = db => {
   // Delete an existing user by id
   // const user = request.session.user_id;
   router.delete("/:id", (req, res) => {
-    const userId = parseInt(req.params.id)
+    // const userId = parseInt(req.params.id)
+    const userId = req.session.user_id
     db.query(
       `DELETE FROM users
       WHERE id = $1`
