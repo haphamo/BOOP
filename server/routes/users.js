@@ -1,14 +1,34 @@
 const router = require("express").Router();
 
 module.exports = db => {
-  // Get all users
+  // Get all users with pets you haven't made a connection with
+  // A connection status is either requested(1), accepted(2), or declined(3)
+  // Is declining a request the same thing as pass?
+  // Should this be a pet route instead?
+  // Assisted by Ahmed, Victoria, and Mikias(mentors)
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM users`)
+    const userId = parseInt(req.params.id)
+    db.query(
+      `SELECT pets.name AS pet, 
+              pets.quirky_fact AS quirky_fact, 
+              pets.profile_photo AS photo,
+              users.first_name AS owner 
+      FROM users 
+      JOIN pets ON users.id = pets.owner_id
+      WHERE users.id 
+      NOT IN (SELECT sender_id AS id 
+              FROM connections
+              WHERE receiver_id = $1 
+              UNION SELECT receiver_id AS id 
+              FROM connections 
+              WHERE sender_id = $1) 
+      AND users.id != $1;`
+      , [userId])
     .then(result => {
       res.json({
         status: 'Success',
         result: result.rows,
-        message: 'Retrieved all the users'
+        message: 'Retrieved all the pets you have not connected with'
       })
     })
     .catch(err => {
