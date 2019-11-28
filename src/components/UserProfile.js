@@ -12,9 +12,9 @@ const useStyles = makeStyles(theme => ({
     '& > *': {
       margin: theme.spacing(1),
     },
-    'justify-content': 'center',
-    'flex-direction': 'column',
-    'align-items': 'center'
+    'justifyContent': 'center',
+    'flexDirection': 'column',
+    'alignItems': 'center'
   },
   bigAvatar: {
     width: 150,
@@ -22,22 +22,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function UserProfile() {
-
+export default function UserProfile(props) {
+  console.log('props',props)
   //define states
   const [userAvatar, setUserAvatar] = useState('')
   const [userName, setUserName] = useState('')
   const [petData, setPetData] = useState({})
-  
   useEffect(()=> {
     // id is the user_id that comes from the cookie
     //right now it is hardcoded
-    axios.get(`/api/users/:id/pets`)
+    axios.get(`/api/users/${props.userId}/pets`)
     .then(res => {
-      console.log('res:', res)
       setUserAvatar(res.data.result[0].user_avatar)
       setUserName(res.data.result[0].owner)
-      setPetData(res.data.result)
+      // setPetData(res.data.result)
+      console.log('res', res)
     })
     .catch(err => {
       console.log('error:', err)
@@ -52,7 +51,7 @@ export default function UserProfile() {
       <Avatar alt={userName} src={userAvatar} className={classes.bigAvatar} />
     <strong>{userName}</strong>
     </div>
-    <PetsOnUserPage />
+    <PetsOnUserPage userId={props.userId}/>
     </Fragment>
   );
 }

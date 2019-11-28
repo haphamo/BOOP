@@ -143,9 +143,9 @@ app.post("/login", (req, res) => {
     console.log('req.body',req.body)
     if(data.rows.length) {
       let existingUser = data.rows[0]
-      console.log(req.body.password)
-      console.log(existingUser.password)
-      console.log(bcrypt.compareSync(req.body.password, existingUser.password))
+      // console.log(req.body.password)
+      // console.log(existingUser.password)
+      // console.log(bcrypt.compareSync(req.body.password, existingUser.password))
       if('maria' === req.body.password) {
         req.session.user_id = existingUser.id
         res.json({
@@ -157,9 +157,12 @@ app.post("/login", (req, res) => {
         })
       }
     }
-
   })
 })
+
+// app.get(`/session`, (req, res) => {
+//   console.log('')
+// })
 
 // POST /logout
 // Redirect the user back to the login page

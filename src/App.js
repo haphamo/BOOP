@@ -62,7 +62,7 @@ export default function App() {
            
           </Route>
           <Route path="/profile">
-            <Profile />
+            <Profile userId={userId}/>
           </Route>
           <Route path="/friends">
             <Friends />
@@ -95,7 +95,6 @@ function DogsNearby(props) {
     <div>
       <h2 className="header">DogsNearby</h2>
       <hr></hr>
-      <Link to='/login'><LockOpenIcon /></Link>
       <h3 style={petNameTextStyle}>{props.petName}</h3>
       <PetProfilePhoto 
       petId={props.petId}
@@ -106,7 +105,7 @@ function DogsNearby(props) {
   );
 }
 
-function Profile() {
+function Profile(props) {
 
   const [showForm, setShowForm] = useState(false)
   
@@ -118,6 +117,7 @@ function Profile() {
   const hidden = {
     visibility: 'hidden'
   }
+
   return (
     <div>
       <div style={ styles }className="my-profile-header">
@@ -127,9 +127,7 @@ function Profile() {
     </div>
       <hr></hr>
       {showForm ? <PetForm setShowForm={setShowForm}/> : 
-      <UserProfile />
-      }
-     
+      <UserProfile userId={props.userId}/>}
     </div>
   );
 }

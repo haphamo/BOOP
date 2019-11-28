@@ -23,7 +23,6 @@ const useStyles = makeStyles(theme => ({
 export default function PetOnUserPage(props) {
   const classes = useStyles();
 
-  console.log('AllPets', props)
   // const allPets = pets.map(pet => {
   //   return (
   //     <Fragment>
