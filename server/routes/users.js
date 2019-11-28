@@ -46,7 +46,8 @@ module.exports = db => {
               pets.name AS pet, 
               pets.quirky_fact AS quirky_fact, 
               pets.profile_photo AS photo,
-              users.first_name AS owner 
+              users.first_name AS owner,
+              users.id as owner_id
       FROM users 
       JOIN pets ON users.id = pets.owner_id
       WHERE users.id 
@@ -72,10 +73,33 @@ module.exports = db => {
     })
   })
 
-  // Get all the pets of a single user
-  // const user = request.session.user_id;
-  router.get("/:id/pets", (req, res) => {
+  // A connection status is either requested(1) or declined(3)
+  // Only the owner that is logged in can make a connection
+  router.get("/:id/connection/:rid/action/:action_code", (req, res) => {
     // const userId = parseInt(req.params.id)
+    const userId = req.session.user_id
+    const receiverId = req.params.receiver_id
+    const action = req.params.action_code
+    db.query( 
+      `INSERT INTO connections (sender_id, receiver_id, status)
+      VALUES ($1, $2, $3)`
+      , [userId, receiverId, action])
+    .then(result => {
+      res.json({
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Made a connection...'
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Get all the pets of a single user
+  router.get("/:id/pets", (req, res) => {
     const userId = req.session.user_id
     db.query(
       `SELECT users.first_name AS owner,
@@ -107,7 +131,6 @@ module.exports = db => {
   // Only the user that is logged in can see their friend requests
   // Status: 1 = Friend Request
   router.get("/:id/notifications", (req, res) => {
-    // const userId = parseInt(req.params.id)
     const userId = req.session.user_id
     db.query(
       `SELECT pets.id AS pet_id,
@@ -143,7 +166,6 @@ module.exports = db => {
   // Only the user that is logged in can see their friends
   // Status: 2 = Friend Request Accepted
   router.get("/:id/friends", (req, res) => {
-    // const userId = parseInt(req.params.id)
     const userId = req.session.user_id
     db.query(
       `SELECT pets.id AS pet_id,
@@ -179,7 +201,6 @@ module.exports = db => {
   })
 
   // Edit an existing user's info by id
-  // const user = request.session.user_id;
   router.put("/:id", (req, res) => {
     const userId = req.session.user_id
     db.query(
@@ -203,9 +224,7 @@ module.exports = db => {
   })
 
   // Delete an existing user by id
-  // const user = request.session.user_id;
   router.delete("/:id", (req, res) => {
-    // const userId = parseInt(req.params.id)
     const userId = req.session.user_id
     db.query(
       `DELETE FROM users
