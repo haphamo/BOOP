@@ -103,6 +103,7 @@ module.exports = db => {
   })
 
   // Get all pending friend requests 
+  // If a user has more than one pet - the request will include all pets
   // Only the user that is logged in can see their friend requests
   // Status: 1 = Friend Request
   router.get("/:id/notifications", (req, res) => {
@@ -129,6 +130,46 @@ module.exports = db => {
         user: userId,
         result: result.rows,
         message: 'Retrieved all the friend requests of a single user'
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Get all your friends
+  // If a user has more than one pet - you will be friends with all of their pets
+  // Only the user that is logged in can see their friends
+  // Status: 2 = Friend Request Accepted
+  router.get("/:id/friends", (req, res) => {
+    // const userId = parseInt(req.params.id)
+    const userId = req.session.user_id
+    db.query(
+      `SELECT pets.id AS pet_id,
+              pets.name AS pet, 
+              pets.profile_photo AS pet_photo,
+              users.first_name AS owner,
+              users.profile_photo AS owner_photo
+      FROM users 
+      JOIN pets ON users.id = pets.owner_id
+      WHERE users.id 
+      IN (SELECT sender_id AS id
+          FROM connections
+          WHERE receiver_id = $1
+          AND connections.status = $2
+          UNION SELECT receiver_id AS id 
+          FROM connections 
+          WHERE sender_id = $1
+          AND connections.status = $2) 
+      AND users.id != $1`
+      , [userId, 2])
+    .then(result => {
+      res.json({
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Retrieved all the best friends of a single user'
       })
     })
     .catch(err => {
