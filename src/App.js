@@ -145,8 +145,8 @@ const useStyles = makeStyles(theme => ({
     'alignItems': 'center'
   },
   bigAvatar: {
-    width: 60,
-    height: 60,
+    width: 100,
+    height: 100,
   },
 }));
 
@@ -166,12 +166,11 @@ function Notifications(props) {
   const friendRequests = notifications.map(notification => {
     return (
       <div className="notification-card" key={notification.pet_id}>
-          <div className={classes.root}>
-        <h2>{notification.owner}</h2>
-        <Avatar alt={notification.owner} src={notification.owner_photo} className={classes.bigAvatar} />
-        <h2>{notification.pet}</h2>
-        <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.bigAvatar} />
-          </div>
+        <div className={classes.root}>
+          <h3>{notification.owner} and {notification.pet} want to connect</h3>
+          <Avatar alt={notification.owner} src={notification.owner_photo} className={classes.bigAvatar} />
+          <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.bigAvatar} />
+        </div>
       </div>
     )
   })
