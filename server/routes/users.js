@@ -109,7 +109,7 @@ module.exports = db => {
   // Get all your friends
   // If a user has more than one pet - you will be friends with all of their pets
   // Only the user that is logged in can see their friends
-  // Status: 2 = Friend Request Accepted
+  // Status: Friend Request ACCEPTED
   router.get("/:id/friends", (req, res) => {
     const userId = req.session.user_id
     db.query(
@@ -130,7 +130,7 @@ module.exports = db => {
           WHERE sender_id = $1
           AND connections.status = $2) 
       AND users.id != $1`
-      , [userId, 2])
+      , [userId, 'ACCEPTED'])
     .then(result => {
       res.json({
         status: 'Success',
@@ -146,7 +146,7 @@ module.exports = db => {
   })
 
   // Get all users with pets you haven't made a connection with by user.id
-  // A connection status is either requested(1), accepted(2), or declined(3)
+  // A connection status is either PENDING, ACCEPTED, or PASSED
   // Is declining a request the same thing as pass? Yes
   // Assisted by Ahmed, Victoria, and Mikias(mentors)
   router.get("/:id/dashboard", (req, res) => {
@@ -187,7 +187,7 @@ module.exports = db => {
   // Get all pending friend requests 
   // If a user has more than one pet - the request will include all pets
   // Only the user that is logged in can see their friend requests
-  // Status: 1 = Friend Request
+  // Status: ACCEPTED friend request
   router.get("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
     db.query(
@@ -204,7 +204,7 @@ module.exports = db => {
              WHERE receiver_id = $1
              AND connections.status = $2) 
      AND users.id != $1`
-      , [userId, 1])
+      , [userId, 'PENDING'])
     .then(result => {
       res.json({
         status: 'Success',
@@ -219,11 +219,10 @@ module.exports = db => {
     })
   })
 
-  // A connection status is either requested(1) or declined(3)
+  // A connection status is either PENDING or PASSED
   // Only the owner that is logged in can make a connection
   // Still need to check what result.action is
   router.get("/:id/connections/:rid/action/:action_code", (req, res) => {
-    // const userId = parseInt(req.params.id)
     const userId = req.session.user_id
     const receiverId = req.params.receiver_id
     const action = req.params.action_code
@@ -262,7 +261,7 @@ module.exports = db => {
         status: 'Success',
         user: userId,
         result: result.rows,
-        message: `${result.action} the friend request`
+        message: `${result.action} friend request`
       })
     })
     .catch(err => {
