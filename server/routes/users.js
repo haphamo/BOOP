@@ -222,14 +222,14 @@ module.exports = db => {
   // A connection status is either PENDING or PASSED
   // Only the owner that is logged in can make a connection
   // NEED TO TEST - Still need to check what result.action is
-  router.post("/:id/connections", (req, res) => {
+  router.post("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.body.receiver_id
-    const action = req.body.action_code
+    const status = req.body.action_code
     db.query( 
       `INSERT INTO connections (sender_id, receiver_id, status)
       VALUES ($1, $2, $3)`
-      , [userId, receiverId, action])
+      , [userId, receiverId, status])
     .then(result => {
       res.json({
         status: 'Success',
@@ -250,12 +250,12 @@ module.exports = db => {
   router.put("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.body.receiver_id
-    const action = req.body.action_code
+    const status = req.body.action_code
     db.query( 
       `UPDATE connections 
       SET sender_id=$1, receiver_id=$2, status=$3
       WHERE id=$1`
-      , [userId, receiverId, action])
+      , [userId, receiverId, status])
     .then(result => {
       res.json({
         status: 'Success',
