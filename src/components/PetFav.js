@@ -26,25 +26,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-// const petFavData = [
-//   {
-//     img: "https://image.flaticon.com/icons/svg/149/149145.svg",
-//     category: 'add'
-//   },
-//   {
-//     img: "https://image.flaticon.com/icons/svg/1025/1025349.svg",
-//     category: 'treat'
-//  },
-//  {
-//   img: "https://image.flaticon.com/icons/svg/802/802340.svg",
-//   category: 'toy'
-// },
-// {
-//   img: "https://image.flaticon.com/icons/svg/189/189502.svg",
-//   category: 'park'
-// },
-// ];
-
 let data = {
   add: "https://image.flaticon.com/icons/svg/149/149145.svg",
   treat: "https://image.flaticon.com/icons/svg/1025/1025349.svg", 
@@ -53,7 +34,7 @@ let data = {
 }
  
 export default function PetFav(props) {
-  
+  console.log('props', props)
   const classes = useStyles();
   
   const imgStyle = {
@@ -82,7 +63,11 @@ export default function PetFav(props) {
         
         {props.petFav.map(tile => (
           <GridListTile style={ fixedHeight }>
-            <img style={ imgStyle } src={data[tile.category.toLowerCase()]} alt={tile.category} />
+            <img 
+            
+            style={ imgStyle } 
+            src={data[tile.category.toLowerCase()]} 
+            alt={tile.category} />
             <h3 style={ categoryTextStyle }>{tile.favourite_item}</h3>
           </GridListTile>
         ))}
