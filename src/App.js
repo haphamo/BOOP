@@ -74,8 +74,15 @@ function DogsNearby(props) {
   const petNameTextStyle = {
     'textAlign': 'center'
   }
-  console.log('dogs state', dogsNearby[0])
-  console.log('index:',currentDogIndex)
+  // console.log('dogs state', dogsNearby[0])
+  // console.log('index:',currentDogIndex)
+
+  // onClick calls a function that does an axios post call to create a connection with the user id, receiver id
+  const connect = function(){
+    axios.post(`api/users/${props.userId}/notifications/`)
+  }
+
+
   return (
     <div>
       <h2 className="header">DogsNearby</h2>
