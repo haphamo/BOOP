@@ -194,6 +194,7 @@ module.exports = db => {
       `SELECT pets.id AS pet_id,
               pets.name AS pet, 
               pets.profile_photo AS pet_photo,
+              users.id AS receiver_id,
               users.first_name AS owner,
               users.profile_photo AS owner_photo
      FROM users 
