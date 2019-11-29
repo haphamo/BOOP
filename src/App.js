@@ -69,6 +69,7 @@ const connect = function(userId, receiverId, status, callback){
   })
 }
 
+// Pets with no connections (PENDING, ACCEPTED, PASSED)
 function DogsNearby(props) {
 
   const [dogsNearby, setDogsNearby] = useState([])
@@ -168,6 +169,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+// PENDING Friend Requests
 function Notifications(props) {
   const classes = useStyles();
   const [notifications, setNotifications] = useState([])
@@ -202,6 +204,7 @@ function Notifications(props) {
   );
 }
 
+// ACCEPTED Friend Requests
 function Friends(props) {
   const classes = useStyles();
 
