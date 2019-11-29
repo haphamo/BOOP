@@ -3,7 +3,6 @@ import { Widget } from '@uploadcare/react-widget';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-// id parameter is hard-coded for now
 // Assisted by Guy Tonye(mentor)
 export default function Upload(props) {
   const { id } = useParams()
@@ -15,7 +14,6 @@ export default function Upload(props) {
     .then(() => {
       props.setLastUploaded(info.originalUrl);
     })
-    // props.setPetGallery(prev => {}info.originalUrl)
   }
   return (
     <Fragment>
