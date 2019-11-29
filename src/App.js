@@ -72,7 +72,6 @@ export default function App() {
 
 function DogsNearby(props) {
 
-  // Ha is working on getting getting the index dynamically
   const [dogsNearby, setDogsNearby] = useState([])
   const [currentDogIndex, setCurrentDogIndex] = useState(0)
   
@@ -80,10 +79,6 @@ function DogsNearby(props) {
     axios.get(`/api/users/${props.userId}/dashboard`)
     .then(res => {
       setDogsNearby(res.data.result)
-      // should be associated with the action
-      // setCurrentDogIndex(prev => prev + 1)
-      console.log('DogsNearby inside call:', res.data.result)
-      
     })
 
     .catch(err => {
