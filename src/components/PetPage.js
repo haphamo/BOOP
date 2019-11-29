@@ -49,8 +49,8 @@ export default function PetPage(props) {
       setPetGallery(all[1].data.result)
       
       let category = all[0].data.result
-      const fav = {}
-      category.map(item => {fav[item.category]=item.favourite_item}) 
+      // const fav = {}
+      // category.map(item => {fav[item.category]=item.favourite_item}) 
       setPetFav([addFav, ...category]);
       
     })
@@ -58,7 +58,7 @@ export default function PetPage(props) {
       console.log('error:', err)
     })
     
-  }, [lastUploaded, addFav, id])
+  }, [lastUploaded, id])
 
   const styles = {
     display: 'flex',
