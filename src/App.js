@@ -158,12 +158,38 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Notifications() {
+function Notifications(props) {
+  const classes = useStyles();
+  const [notifications, setNotifications] = useState([])
+
+  useEffect(() => {
+    axios.get(`/api/users/${props.userId}/notifications`)
+    .then(res => {
+      console.log("What is the response?!!", res.data.result)
+      setNotifications(res.data.result)
+    }).catch(err => {
+      console.log(err)
+    })
+  }, [])
+
+  const friendRequests = notifications.map(notification => {
+    return (
+      <div className="notification-card" key={notification.pet_id}>
+        <h2>{notification.owner}</h2>
+        <h2>{notification.pet}</h2>
+          <div className={classes.root}>
+          <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.bigAvatar} />
+        <Avatar alt={notification.owner} src={notification.owner_photo} className={classes.bigAvatar} />
+          </div>
+      </div>
+    )
+  })
+
   return (
-    <div>
-      <h2 className="header">Notifications</h2>
+    <div className="header">
+      <h2>Notifications</h2>
       <hr></hr>
-     
+      {friendRequests}
     </div>
   );
 }
@@ -190,7 +216,6 @@ function Friends(props) {
         <div className={classes.root}>
         <Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} />
         <Avatar alt={friend.owner} src={friend.owner_photo} className={classes.bigAvatar} />
-
         </div>
       </div>
     )
@@ -200,8 +225,6 @@ function Friends(props) {
       <h2>Friends</h2>
       <hr></hr>
     {furryFriends}
-
-
     </div>
   );
 }
