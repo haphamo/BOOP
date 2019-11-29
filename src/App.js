@@ -189,7 +189,7 @@ function Notifications(props) {
     return (
       <div className="notification-card" key={notification.pet_id}>
         <div className={classes.root}>
-          <h3>{notification.owner} and {notification.pet} want to connect</h3>
+          <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
           <Avatar alt={notification.owner} src={notification.owner_photo} className={classes.bigAvatar} />
           <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.bigAvatar} />
         </div>
@@ -223,11 +223,10 @@ function Friends(props) {
   const furryFriends = friends.map(friend => {
     return (
       <div className="friend-card" key={friend.pet_id}>
-      <h2>{friend.owner}</h2>
-      <h2>{friend.pet}</h2>
         <div className={classes.root}>
-        <Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} />
-        <Avatar alt={friend.owner} src={friend.owner_photo} className={classes.bigAvatar} />
+          <h4>{friend.owner} and {friend.pet}</h4>
+            <Avatar alt={friend.owner} src={friend.owner_photo} className={classes.bigAvatar} />
+            <Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} />
         </div>
       </div>
     )
