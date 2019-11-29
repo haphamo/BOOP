@@ -205,7 +205,7 @@ module.exports = db => {
              WHERE receiver_id = $1
              AND connections.status = $2) 
      AND users.id != $1`
-      , [userId, 'PENDING'])
+      , [userId, 'ACCEPTED'])
     .then(result => {
       res.json({
         status: 'Success',
