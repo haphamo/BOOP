@@ -61,7 +61,7 @@ export default function App() {
 
 const connect = function(userId, receiverId, status, callback){
   axios.post(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
-  axios.put(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
+  
   .then(res => {
     callback()
     console.log('res', res)
@@ -70,6 +70,19 @@ const connect = function(userId, receiverId, status, callback){
     console.log(err)
   })
 }
+
+const respond = function(userId, receiverId, status, callback){
+  axios.put(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
+  
+  .then(res => {
+    callback()
+    console.log('res', res)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
 
 // Pets with no connections (PENDING, ACCEPTED, DECLINED)
 function DogsNearby(props) {
@@ -185,11 +198,11 @@ function Notifications(props) {
   }
 
   const declineRequest = function(receiverId) {
-    connect(props.userId, receiverId, 'DECLINED', null)
+    respond(props.userId, receiverId, 'DECLINED', null)
   }
 
    const acceptRequest = function(receiverId){
-    connect(props.userId, receiverId, 'ACCEPTED', null)
+    respond(props.userId, receiverId, 'ACCEPTED', null)
   }
   const [notifications, setNotifications] = useState([])
 
@@ -197,6 +210,7 @@ function Notifications(props) {
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {
       setNotifications(res.data.result)
+      
     }).catch(err => {
       console.log(err)
     })
@@ -210,8 +224,8 @@ function Notifications(props) {
           <div className="right-side">
             <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
             <div className="buttons" style={buttonStyle}>
-              <ClearIcon style={largeButton} onClick={()=> declineRequest()}/>
-              <PetsIcon style={largeButton} onClick={()=> acceptRequest()}/>
+              <ClearIcon style={largeButton} onClick={()=> declineRequest(notification.receiver_id)}/>
+              <PetsIcon style={largeButton} onClick={()=> acceptRequest(notification.receiver_id)}/>
             </div>
 
           </div>
