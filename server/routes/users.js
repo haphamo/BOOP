@@ -222,7 +222,7 @@ module.exports = db => {
   // A connection status is either PENDING or PASSED
   // Only the owner that is logged in can make a connection
   // Still need to check what result.action is
-  router.get("/:id/connections/:rid/action/:action_code", (req, res) => {
+  router.post("/:id/connections/:rid/action/:action_code", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.params.receiver_id
     const action = req.params.action_code
@@ -247,7 +247,7 @@ module.exports = db => {
   // A connection status is either accepted(1) or passed(3)
   // Only the owner that is logged in can make a connection
   // Still need to check what result.action is
-  router.get("/:id/notifications/:rid/action/:action_code", (req, res) => {
+  router.put("/:id/notifications/:rid/action/:action_code", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.params.receiver_id
     const action = req.params.action_code
