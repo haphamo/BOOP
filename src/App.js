@@ -165,12 +165,11 @@ function Notifications(props) {
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {
-      console.log("What is the response?!!", res.data.result)
       setNotifications(res.data.result)
     }).catch(err => {
       console.log(err)
     })
-  }, [])
+  }, [props.userId])
 
   const friendRequests = notifications.map(notification => {
     return (
@@ -206,7 +205,7 @@ function Friends(props) {
       console.log(err)
     })
 
-  }, [])
+  }, [props.userId])
 
   const furryFriends = friends.map(friend => {
     return (
