@@ -54,8 +54,6 @@ export default function Login (props) {
  let userLogin = function () {
    axios.post(`/login`, {email, password}, { withCredentials: true})
    .then(res => {
-    
-      console.log('res', res.data.userId)
       props.onLogin(res.data.userId)
    })
  }
