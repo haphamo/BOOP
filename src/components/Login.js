@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -33,7 +33,6 @@ export default function Login (props) {
   
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [login, setLogin] = useState('')
 
   const onSubmit = function (evt) {
     evt.preventDefault();
