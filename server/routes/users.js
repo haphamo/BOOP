@@ -150,7 +150,6 @@ module.exports = db => {
   // Is declining a request the same thing as pass? Yes
   // Assisted by Ahmed, Victoria, and Mikias(mentors)
   router.get("/:id/dashboard", (req, res) => {
-    // const userId = parseInt(req.params.id)
     const userId = req.session.user_id
     db.query(
       `SELECT pets.id AS pet_id,
@@ -184,12 +183,38 @@ module.exports = db => {
     })
   })
 
+  // Send a Friend Request(PENDING) or Pass(PASSED)
+  // Only the owner that is logged in can make a connection
+  router.post("/:id/notifications", (req, res) => {
+    const userId = req.session.user_id
+    const receiverId = req.body.receiver_id
+    const status = req.body.status
+    db.query( 
+      `INSERT INTO connections (sender_id, receiver_id, status)
+      VALUES ($1, $2, $3)`
+      , [userId, receiverId, status])
+    .then(result => {
+      res.json({
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: `${status}`
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
   // Get all pending friend requests 
   // If a user has more than one pet - the request will include all pets
   // Only the user that is logged in can see their friend requests
-  // Status: ACCEPTED friend request
+  // Status: PENDING friend request
   router.get("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
+    const status = req.body.status
+    const connectionId = req.body.connections_id
     db.query(
       `SELECT pets.id AS pet_id,
               pets.name AS pet, 
@@ -200,12 +225,14 @@ module.exports = db => {
      FROM users 
      JOIN pets ON users.id = pets.owner_id
      WHERE users.id 
-     IN (SELECT sender_id AS id
+     IN (SELECT sender_id AS id,
+                connections.id AS connection_id
              FROM connections
              WHERE receiver_id = $1
-             AND connections.status = $2) 
+             AND connections.status = $2
+             AND connections_id = $3) 
      AND users.id != $1`
-      , [userId, 'PENDING'])
+      , [userId, status, connectionId])
     .then(result => {
       res.json({
         status: 'Success',
@@ -220,49 +247,24 @@ module.exports = db => {
     })
   })
 
-  // A connection status is either PENDING or PASSED
+  // A connection status is either ACCEPT or DECLINE
   // Only the owner that is logged in can make a connection
-  // NEED TO TEST - Still need to check what result.action is
-  router.post("/:id/notifications", (req, res) => {
-    const userId = req.session.user_id
-    const receiverId = req.body.receiver_id
-    const status = req.body.status
-    db.query( 
-      `INSERT INTO connections (sender_id, receiver_id, status)
-      VALUES ($1, $2, $3)`
-      , [userId, receiverId, status])
-    .then(result => {
-      res.json({
-        status: 'Success',
-        user: userId,
-        result: result.rows,
-        message: `${result.status}`
-      })
-    })
-    .catch(err => {
-      res.status(500)
-      res.json({ error: err.message })
-    })
-  })
-
-  // A connection status is either accepted(1) or passed(3)
-  // Only the owner that is logged in can make a connection
-  // NEED TO TEST - Still need to check what result.action is
   router.put("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.body.receiver_id
     const status = req.body.status
+    const connectionId = req.body.connections_id
     db.query( 
       `UPDATE connections 
       SET sender_id=$1, receiver_id=$2, status=$3
-      WHERE id=$1`
-      , [userId, receiverId, status])
+      WHERE id=$4`
+      , [userId, receiverId, status, connectionId])
     .then(result => {
       res.json({
         status: 'Success',
         user: userId,
         result: result.rows,
-        message: `${result.status} friend request`
+        message: `${status} friend request`
       })
     })
     .catch(err => {
