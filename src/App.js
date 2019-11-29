@@ -18,6 +18,8 @@ import PetFavForm from './components/petFavForm';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
+import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 
 //Fixture data
 
@@ -71,14 +73,16 @@ export default function App() {
 function DogsNearby(props) {
 
   const [dogsNearby, setDogsNearby] = useState([])
-  const [currentView, setCurrentView] = useState()
-  const [receiverId, setReceiverId] = useState()
+  // Ha is working on getting getting the index dynamically
+  const [currentDogIndex, setCurrentDogIndex] = useState(0)
 
   useEffect(()=> {
     axios.get(`/api/users/${props.userId}/dashboard`)
     .then(res => {
-      console.log('DogsNearby', res.data.result)
       setDogsNearby(res.data.result[0])
+      setCurrentDogIndex(prev => prev + 1)
+      console.log('DogsNearby', res.data.result)
+      
     })
 
     .catch(err => {
@@ -105,6 +109,13 @@ function DogsNearby(props) {
           <PetInfo 
           petInfo={dogsNearby.quirky_fact}
           />
+        </div>
+        <div className="buttons">
+          <ArrowBackRoundedIcon />
+          <FavoriteRoundedIcon 
+          // { setCurrentDogIndex(prev => prev+1)}
+          />
+
         </div>
     </div>
   );
