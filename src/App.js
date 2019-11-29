@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -60,6 +60,7 @@ export default function App() {
             petName={otherDogsNearby.petName}
             petImg={otherDogsNearby.img}
             petInfo={otherDogsNearby.info}
+            userId={userId}
             /> : <Login onLogin={handleLogin} />}
            
           </Route>
@@ -86,9 +87,6 @@ export default function App() {
   );
 }
 
-// You can think of these components as "pages"
-// in your app.
-// Added the Upload component for testing 
 function DogsNearby(props) {
 
   axios.get(`/api/users/:id/dashboard`)
@@ -98,6 +96,12 @@ function DogsNearby(props) {
   const petNameTextStyle = {
     'textAlign': 'center'
   }
+
+  axios.get(`/api/users/${props.userId}/dashboard`)
+  .then(res => {
+    console.log(res)
+  })
+
   return (
     <div>
       <h2 className="header">DogsNearby</h2>
@@ -168,34 +172,37 @@ const useStyles = makeStyles(theme => ({
 function Friends(props) {
   const classes = useStyles();
 
-  const [username, setUsername] = useState('')
-  const [userAvatar, setUserAvatar] = useState('')
-  const [petNames, setPetNames] = useState('')
-  const [petAvatars, setPetAvatars] = useState('')
+  const [friends, setFriends] = useState([])
+  useEffect(() => {
+    axios.get(`/api/users/${props.userId}/friends`)
+    .then(res => {
+      setFriends(res.data.result)
+    }).catch(err => {
+      console.log(err)
+    })
 
-  axios.get(`/api/users/${props.userId}/friends`)
-  .then(res => {
-    console.log('friends', res.data.result[0])
-    setUsername(res.data.result[0].owner)
-    setUserAvatar(res.data.result[0].owner_photo)
-    setPetNames(res.data.result[0].pet)
-    setPetAvatars(res.data.result[0].pet_photo)
+  }, [])
+
+  const furryFriends = friends.map(friend => {
+    return (
+      <div className="friend-card" key={friend.pet_id}>
+      <h2>{friend.owner}</h2>
+      <h2>{friend.pet}</h2>
+        <div className={classes.root}>
+        <Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} />
+        <Avatar alt={friend.owner} src={friend.owner_photo} className={classes.bigAvatar} />
+
+        </div>
+      </div>
+    )
   })
-
-  
   return (
     <div className="header">
       <h2>Friends</h2>
       <hr></hr>
-      <div className="friend-card">
-      <h2>{username}</h2>
-      <h2>{petNames}</h2>
-      <div className={classes.root}>
-      <Avatar alt={petNames} src={petAvatars} className={classes.bigAvatar} />
-      <Avatar alt={username} src={userAvatar} className={classes.bigAvatar} />
+    {furryFriends}
 
-    </div>
-      </div>
+
     </div>
   );
 }

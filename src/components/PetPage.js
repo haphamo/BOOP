@@ -9,8 +9,6 @@ import Gallery from './Gallery';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
-
-
 const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(1),
@@ -19,9 +17,6 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
   },
 }));
-const hidden = {
-  visibility: 'hidden'
-}
 
 export default function PetPage(props) {
   // this id is of the pet
@@ -39,7 +34,6 @@ export default function PetPage(props) {
   const [petFav, setPetFav] = useState([addFav])
   const [petInfo, setPetInfo] = useState('')
   const [petGallery, setPetGallery] = useState([])
-  // const [showLoadFile, setShowLoadFile] = useState(false);
   const [lastUploaded, setLastUploaded] = useState('');
   
   useEffect(() => {
@@ -49,7 +43,6 @@ export default function PetPage(props) {
 
     ])
     .then(all => {
-      // console.log('all', all)
       setPetName(all[0].data.result[0].name)
       setPetAvatar(all[0].data.result[0].profile_photo)
       setPetInfo(all[0].data.result[0].quirky_fact)
@@ -65,13 +58,14 @@ export default function PetPage(props) {
       console.log('error:', err)
     })
     
-  }, [lastUploaded])
+  }, [lastUploaded, addFav, id])
 
   const styles = {
     display: 'flex',
     'justifyContent': 'space-around',
     'alignItems': 'center'
   }
+  //the first button in the header is hidden to center the name of the pet
   const hidden = {
     visibility: 'hidden'
   }
