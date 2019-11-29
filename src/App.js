@@ -22,6 +22,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
+import ClearIcon from '@material-ui/icons/Clear';
 
 export default function App() {
  const [userId, setUserId] = useState(undefined)
@@ -60,6 +61,7 @@ export default function App() {
 
 const connect = function(userId, receiverId, status, callback){
   axios.post(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
+  axios.put(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
   .then(res => {
     callback()
     console.log('res', res)
@@ -69,7 +71,7 @@ const connect = function(userId, receiverId, status, callback){
   })
 }
 
-// Pets with no connections (PENDING, ACCEPTED, PASSED)
+// Pets with no connections (PENDING, ACCEPTED, DECLINED)
 function DogsNearby(props) {
 
   const [dogsNearby, setDogsNearby] = useState([])
@@ -172,6 +174,23 @@ const useStyles = makeStyles(theme => ({
 // PENDING Friend Requests
 function Notifications(props) {
   const classes = useStyles();
+
+  const largeButton = {
+    transform: 'scale(1.5)'
+  }
+
+  const buttonStyle = {
+    justifyContent: 'space-around',
+    display: 'flex'
+  }
+
+  const declineRequest = function(receiverId) {
+    connect(props.userId, receiverId, 'DECLINED', null)
+  }
+
+   const acceptRequest = function(receiverId){
+    connect(props.userId, receiverId, 'ACCEPTED', null)
+  }
   const [notifications, setNotifications] = useState([])
 
   useEffect(() => {
@@ -188,8 +207,12 @@ function Notifications(props) {
       <div className="notification-card" key={notification.pet_id}>
         <div className={classes.root}>
           <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.petAvatar} />
-          <div>
-          <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
+          <div className="right-side">
+            <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
+            <div className="buttons" style={buttonStyle}>
+              <ClearIcon style={largeButton} onClick={()=> declineRequest()}/>
+              <PetsIcon style={largeButton} onClick={()=> acceptRequest()}/>
+            </div>
 
           </div>
 
@@ -202,7 +225,10 @@ function Notifications(props) {
     <div className="header">
       <h2>Notifications</h2>
       <hr></hr>
+      <div className="container">
+
       {friendRequests}
+      </div>
     </div>
   );
 }
