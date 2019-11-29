@@ -40,12 +40,12 @@ VALUES ('https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage
 ('https://data.whicdn.com/images/106070832/original.jpg', 1);
 
 
-
+-- Status can be PENDING, ACCEPTED or PASSED
 INSERT INTO connections (sender_id, receiver_id, status)
-VALUES (1, 2, 2),
-(3, 1, 1),
-(4, 1, 1),
-(7, 4, 1);
+VALUES (1, 2, 'ACCEPTED'),
+(3, 1, 'PENDING'),
+(4, 1, 'PENDING'),
+(7, 4, 'PENDING');
 
 -- SENDER
 -- SELECT users.first_name as sender_name, friends.first_name as receiver_name
@@ -67,11 +67,6 @@ VALUES (1, 2, 2),
 -- JOIN users AS friends ON receiver_id = friends.id
 -- WHERE users.id = 1;
 
-
 -- users.first_name as sender_name, friends.first_name as receiver_name from users join connections ON connections.sender_id = users.id join users as friends on receiver_id = friends.id where users.id = 1
 
 
-
--- The one connection is Maria and Ha, Fido should show up on the dashboard since no connections with him is available
--- The INTEGERS in the STATUS column of CONNECTIONS can be 1 (REQUESTED), 2 (ACCEPTED) or 3 (DECLINED)
--- Once the user has accepted the request, they show up on each others friends list
