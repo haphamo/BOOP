@@ -225,7 +225,7 @@ module.exports = db => {
   router.post("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.body.receiver_id
-    const status = req.body.action_code
+    const status = req.body.status
     db.query( 
       `INSERT INTO connections (sender_id, receiver_id, status)
       VALUES ($1, $2, $3)`
@@ -235,7 +235,7 @@ module.exports = db => {
         status: 'Success',
         user: userId,
         result: result.rows,
-        message: `${result.action}`
+        message: `${result.status}`
       })
     })
     .catch(err => {
@@ -250,7 +250,7 @@ module.exports = db => {
   router.put("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.body.receiver_id
-    const status = req.body.action_code
+    const status = req.body.status
     db.query( 
       `UPDATE connections 
       SET sender_id=$1, receiver_id=$2, status=$3
@@ -261,7 +261,7 @@ module.exports = db => {
         status: 'Success',
         user: userId,
         result: result.rows,
-        message: `${result.action} friend request`
+        message: `${result.status} friend request`
       })
     })
     .catch(err => {
