@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 import './App.scss';
@@ -16,6 +15,7 @@ import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
 import Login from './components/Login';
 import PetFavForm from './components/petFavForm';
+import axios from 'axios';
 
 //Fixture data
 
@@ -58,6 +58,7 @@ export default function App() {
             petName={otherDogsNearby.petName}
             petImg={otherDogsNearby.img}
             petInfo={otherDogsNearby.info}
+            userId={userId}
             /> : <Login onLogin={handleLogin} />}
            
           </Route>
@@ -84,13 +85,17 @@ export default function App() {
   );
 }
 
-// You can think of these components as "pages"
-// in your app.
-// Added the Upload component for testing 
 function DogsNearby(props) {
+
   const petNameTextStyle = {
     'textAlign': 'center'
   }
+
+  axios.get(`/api/users/${props.userId}/dashboard`)
+  .then(res => {
+    console.log(res)
+  })
+
   return (
     <div>
       <h2 className="header">DogsNearby</h2>
