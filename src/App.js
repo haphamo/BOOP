@@ -86,8 +86,6 @@ function DogsNearby(props) {
   const petNameTextStyle = {
     'textAlign': 'center'
   }
-
-
   const requestConnection = function(receiverId) {
     const callback = () => setCurrentDogIndex(prev => prev+1)
     connect(props.userId, receiverId, 'PENDING', callback)
@@ -119,9 +117,8 @@ function DogsNearby(props) {
               onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
              />
            </div>
-      </div> : 
-      <small>No More furry friends left !</small> }
-     
+        </div> : 
+        <small>No More furry friends left !</small> }
     </div>
   );
 }
@@ -154,17 +151,19 @@ function Profile(props) {
 }
 
 // Avatar styles for the Notifications and Friends route
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     '& > *': {
       margin: theme.spacing(1),
     },
+    'justifyContent': 'center',
+    'flexDirection': 'row',
+    'alignItems': 'center'
   },
   bigAvatar: {
-    width: 60,
-    height: 60,
+    width: 100,
+    height: 100,
   },
 }));
 
@@ -184,12 +183,11 @@ function Notifications(props) {
   const friendRequests = notifications.map(notification => {
     return (
       <div className="notification-card" key={notification.pet_id}>
-        <h2>{notification.owner}</h2>
-        <h2>{notification.pet}</h2>
-          <div className={classes.root}>
+        <div className={classes.root}>
+          <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
+          <Avatar alt={notification.owner} src={notification.owner_photo} className={classes.bigAvatar} />
           <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.bigAvatar} />
-        <Avatar alt={notification.owner} src={notification.owner_photo} className={classes.bigAvatar} />
-          </div>
+        </div>
       </div>
     )
   })
@@ -220,11 +218,10 @@ function Friends(props) {
   const furryFriends = friends.map(friend => {
     return (
       <div className="friend-card" key={friend.pet_id}>
-      <h2>{friend.owner}</h2>
-      <h2>{friend.pet}</h2>
         <div className={classes.root}>
-        <Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} />
-        <Avatar alt={friend.owner} src={friend.owner_photo} className={classes.bigAvatar} />
+          <h4>{friend.owner} and {friend.pet}</h4>
+            <Avatar alt={friend.owner} src={friend.owner_photo} className={classes.bigAvatar} />
+            <Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} />
         </div>
       </div>
     )
@@ -233,7 +230,7 @@ function Friends(props) {
     <div className="header">
       <h2>Friends</h2>
       <hr></hr>
-    {furryFriends}
+      {furryFriends}
     </div>
   );
 }
