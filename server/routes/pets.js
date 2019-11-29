@@ -18,6 +18,79 @@ module.exports = db => {
     })
   })
 
+  // Add a new pet
+  // Removed the owner_id since we are using req.session.user_id now
+  // Only the owner that is logged in can add a new pet on their profile
+  router.post("/", (req, res) => {
+    const userId = req.session.user_id
+    db.query(
+      `INSERT INTO pets (name, age, breed, quirky_fact, profile_photo)
+      VALUES ($1, $2, $3, $4, $5)`
+      , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, req.body.profile_photo])
+    .then(result => {
+      res.status(201) 
+      res.json({ 
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Added a new pet' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Edit an existing pet's info by id
+  // Changed owner_id as a value to userId since we are using req.session.user_id now
+  // Only the owner that is logged in can edit the info of their pets
+  router.put("/:id", (req, res) => {
+    const userId = req.session.user_id
+    const petId = parseInt(req.params.id)
+    db.query(
+      `UPDATE pets
+      SET name=$1, age=$2, breed=$3, quirky_fact=$4, profile_photo=$5
+      WHERE id=$6`
+      , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, req.body.profile_photo, petId])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Updated the info of an existing pet' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Delete an existing pet by id
+  // Only the owner that is logged in can delete their pets
+  router.delete("/:id", (req, res) => {
+    const userId = req.session.user_id
+    const petId = parseInt(req.params.id)
+    db.query(
+      `DELETE FROM pets
+      WHERE id = $1`
+      , [petId])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        user: userId,
+        message: `Removed ${result.rowCount} pet` 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
   // Get all pet photos
   router.get("/images", (req, res) => {
     db.query(
@@ -98,7 +171,7 @@ module.exports = db => {
   })
 
   // Get a single pet's photos by id
-  router.get("/images/:id", (req, res) => {
+  router.get("/:id/images", (req, res) => {
     const userId = req.session.user_id
     const petId = parseInt(req.params.id)
     db.query(
@@ -125,34 +198,10 @@ module.exports = db => {
     })
   })
 
-  // Add a new pet
-  // Removed the owner_id since we are using req.session.user_id now
-  // Only the owner that is logged in can add a new pet on their profile
-  router.post("/", (req, res) => {
-    const userId = req.session.user_id
-    db.query(
-      `INSERT INTO pets (name, age, breed, quirky_fact, profile_photo)
-      VALUES ($1, $2, $3, $4, $5)`
-      , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, req.body.profile_photo])
-    .then(result => {
-      res.status(201) 
-      res.json({ 
-        status: 'Success',
-        user: userId,
-        result: result.rows,
-        message: 'Added a new pet' 
-      })
-    })
-    .catch(err => {
-      res.status(500)
-      res.json({ error: err.message })
-    })
-  })
-
   // Add a new favourite thing
   // This will be associated with a form on the front-end
   // Only the owner that is logged in can add a favourite thing for their pet
-  router.post("/favourites/:id", (req, res) => {
+  router.post("/:id/favourites", (req, res) => {
     const userId = req.session.user_id
     const petId = parseInt(req.params.id)
     db.query(
@@ -174,9 +223,36 @@ module.exports = db => {
     })
   })
 
+  // Delete a favourite thing by id
+  // Only the owner that is logged in can delete a favourite thing for their pet
+  // Do we need the petId as well?
+  router.delete("/:id/favourites/:fid", (req, res) => {
+    const userId = req.session.user_id
+    const petId = parseInt(req.params.id)
+    const favouriteId = parseInt(req.params.pet_favourites.id)
+    db.query(
+      `DELETE FROM pet_favourites
+      WHERE id = $1
+      AND pet_id = $2`
+      , [favouriteId, petId])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: `Deleted ${result.rowCount} favourite item` 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
   // Upload a new image
-  // Only the owner that is logged in can upload photos of their pet
-  router.post("/images/:id", (req, res) => {
+  // Only the owner that is logged in can upload a photo of their pet
+  router.post("/:id/images", (req, res) => {
     const userId = req.session.user_id
     const petId = parseInt(req.params.id)
     db.query(
@@ -198,47 +274,24 @@ module.exports = db => {
     })
   })
 
-  // Edit an existing pet's info by id
-  // Changed owner_id as a value to userId since we are using req.session.user_id now
-  // Only the owner that is logged in can edit the info of their pets
-  router.put("/:id", (req, res) => {
+  // Delete an image by id
+  // Only the owner that is logged in can delete a photo of their pet
+  router.delete("/:id/images/pid", (req, res) => {
     const userId = req.session.user_id
     const petId = parseInt(req.params.id)
+    const imageId = parseInt(req.params.images.id)
     db.query(
-      `UPDATE pets
-      SET name=$1, age=$2, breed=$3, quirky_fact=$4, profile_photo=$5
-      WHERE id=$6`
-      , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, req.body.profile_photo, petId])
+      `DELETE FROM images
+      WHERE id = $1
+      AND pet_id = $2`
+      , [imageId, petId])
     .then(result => {
       res.status(200)
       res.json({ 
         status: 'Success',
         user: userId,
         result: result.rows,
-        message: 'Updated the info of an existing pet' 
-      })
-    })
-    .catch(err => {
-      res.status(500)
-      res.json({ error: err.message })
-    })
-  })
-
-  // Delete an existing pet by id
-  // Only the owner that is logged in can delete their pets
-  router.delete("/:id", (req, res) => {
-    const userId = req.session.user_id
-    const petId = parseInt(req.params.id)
-    db.query(
-      `DELETE FROM pets
-      WHERE id = $1`
-      , [petId])
-    .then(result => {
-      res.status(200)
-      res.json({ 
-        status: 'Success',
-        user: userId,
-        message: `Removed ${result.rowCount} pet` 
+        message: `Deleted ${result.rowCount} image`
       })
     })
     .catch(err => {
