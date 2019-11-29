@@ -18,15 +18,10 @@ import PetFavForm from './components/petFavForm';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
+import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
+import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 
 //Fixture data
-
-const petData = {
-  petId: '1',
-  petName: 'Labber',
-  img: 'https://pbs.twimg.com/profile_images/962170088941019136/lgpCD8X4_400x400.jpg',
-  info: "I'm a 5 month Labbie and I like to make friends."
-}
 
 const otherDogsNearby = {
   petId: '4',
@@ -46,13 +41,6 @@ export default function App() {
   return (
     <Router>
       <div>
-        {/*
-          A <Switch> looks through all its children <Route>
-          elements and renders the first one whose path
-          matches the current URL. Use a <Switch> any time
-          you have multiple routes, but you want only one
-          of them to render at a time
-        */}
         <Switch>
           <Route exact path="/">
           {userId ?  <DogsNearby 
@@ -61,8 +49,7 @@ export default function App() {
             petImg={otherDogsNearby.img}
             petInfo={otherDogsNearby.info}
             userId={userId}
-            /> : <Login onLogin={handleLogin} />}
-           
+            /> : <Login onLogin={handleLogin} />} 
           </Route>
           <Route path="/profile">
             <Profile userId={userId}/>
@@ -74,11 +61,7 @@ export default function App() {
             <Notifications userId={userId} />
           </Route>
           <Route path="/pets/:id">
-          <PetPage 
-          petId={petData.petId}
-          petName={petData.petName}
-          petImg={petData.img}
-          petInfo={petData.petInfo}/>
+          <PetPage />
           </Route>
         </Switch>
       </div>
@@ -89,29 +72,51 @@ export default function App() {
 
 function DogsNearby(props) {
 
-  axios.get(`/api/users/:id/dashboard`)
-  .then(res => {
-    console.log('DogsNearby',res.data.result)
-  })
+  const [dogsNearby, setDogsNearby] = useState([])
+  // Ha is working on getting getting the index dynamically
+  const [currentDogIndex, setCurrentDogIndex] = useState(0)
+
+  useEffect(()=> {
+    axios.get(`/api/users/${props.userId}/dashboard`)
+    .then(res => {
+      setDogsNearby(res.data.result[0])
+      setCurrentDogIndex(prev => prev + 1)
+      console.log('DogsNearby', res.data.result)
+      
+    })
+
+    .catch(err => {
+      console.log(err)
+    })
+
+  }, [])
+  
   const petNameTextStyle = {
     'textAlign': 'center'
   }
-
-  axios.get(`/api/users/${props.userId}/dashboard`)
-  .then(res => {
-    console.log(res)
-  })
-
+  
   return (
     <div>
       <h2 className="header">DogsNearby</h2>
       <hr></hr>
-      <h3 style={petNameTextStyle}>{props.petName}</h3>
-      <PetProfilePhoto 
-      petId={props.petId}
-      petImg={props.petImg}/>
-      <PetInfo 
-      petInfo={props.petInfo}/>
+        <div key={dogsNearby.owner_id}>
+          <h3 style={petNameTextStyle}>{dogsNearby.pet}</h3>
+          <em>owner_id: {dogsNearby.owner_id}</em>
+          <PetProfilePhoto 
+          petId={dogsNearby.pet_id}
+          petImg={dogsNearby.photo}
+          />
+          <PetInfo 
+          petInfo={dogsNearby.quirky_fact}
+          />
+        </div>
+        <div className="buttons">
+          <ArrowBackRoundedIcon />
+          <FavoriteRoundedIcon 
+          // { setCurrentDogIndex(prev => prev+1)}
+          />
+
+        </div>
     </div>
   );
 }
