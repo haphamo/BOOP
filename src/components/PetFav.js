@@ -61,14 +61,14 @@ export default function PetFav(props) {
     <div className={classes.root} >
       <GridList style={listItemStyle} className={classes.gridList} cols={2.5}>
         
-        {props.petFav.map(tile => (
+        {props.petFav.map(item => (
           <GridListTile style={ fixedHeight }>
             <img 
-            
+            key={item.favourite_id}
             style={ imgStyle } 
-            src={data[tile.category.toLowerCase()]} 
-            alt={tile.category} />
-            <h3 style={ categoryTextStyle }>{tile.favourite_item}</h3>
+            src={data[item.category.toLowerCase()]} 
+            alt={item.category} />
+            <h3 style={ categoryTextStyle }>{item.favourite_item}</h3>
           </GridListTile>
         ))}
       </GridList>
