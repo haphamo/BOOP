@@ -23,7 +23,7 @@ export default function PetPage(props) {
   let { id } = useParams()
 
   // initial state of fav bar will always have an add button
-  const addFav = { category: 'Add'}
+  const addFav = { category: 'Add', favourite_id: 0}
 
   // hidden button style
   const classes = useStyles();
