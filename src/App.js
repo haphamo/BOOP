@@ -22,16 +22,6 @@ import Avatar from '@material-ui/core/Avatar';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 
-//Fixture data
-
-const otherDogsNearby = {
-  petId: '4',
-  petName: 'Mikey',
-  img: 'https://pbs.twimg.com/media/EKL01x6XkAItDjx.jpg',
-  info: "I'm a 2 year old Boxer and I like snow."
-}
-
-
 export default function App() {
  const [userId, setUserId] = useState(undefined)
   console.log('the user id:', userId)
@@ -45,10 +35,6 @@ export default function App() {
         <Switch>
           <Route exact path="/">
           {userId ?  <DogsNearby 
-            petId={otherDogsNearby.petId}
-            petName={otherDogsNearby.petName}
-            petImg={otherDogsNearby.img}
-            petInfo={otherDogsNearby.info}
             userId={userId}
             /> : <Login onLogin={handleLogin} />} 
           </Route>
@@ -95,7 +81,6 @@ function DogsNearby(props) {
     <div>
       <h2 className="header">DogsNearby</h2>
       <hr></hr>
-
       { dogsNearby && dogsNearby.length > 0 && dogsNearby[currentDogIndex] ? 
         <div key={dogsNearby[currentDogIndex].owner_id}>
           <h3 style={petNameTextStyle}>{dogsNearby[currentDogIndex].pet}</h3>
@@ -108,10 +93,10 @@ function DogsNearby(props) {
           petInfo={dogsNearby[currentDogIndex].quirky_fact}
           />
       </div> : 
-      <small>Loading</small>
-      }
+      <small>No More furry friends left !</small> }
       <div className="buttons">
-        <ArrowBackRoundedIcon />
+        <ArrowBackRoundedIcon 
+        onClick={ () => setCurrentDogIndex(prev => prev+1)}/>
         <FavoriteRoundedIcon 
         onClick={ () => setCurrentDogIndex(prev => prev+1)}
         />
