@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from "react-router-dom";
 
 import './App.scss';
@@ -221,7 +222,8 @@ function Friends(props) {
         <div className={classes.root}>
           <h4>{friend.owner} and {friend.pet}</h4>
             <Avatar alt={friend.owner} src={friend.owner_photo} className={classes.bigAvatar} />
-            <Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} />
+            {/* <Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} /> */}
+            <Link to={`/pets/${friend.pet_id}`} ><Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} /></Link>
         </div>
       </div>
     )
