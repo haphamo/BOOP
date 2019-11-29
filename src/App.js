@@ -143,18 +143,7 @@ function Profile(props) {
   );
 }
 
-function Notifications() {
-  return (
-    <div>
-      <h2 className="header">Notifications</h2>
-      <hr></hr>
-      <PetFavForm />  
-    </div>
-  );
-}
-
-
-// Avatar styles for the friends route
+// Avatar styles for the Notifications and Friends route
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -168,6 +157,16 @@ const useStyles = makeStyles(theme => ({
     height: 60,
   },
 }));
+
+function Notifications() {
+  return (
+    <div>
+      <h2 className="header">Notifications</h2>
+      <hr></hr>
+     
+    </div>
+  );
+}
 
 function Friends(props) {
   const classes = useStyles();
