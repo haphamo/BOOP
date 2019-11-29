@@ -220,10 +220,8 @@ function Friends(props) {
     return (
       <div className="friend-card" key={friend.pet_id}>
         <div className={classes.root}>
+          <Link to={`/pets/${friend.pet_id}`} ><Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} /></Link>
           <h4>{friend.owner} and {friend.pet}</h4>
-            <Avatar alt={friend.owner} src={friend.owner_photo} className={classes.bigAvatar} />
-            {/* <Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} /> */}
-            <Link to={`/pets/${friend.pet_id}`} ><Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} /></Link>
         </div>
       </div>
     )
