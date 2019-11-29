@@ -74,15 +74,12 @@ export default function App() {
 function DogsNearby(props) {
 
   const [dogsNearby, setDogsNearby] = useState([])
-  // Ha is working on getting getting the index dynamically
   const [currentDogIndex, setCurrentDogIndex] = useState(0)
-
+  
   useEffect(()=> {
     axios.get(`/api/users/${props.userId}/dashboard`)
     .then(res => {
-      setDogsNearby(res.data.result[0])
-      setCurrentDogIndex(prev => prev + 1)
-      console.log('DogsNearby', res.data.result)
+      setDogsNearby(res.data.result)
     })
     .catch(err => {
       console.log(err)
@@ -92,29 +89,33 @@ function DogsNearby(props) {
   const petNameTextStyle = {
     'textAlign': 'center'
   }
-  
+  console.log('dogs state', dogsNearby[0])
+  console.log('index:',currentDogIndex)
   return (
     <div>
       <h2 className="header">DogsNearby</h2>
       <hr></hr>
-        <div key={dogsNearby.owner_id}>
-          <h3 style={petNameTextStyle}>{dogsNearby.pet}</h3>
-          <em>owner_id: {dogsNearby.owner_id}</em>
+
+      { dogsNearby && dogsNearby.length > 0 && dogsNearby[currentDogIndex] ? 
+        <div key={dogsNearby[currentDogIndex].owner_id}>
+          <h3 style={petNameTextStyle}>{dogsNearby[currentDogIndex].pet}</h3>
+          <em>owner_id: {dogsNearby[currentDogIndex].owner_id}</em>
           <PetProfilePhoto 
-          petId={dogsNearby.pet_id}
-          petImg={dogsNearby.photo}
+          petId={dogsNearby[currentDogIndex].pet_id}
+          petImg={dogsNearby[currentDogIndex].photo}
           />
           <PetInfo 
-          petInfo={dogsNearby.quirky_fact}
+          petInfo={dogsNearby[currentDogIndex].quirky_fact}
           />
-        </div>
-        <div className="buttons">
-          <ArrowBackRoundedIcon />
-          <FavoriteRoundedIcon 
-          // { setCurrentDogIndex(prev => prev+1)}
-          />
-
-        </div>
+      </div> : 
+      <small>Loading</small>
+      }
+      <div className="buttons">
+        <ArrowBackRoundedIcon />
+        <FavoriteRoundedIcon 
+        onClick={ () => setCurrentDogIndex(prev => prev+1)}
+        />
+      </div>
     </div>
   );
 }
