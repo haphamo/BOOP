@@ -222,7 +222,7 @@ module.exports = db => {
   // A connection status is either PENDING or PASSED
   // Only the owner that is logged in can make a connection
   // Still need to check what result.action is
-  // How to get the response from the client???
+  // Front-end - send the receiver_id and action code in a res.json obj
   router.post("/:id/connections/:rid/action/:action_code", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.params.receiver_id
@@ -247,6 +247,7 @@ module.exports = db => {
 
   // A connection status is either accepted(1) or passed(3)
   // Only the owner that is logged in can make a connection
+  // Front-end - send the receiver_id and action code in a res.json obj
   // Still need to check what result.action is
   router.put("/:id/notifications/:rid/action/:action_code", (req, res) => {
     const userId = req.session.user_id
