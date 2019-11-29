@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -82,13 +83,10 @@ function DogsNearby(props) {
       setDogsNearby(res.data.result[0])
       setCurrentDogIndex(prev => prev + 1)
       console.log('DogsNearby', res.data.result)
-      
     })
-
     .catch(err => {
       console.log(err)
     })
-
   }, [])
   
   const petNameTextStyle = {
