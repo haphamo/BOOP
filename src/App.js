@@ -57,6 +57,17 @@ export default function App() {
   );
 }
 
+const connect = function(userId, receiverId, status, callback){
+  axios.post(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
+  .then(res => {
+    callback()
+    console.log('res', res)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
 function DogsNearby(props) {
 
   const [dogsNearby, setDogsNearby] = useState([])
@@ -75,8 +86,17 @@ function DogsNearby(props) {
   const petNameTextStyle = {
     'textAlign': 'center'
   }
-  console.log('dogs state', dogsNearby[0])
-  console.log('index:',currentDogIndex)
+
+
+  const requestConnection = function(receiverId) {
+    const callback = () => setCurrentDogIndex(prev => prev+1)
+    connect(props.userId, receiverId, 'PENDING', callback)
+  }
+  const declineConnection = function(receiverId) {
+    const callback = () => setCurrentDogIndex(prev => prev+1)
+    connect(props.userId, receiverId, 'DECLINED', callback)
+  }
+
   return (
     <div>
       <h2 className="header">DogsNearby</h2>
@@ -86,21 +106,23 @@ function DogsNearby(props) {
           <h3 style={petNameTextStyle}>{dogsNearby[currentDogIndex].pet}</h3>
           <em>owner_id: {dogsNearby[currentDogIndex].owner_id}</em>
           <PetProfilePhoto 
-          petId={dogsNearby[currentDogIndex].pet_id}
-          petImg={dogsNearby[currentDogIndex].photo}
+            petId={dogsNearby[currentDogIndex].pet_id}
+            petImg={dogsNearby[currentDogIndex].photo}
           />
           <PetInfo 
-          petInfo={dogsNearby[currentDogIndex].quirky_fact}
+            petInfo={dogsNearby[currentDogIndex].quirky_fact}
           />
+          <div className="buttons">
+            <ArrowBackRoundedIcon 
+              onClick={ () => declineConnection(dogsNearby[currentDogIndex].owner_id)} 
+            />
+            <FavoriteRoundedIcon 
+              onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
+             />
+           </div>
       </div> : 
       <small>No More furry friends left !</small> }
-      <div className="buttons">
-        <ArrowBackRoundedIcon 
-        onClick={ () => setCurrentDogIndex(prev => prev+1)}/>
-        <FavoriteRoundedIcon 
-        onClick={ () => setCurrentDogIndex(prev => prev+1)}
-        />
-      </div>
+     
     </div>
   );
 }
