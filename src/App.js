@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from "react-router-dom";
 
 import './App.scss';
@@ -68,6 +69,7 @@ const connect = function(userId, receiverId, status, callback){
   })
 }
 
+// Pets with no connections (PENDING, ACCEPTED, PASSED)
 function DogsNearby(props) {
 
   const [dogsNearby, setDogsNearby] = useState([])
@@ -167,6 +169,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+// PENDING Friend Requests
 function Notifications(props) {
   const classes = useStyles();
   const [notifications, setNotifications] = useState([])
@@ -204,6 +207,7 @@ function Notifications(props) {
   );
 }
 
+// ACCEPTED Friend Requests
 function Friends(props) {
   const classes = useStyles();
 
@@ -222,9 +226,8 @@ function Friends(props) {
     return (
       <div className="friend-card" key={friend.pet_id}>
         <div className={classes.root}>
+          <Link to={`/pets/${friend.pet_id}`} ><Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} /></Link>
           <h4>{friend.owner} and {friend.pet}</h4>
-            <Avatar alt={friend.owner} src={friend.owner_photo} className={classes.bigAvatar} />
-            <Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} />
         </div>
       </div>
     )
