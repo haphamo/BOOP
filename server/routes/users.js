@@ -222,6 +222,7 @@ module.exports = db => {
   // A connection status is either PENDING or PASSED
   // Only the owner that is logged in can make a connection
   // Still need to check what result.action is
+  // How to get the response from the client???
   router.post("/:id/connections/:rid/action/:action_code", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.params.receiver_id
