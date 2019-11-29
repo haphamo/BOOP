@@ -161,9 +161,9 @@ const useStyles = makeStyles(theme => ({
     'flexDirection': 'row',
     'alignItems': 'center'
   },
-  bigAvatar: {
-    width: 100,
-    height: 100,
+  petAvatar: {
+    width: 170,
+    height: 170,
   },
 }));
 
@@ -184,9 +184,12 @@ function Notifications(props) {
     return (
       <div className="notification-card" key={notification.pet_id}>
         <div className={classes.root}>
+          <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.petAvatar} />
+          <div>
           <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
-          <Avatar alt={notification.owner} src={notification.owner_photo} className={classes.bigAvatar} />
-          <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.bigAvatar} />
+
+          </div>
+
         </div>
       </div>
     )
