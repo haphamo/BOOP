@@ -86,8 +86,6 @@ function DogsNearby(props) {
   const petNameTextStyle = {
     'textAlign': 'center'
   }
-
-
   const requestConnection = function(receiverId) {
     const callback = () => setCurrentDogIndex(prev => prev+1)
     connect(props.userId, receiverId, 'PENDING', callback)
@@ -120,9 +118,8 @@ function DogsNearby(props) {
               onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
              />
            </div>
-      </div> : 
-      <small>No More furry friends left !</small> }
-     
+        </div> : 
+        <small>No More furry friends left !</small> }
     </div>
   );
 }
@@ -155,7 +152,6 @@ function Profile(props) {
 }
 
 // Avatar styles for the Notifications and Friends route
-
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -163,7 +159,7 @@ const useStyles = makeStyles(theme => ({
       margin: theme.spacing(1),
     },
     'justifyContent': 'center',
-    'flexDirection': 'column',
+    'flexDirection': 'row',
     'alignItems': 'center'
   },
   bigAvatar: {
@@ -235,7 +231,7 @@ function Friends(props) {
     <div className="header">
       <h2>Friends</h2>
       <hr></hr>
-    {furryFriends}
+      {furryFriends}
     </div>
   );
 }
