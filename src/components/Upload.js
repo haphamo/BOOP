@@ -9,7 +9,7 @@ export default function Upload(props) {
   const { id } = useParams()
   const onUpload = (info) => {
     // Save the image to the database
-    axios.post(`/api/pets/images/${id}`, { 
+    axios.post(`/api/pets/${id}/images`, { 
       url: info.originalUrl 
     })
     .then(() => {
