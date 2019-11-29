@@ -16,6 +16,8 @@ import PetInfo from './components/PetInfo';
 import Login from './components/Login';
 import PetFavForm from './components/petFavForm';
 import axios from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
 
 //Fixture data
 
@@ -66,7 +68,7 @@ export default function App() {
             <Profile userId={userId}/>
           </Route>
           <Route path="/friends">
-            <Friends />
+            <Friends userId={userId}/>
           </Route>
           <Route path="/notifications">
             <Notifications />
@@ -87,6 +89,10 @@ export default function App() {
 
 function DogsNearby(props) {
 
+  axios.get(`/api/users/:id/dashboard`)
+  .then(res => {
+    console.log('DogsNearby',res.data.result)
+  })
   const petNameTextStyle = {
     'textAlign': 'center'
   }
@@ -147,11 +153,53 @@ function Notifications() {
   );
 }
 
-function Friends() {
+
+// Avatar styles for the friends route
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  bigAvatar: {
+    width: 60,
+    height: 60,
+  },
+}));
+
+function Friends(props) {
+  const classes = useStyles();
+
+  const [username, setUsername] = useState('')
+  const [userAvatar, setUserAvatar] = useState('')
+  const [petNames, setPetNames] = useState('')
+  const [petAvatars, setPetAvatars] = useState('')
+
+  axios.get(`/api/users/${props.userId}/friends`)
+  .then(res => {
+    console.log('friends', res.data.result[0])
+    setUsername(res.data.result[0].owner)
+    setUserAvatar(res.data.result[0].owner_photo)
+    setPetNames(res.data.result[0].pet)
+    setPetAvatars(res.data.result[0].pet_photo)
+  })
+
+  
   return (
     <div className="header">
       <h2>Friends</h2>
       <hr></hr>
+      <div className="friend-card">
+      <h2>{username}</h2>
+      <h2>{petNames}</h2>
+      <div className={classes.root}>
+      <Avatar alt={petNames} src={petAvatars} className={classes.bigAvatar} />
+      <Avatar alt={username} src={userAvatar} className={classes.bigAvatar} />
+
+    </div>
+      </div>
     </div>
   );
 }

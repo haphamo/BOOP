@@ -18,113 +18,6 @@ module.exports = db => {
     })
   })
 
-  // Get all pet photos
-  router.get("/images", (req, res) => {
-    db.query(
-      `SELECT pets.id AS pet_id,
-              pets.name AS name,
-              images.id AS image_id,
-              images.url AS photo 
-      FROM images
-      JOIN pets ON pets.id = pet_id`)
-    .then(result => {
-      res.status(200)
-      res.json({ 
-        status: 'Success',
-        result: result.rows,
-        message: 'Retrieved all the pet pictures' 
-      })
-    })
-    .catch(err => {
-      res.status(500)
-      res.json({ error: err.message })
-    })
-  })
-
-  // Get all pet favourites
-  router.get("/favourites", (req, res) => {
-    db.query(
-      `SELECT pets.name AS pet,
-              pet_favourites.category AS category, 
-              pet_favourites.name AS name
-      FROM pet_favourites
-      JOIN pets ON pets.id = pet_id`)
-    .then(result => {
-      res.status(200)
-      res.json({ 
-        status: 'Success',
-        result: result.rows,
-        message: 'Retrieved all the pet favourites' 
-      })
-    })
-    .catch(err => {
-      res.status(500)
-      res.json({ error: err.message })
-    })
-  })
-
-  // Get a single pet and its favourite things by id
-  router.get("/:id", (req, res) => {
-    const userId = req.session.user_id
-    const petId = parseInt(req.params.id)
-    db.query(
-      `SELECT pets.name AS name, 
-              pets.age AS age, 
-              pets.breed AS breed, 
-              pets.quirky_fact AS quirky_fact, 
-              pets.profile_photo AS profile_photo,
-              users.first_name AS owner,
-              users.city AS home,
-              pet_favourites.category AS category, 
-              pet_favourites.name AS favourite_item
-      FROM pets
-      JOIN pet_favourites ON pet_id = pets.id
-      JOIN users ON users.id = pets.owner_id
-      WHERE pets.id = $1`
-      , [petId])
-    .then(result => {
-      res.status(200)
-      res.json({ 
-        status: 'Success',
-        user: userId,
-        result: result.rows,
-        message: 'Retrieved all the information about a single pet' 
-      })
-    })
-    .catch(err => {
-      res.status(500)
-      res.json({ error: err.message })
-    })
-  })
-
-  // Get a single pet's photos by id
-  router.get("/images/:id", (req, res) => {
-    const userId = req.session.user_id
-    const petId = parseInt(req.params.id)
-    db.query(
-      `SELECT pets.id AS pet_id,
-              pets.name AS name,
-              images.id AS image_id,
-              images.url AS photo 
-      FROM pets
-      JOIN images ON images.pet_id = pets.id
-      WHERE pets.id = $1`
-      , [petId])
-    .then(result => {
-      res.status(200)
-      res.json({ 
-        status: 'Success',
-        user: userId,
-        result: result.rows,
-        message: 'Retrieved the images of a single pet' 
-      })
-    })
-    .catch(err => {
-      res.status(500)
-      res.json({ error: err.message })
-    })
-  })
-
   // Add a new pet
   // Removed the owner_id since we are using req.session.user_id now
   // Only the owner that is logged in can add a new pet on their profile
@@ -149,47 +42,33 @@ module.exports = db => {
     })
   })
 
-  // Add a new favourite thing
-  // This will be associated with a form on the front-end
-  // Only the owner that is logged in can add a favourite thing for their pet
-  router.post("/favourites/:id", (req, res) => {
+  // Get a single pet and its favourite things by id
+  router.get("/:id", (req, res) => {
     const userId = req.session.user_id
     const petId = parseInt(req.params.id)
     db.query(
-      `INSERT INTO pet_favourites (name, category, pet_id)
-      VALUES($1, $2, $3)`
-      , [req.body.name, req.body.category, petId])
+      `SELECT pets.name AS name, 
+              pets.age AS age, 
+              pets.breed AS breed, 
+              pets.quirky_fact AS quirky_fact, 
+              pets.profile_photo AS profile_photo,
+              users.first_name AS owner,
+              users.city AS home,
+              pet_favourites.id AS favourite_id,
+              pet_favourites.category AS category, 
+              pet_favourites.name AS favourite_item
+      FROM pets
+      JOIN pet_favourites ON pet_id = pets.id
+      JOIN users ON users.id = pets.owner_id
+      WHERE pets.id = $1`
+      , [petId])
     .then(result => {
       res.status(200)
       res.json({ 
         status: 'Success',
         user: userId,
         result: result.rows,
-        message: 'Added a new favourite item' 
-      })
-    })
-    .catch(err => {
-      res.status(500)
-      res.json({ error: err.message })
-    })
-  })
-
-  // Upload a new image
-  // Only the owner that is logged in can upload photos of their pet
-  router.post("/images/:id", (req, res) => {
-    const userId = req.session.user_id
-    const petId = parseInt(req.params.id)
-    db.query(
-      `INSERT INTO images (url, pet_id)
-      VALUES($1, $2) RETURNING *`
-      , [req.body.url, petId])
-    .then(result => {
-      res.status(200)
-      res.json({ 
-        status: 'Success',
-        user: userId,
-        result: result.rows,
-        message: 'Added a new image' 
+        message: 'Retrieved all the information about a single pet' 
       })
     })
     .catch(err => {
@@ -239,6 +118,181 @@ module.exports = db => {
         status: 'Success',
         user: userId,
         message: `Removed ${result.rowCount} pet` 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Get all pet photos
+  router.get("/images", (req, res) => {
+    db.query(
+      `SELECT pets.id AS pet_id,
+              pets.name AS name,
+              images.id AS image_id,
+              images.url AS photo 
+      FROM images
+      JOIN pets ON pets.id = pet_id`)
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        result: result.rows,
+        message: 'Retrieved all the pet pictures' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Get all pet favourites
+  router.get("/favourites", (req, res) => {
+    db.query(
+      `SELECT pets.name AS pet,
+              pet_favourites.category AS category, 
+              pet_favourites.name AS name
+      FROM pet_favourites
+      JOIN pets ON pets.id = pet_id`)
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        result: result.rows,
+        message: 'Retrieved all the pet favourites' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Get a single pet's photos by id
+  router.get("/:id/images", (req, res) => {
+    const userId = req.session.user_id
+    const petId = parseInt(req.params.id)
+    db.query(
+      `SELECT pets.id AS pet_id,
+              pets.name AS name,
+              images.id AS image_id,
+              images.url AS photo 
+      FROM pets
+      JOIN images ON images.pet_id = pets.id
+      WHERE pets.id = $1`
+      , [petId])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Retrieved the images of a single pet' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Add a new favourite thing
+  // This will be associated with a form on the front-end
+  // Only the owner that is logged in can add a favourite thing for their pet
+  router.post("/:id/favourites", (req, res) => {
+    const userId = req.session.user_id
+    const petId = parseInt(req.params.id)
+    db.query(
+      `INSERT INTO pet_favourites (name, category, pet_id)
+      VALUES($1, $2, $3)`
+      , [req.body.name, req.body.category, petId])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Added a new favourite item' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Delete a favourite thing by id
+  // Only the owner that is logged in can delete a favourite thing for their pet
+  // Do we need the petId as well?
+  router.delete("/:id/favourites/:fid", (req, res) => {
+    const userId = req.session.user_id
+    const petId = parseInt(req.params.id)
+    const favouriteId = parseInt(req.params.pet_favourites.id)
+    db.query(
+      `DELETE FROM pet_favourites
+      WHERE id = $1
+      AND pet_id = $2`
+      , [favouriteId, petId])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: `Deleted ${result.rowCount} favourite item` 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Upload a new image
+  // Only the owner that is logged in can upload a photo of their pet
+  router.post("/:id/images", (req, res) => {
+    const userId = req.session.user_id
+    const petId = parseInt(req.params.id)
+    db.query(
+      `INSERT INTO images (url, pet_id)
+      VALUES($1, $2) RETURNING *`
+      , [req.body.url, petId])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: 'Added a new image' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Delete an image by id
+  // Only the owner that is logged in can delete a photo of their pet
+  router.delete("/:id/images/pid", (req, res) => {
+    const userId = req.session.user_id
+    const petId = parseInt(req.params.id)
+    const imageId = parseInt(req.params.images.id)
+    db.query(
+      `DELETE FROM images
+      WHERE id = $1
+      AND pet_id = $2`
+      , [imageId, petId])
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: `Deleted ${result.rowCount} image`
       })
     })
     .catch(err => {

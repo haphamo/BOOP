@@ -39,7 +39,7 @@ export default function PetPage(props) {
   useEffect(() => {
     Promise.all([
       axios.get(`/api/pets/${id}`),
-      axios.get(`/api/pets/images/${id}`)
+      axios.get(`/api/pets/${id}/images`)
 
     ])
     .then(all => {
