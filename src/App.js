@@ -71,7 +71,7 @@ export default function App() {
             <Friends userId={userId}/>
           </Route>
           <Route path="/notifications">
-            <Notifications />
+            <Notifications userId={userId} />
           </Route>
           <Route path="/pets/:id">
           <PetPage 
