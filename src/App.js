@@ -104,7 +104,6 @@ function DogsNearby(props) {
       { dogsNearby && dogsNearby.length > 0 && dogsNearby[currentDogIndex] ? 
         <div key={dogsNearby[currentDogIndex].owner_id}>
           <h3 style={petNameTextStyle}>{dogsNearby[currentDogIndex].pet}</h3>
-          <em>owner_id: {dogsNearby[currentDogIndex].owner_id}</em>
           <PetProfilePhoto 
             petId={dogsNearby[currentDogIndex].pet_id}
             petImg={dogsNearby[currentDogIndex].photo}
