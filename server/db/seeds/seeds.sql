@@ -45,7 +45,9 @@ INSERT INTO connections (sender_id, receiver_id, status)
 VALUES (1, 2, 'ACCEPTED'),
 (3, 1, 'PENDING'),
 (4, 1, 'PENDING'),
-(7, 4, 'PENDING');
+(2, 3, 'PENDING'),
+(2, 4, 'ACCEPTED'),
+(1, 7, 'ACCEPTED');
 
 -- SENDER
 -- SELECT users.first_name as sender_name, friends.first_name as receiver_name
