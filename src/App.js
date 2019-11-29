@@ -57,6 +57,17 @@ export default function App() {
   );
 }
 
+const connect = function(userId, receiverId, status, callback){
+  axios.post(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
+  .then(res => {
+    callback()
+    console.log('res', res)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
 function DogsNearby(props) {
 
   const [dogsNearby, setDogsNearby] = useState([])
@@ -75,21 +86,15 @@ function DogsNearby(props) {
   const petNameTextStyle = {
     'textAlign': 'center'
   }
-  // console.log('dogs state', dogsNearby[0])
-  // console.log('index:',currentDogIndex)
 
-  // onClick calls a function that does an axios post call to create a connection with the user id, receiver id
-  const connect = function(receiverId){
-    axios.post(`api/users/${props.userId}/connections`)
-    .then( res => {
-      res.json({
-        receiverId: receiverId,
-        status: 'pending'
-      })
-    })
-    .catch(err => {
-      console.log(err)
-    })
+
+  const requestConnection = function(receiverId) {
+    const callback = () => setCurrentDogIndex(prev => prev+1)
+    connect(props.userId, receiverId, 'PENDING', callback)
+  }
+  const declineConnection = function(receiverId) {
+    const callback = () => setCurrentDogIndex(prev => prev+1)
+    connect(props.userId, receiverId, 'DECLINED', callback)
   }
 
   return (
@@ -109,11 +114,10 @@ function DogsNearby(props) {
           />
           <div className="buttons">
             <ArrowBackRoundedIcon 
-              onClick={ () => setCurrentDogIndex(prev => prev+1)} 
+              onClick={ () => declineConnection(dogsNearby[currentDogIndex].owner_id)} 
             />
             <FavoriteRoundedIcon 
-              onClick={ () => setCurrentDogIndex(prev => prev+1)}
-              onClick={connect(dogsNearby[currentDogIndex].owner_id)}
+              onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
              />
            </div>
       </div> : 
