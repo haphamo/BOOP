@@ -148,6 +148,7 @@ module.exports = db => {
               pets.profile_photo AS profile_photo,
               users.first_name AS owner,
               users.city AS home,
+              pet_favourites.id AS favourite_id,
               pet_favourites.category AS category, 
               pet_favourites.name AS favourite_item
       FROM pets
