@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import './App.scss';
-import BottonNav from './components/BottomNav';
+import BottomNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
 import PetForm from './components/Form';
@@ -56,14 +56,14 @@ export default function App() {
             <Friends userId={userId}/>
           </Route>
           <Route path="/notifications">
-            <Notifications />
+            <Notifications userId={userId} />
           </Route>
           <Route path="/pets/:id">
           <PetPage />
           </Route>
         </Switch>
       </div>
-      <BottonNav />
+      <BottomNav />
     </Router>
   );
 }
@@ -137,18 +137,7 @@ function Profile(props) {
   );
 }
 
-function Notifications() {
-  return (
-    <div>
-      <h2 className="header">Notifications</h2>
-      <hr></hr>
-      <PetFavForm />  
-    </div>
-  );
-}
-
-
-// Avatar styles for the friends route
+// Avatar styles for the Notifications and Friends route
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -163,6 +152,41 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+function Notifications(props) {
+  const classes = useStyles();
+  const [notifications, setNotifications] = useState([])
+
+  useEffect(() => {
+    axios.get(`/api/users/${props.userId}/notifications`)
+    .then(res => {
+      setNotifications(res.data.result)
+    }).catch(err => {
+      console.log(err)
+    })
+  }, [props.userId])
+
+  const friendRequests = notifications.map(notification => {
+    return (
+      <div className="notification-card" key={notification.pet_id}>
+        <h2>{notification.owner}</h2>
+        <h2>{notification.pet}</h2>
+          <div className={classes.root}>
+          <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.bigAvatar} />
+        <Avatar alt={notification.owner} src={notification.owner_photo} className={classes.bigAvatar} />
+          </div>
+      </div>
+    )
+  })
+
+  return (
+    <div className="header">
+      <h2>Notifications</h2>
+      <hr></hr>
+      {friendRequests}
+    </div>
+  );
+}
+
 function Friends(props) {
   const classes = useStyles();
 
@@ -175,7 +199,7 @@ function Friends(props) {
       console.log(err)
     })
 
-  }, [])
+  }, [props.userId])
 
   const furryFriends = friends.map(friend => {
     return (
@@ -185,7 +209,6 @@ function Friends(props) {
         <div className={classes.root}>
         <Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} />
         <Avatar alt={friend.owner} src={friend.owner_photo} className={classes.bigAvatar} />
-
         </div>
       </div>
     )
@@ -195,8 +218,6 @@ function Friends(props) {
       <h2>Friends</h2>
       <hr></hr>
     {furryFriends}
-
-
     </div>
   );
 }
