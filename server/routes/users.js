@@ -221,16 +221,15 @@ module.exports = db => {
 
   // A connection status is either PENDING or PASSED
   // Only the owner that is logged in can make a connection
-  // Still need to check what result.action is
-  // Front-end - send the receiver_id and action code in a res.json obj
-  router.post("/:id/connections", (req, res) => {
+  // NEED TO TEST - Still need to check what result.action is
+  router.post("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
-    const receiverId = req.params.receiver_id
-    const action = req.params.action_code
+    const receiverId = req.body.receiver_id
+    const status = req.body.action_code
     db.query( 
       `INSERT INTO connections (sender_id, receiver_id, status)
       VALUES ($1, $2, $3)`
-      , [userId, receiverId, action])
+      , [userId, receiverId, status])
     .then(result => {
       res.json({
         status: 'Success',
@@ -247,17 +246,16 @@ module.exports = db => {
 
   // A connection status is either accepted(1) or passed(3)
   // Only the owner that is logged in can make a connection
-  // Front-end - send the receiver_id and action code in a res.json obj
-  // Still need to check what result.action is
-  router.put("/:id/notifications/:rid/action/:action_code", (req, res) => {
+  // NEED TO TEST - Still need to check what result.action is
+  router.put("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
-    const receiverId = req.params.receiver_id
-    const action = req.params.action_code
+    const receiverId = req.body.receiver_id
+    const status = req.body.action_code
     db.query( 
       `UPDATE connections 
       SET sender_id=$1, receiver_id=$2, status=$3
       WHERE id=$1`
-      , [userId, receiverId, action])
+      , [userId, receiverId, status])
     .then(result => {
       res.json({
         status: 'Success',
