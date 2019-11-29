@@ -223,7 +223,7 @@ module.exports = db => {
   // Only the owner that is logged in can make a connection
   // Still need to check what result.action is
   // Front-end - send the receiver_id and action code in a res.json obj
-  router.post("/:id/connections/:rid/action/:action_code", (req, res) => {
+  router.post("/:id/connections", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.params.receiver_id
     const action = req.params.action_code

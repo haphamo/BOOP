@@ -79,10 +79,18 @@ function DogsNearby(props) {
   // console.log('index:',currentDogIndex)
 
   // onClick calls a function that does an axios post call to create a connection with the user id, receiver id
-  const connect = function(){
-    axios.post(`api/users/${props.userId}/notifications/`)
+  const connect = function(receiverId){
+    axios.post(`api/users/${props.userId}/connections`)
+    .then( res => {
+      res.json({
+        receiverId: receiverId,
+        status: 'pending'
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
-
 
   return (
     <div>
@@ -93,21 +101,24 @@ function DogsNearby(props) {
           <h3 style={petNameTextStyle}>{dogsNearby[currentDogIndex].pet}</h3>
           <em>owner_id: {dogsNearby[currentDogIndex].owner_id}</em>
           <PetProfilePhoto 
-          petId={dogsNearby[currentDogIndex].pet_id}
-          petImg={dogsNearby[currentDogIndex].photo}
+            petId={dogsNearby[currentDogIndex].pet_id}
+            petImg={dogsNearby[currentDogIndex].photo}
           />
           <PetInfo 
-          petInfo={dogsNearby[currentDogIndex].quirky_fact}
+            petInfo={dogsNearby[currentDogIndex].quirky_fact}
           />
+          <div className="buttons">
+            <ArrowBackRoundedIcon 
+              onClick={ () => setCurrentDogIndex(prev => prev+1)} 
+            />
+            <FavoriteRoundedIcon 
+              onClick={ () => setCurrentDogIndex(prev => prev+1)}
+              onClick={connect(dogsNearby[currentDogIndex].owner_id)}
+             />
+           </div>
       </div> : 
       <small>No More furry friends left !</small> }
-      <div className="buttons">
-        <ArrowBackRoundedIcon 
-        onClick={ () => setCurrentDogIndex(prev => prev+1)}/>
-        <FavoriteRoundedIcon 
-        onClick={ () => setCurrentDogIndex(prev => prev+1)}
-        />
-      </div>
+     
     </div>
   );
 }
