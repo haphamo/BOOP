@@ -155,10 +155,6 @@ app.post("/login", (req, res) => {
   })
 })
 
-// app.get(`/session`, (req, res) => {
-//   console.log('')
-// })
-
 // POST /logout
 app.post("/logout", (req, res) => {
   req.session = null
@@ -173,6 +169,8 @@ app.post("/logout", (req, res) => {
 app.get('/auth/facebook', 
   passport.authenticate('facebook'),
   function(req, res) {
+    console.log("What is the request?", req)
+    console.log("What is the response?", res)
     res.json({ 
       loggedIn: true,
       id: req.session.user_id, 
