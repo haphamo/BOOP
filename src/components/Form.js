@@ -43,9 +43,9 @@ export default function PetForm(props) {
 
   return (
     <Fragment>
+      <h2>Add a new pet</h2>
+      {/* <h4>All fields are required.</h4> */}
       <div className={avatarClasses.root}>
-      <Avatar alt="Remy Sharp" src={ null } className={avatarClasses.bigAvatar} />
-      <Upload />
     </div>
     <div className={classes.container}> 
       <Input
@@ -71,6 +71,13 @@ export default function PetForm(props) {
       />
        <Input
         placeholder="Breed"
+        className={classes.input}
+        inputProps={{
+          'aria-label': 'description',
+        }}
+      />
+       <Input
+        placeholder="Add a Profile Photo (url)"
         className={classes.input}
         inputProps={{
           'aria-label': 'description',
