@@ -213,6 +213,8 @@ module.exports = db => {
   // Status: PENDING friend request
   router.get("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
+    const status = req.body.status
+    const connectionId = req.body.connections_id
     db.query(
       `SELECT pets.id AS pet_id,
               pets.name AS pet, 
@@ -223,12 +225,14 @@ module.exports = db => {
      FROM users 
      JOIN pets ON users.id = pets.owner_id
      WHERE users.id 
-     IN (SELECT sender_id AS id
+     IN (SELECT sender_id AS id,
+                connections.id AS connection_id
              FROM connections
              WHERE receiver_id = $1
-             AND connections.status = $2) 
+             AND connections.status = $2
+             AND connections_id = $3) 
      AND users.id != $1`
-      , [userId, 'PENDING'])
+      , [userId, status, connectionId])
     .then(result => {
       res.json({
         status: 'Success',
@@ -243,17 +247,18 @@ module.exports = db => {
     })
   })
 
-  // A connection status is either accepted(1) or passed(3)
+  // A connection status is either ACCEPT or DECLINE
   // Only the owner that is logged in can make a connection
   router.put("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.body.receiver_id
     const status = req.body.status
+    const connectionId = req.body.connections_id
     db.query( 
       `UPDATE connections 
       SET sender_id=$1, receiver_id=$2, status=$3
-      WHERE id=$1`
-      , [userId, receiverId, status])
+      WHERE id=$4`
+      , [userId, receiverId, status, connectionId])
     .then(result => {
       res.json({
         status: 'Success',
