@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import './App.scss';
-import BottonNav from './components/BottomNav';
+import BottomNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
 import PetForm from './components/Form';
@@ -82,7 +82,7 @@ export default function App() {
           </Route>
         </Switch>
       </div>
-      <BottonNav />
+      <BottomNav />
     </Router>
   );
 }
