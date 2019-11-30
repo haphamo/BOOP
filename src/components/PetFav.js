@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -23,9 +24,26 @@ const useStyles = makeStyles(theme => ({
     background:
       'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
+  imgStyle: {
+    height: '60%',
+    "paddingTop": '10%',
+    width: 'fit-content'
+  },
+  listItemStyle: {
+    width:"100%",
+    height:"100px"
+  },
+  categoryTextStyle: {
+    "textAlign": "center"
+  },
+  fixedHeight: {
+    height:'100px',
+    width: '30%'
+  }
+
 }));
 
-
+// the images for the categories of pet favourites
 let data = {
   add: "https://image.flaticon.com/icons/svg/149/149145.svg",
   treat: "https://image.flaticon.com/icons/svg/1025/1025349.svg", 
@@ -34,41 +52,21 @@ let data = {
 }
  
 export default function PetFav(props) {
-  console.log('props', props)
+
   const classes = useStyles();
-  
-  const imgStyle = {
-    height: '60%',
-    "paddingTop": '10%',
-    transform: "translateY(0%)"
-  }
-
-  const listItemStyle = {
-    width:"100%",
-    height:"100px"
-  }
-
-  const categoryTextStyle = {
-    "textAlign": "center"
-  }
-
-  const fixedHeight = {
-    height:'100px',
-    width: '30%'
-  }
 
   return (
     <div className={classes.root} >
-      <GridList style={listItemStyle} className={classes.gridList} cols={2.5}>
+      <GridList className={classes.listItemStyle} className={classes.gridList} cols={2.5}>
         
-        {props.petFav.map(item => (
-          <GridListTile style={ fixedHeight }>
+        {props.petFavs.map(item => (
+          <GridListTile className={ classes.fixedHeight } onClick={()=> props.setShowPetFavForm(false)}>
             <img 
             key={item.favourite_id}
-            style={ imgStyle } 
+            className={ classes.imgStyle } 
             src={data[item.category.toLowerCase()]} 
             alt={item.category} />
-            <h3 style={ categoryTextStyle }>{item.favourite_item}</h3>
+            <h3 className={ classes.categoryTextStyle }>{item.favourite_item}</h3>
           </GridListTile>
         ))}
       </GridList>

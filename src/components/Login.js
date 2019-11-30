@@ -20,13 +20,12 @@ const useStyles = makeStyles(theme => ({
   input: {
     display: 'none',
   },
+  formStyle: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  }
 }));
-
-const formStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center'
-}
 
 export default function Login (props) {
   const classes = useStyles();
@@ -50,7 +49,6 @@ export default function Login (props) {
   // useEffect(()=> {
   // }, [])
 
-
  let userLogin = function () {
    axios.post(`/login`, {email, password}, { withCredentials: true})
    .then(res => {
@@ -62,7 +60,7 @@ export default function Login (props) {
     <div className="header">
       <h2>Login</h2>
       <hr></hr>
-      <form style={ formStyle } onSubmit={onSubmit}>
+      <form className={ classes.formStyle } onSubmit={onSubmit}>
          <TextField
           id="email"
           label="Email"
