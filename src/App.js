@@ -59,6 +59,17 @@ export default function App() {
   );
 }
 
+  // const { id } = useParams()
+  // const onUpload = (info) => {
+  //   // Save the image to the database
+  //   axios.post(`/api/pets/${id}/images`, { 
+  //     url: info.originalUrl 
+  //   })
+  //   .then(() => {
+  //     props.setLastUploaded(info.originalUrl);
+  //   })
+  // }
+
 const connect = function(userId, receiverId, status, callback){
   axios.post(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
   

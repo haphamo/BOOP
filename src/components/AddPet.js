@@ -56,10 +56,14 @@ export default function AddPet(props) {
   const [quirkyFact, setQuirkyFact] = useState('')
   const [profilePhoto, setProfilePhoto] = useState('')
 
-  const onSubmit = function (evt) {
+  const handleSubmit = function (evt) {
     evt.preventDefault();
     //validations here
-    addNewPet();
+    const pet = {
+      name, age, breed, quirkyFact, userId, profilePhoto
+    }
+  
+    props.onSubmit(pet);
   }
   const handleNameChange = function(e) {
     setName(e.target.value)
@@ -75,18 +79,8 @@ export default function AddPet(props) {
   }
   // AddPet component is in the App.js
   // How can I get the lastUploaded state from the Upload component?
-  const handleProfilePhotoChange = function() {
-    setProfilePhoto()
-  }
-
-  const addNewPet = function() {
-    axios.post('api/pets', { name, age, breed, quirky_fact: quirkyFact, owner_id: userId, profile_photo: profilePhoto })
-    .then(res => {
-      console.log("Added a new  pet: ", res)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  const handleUpload = function(info) {
+    setProfilePhoto(info.originalUrl)
   }
 
   return (
@@ -95,7 +89,7 @@ export default function AddPet(props) {
       <em>All fields are required.</em>
         <div className={avatarClasses.root}></div>
         <div className={classes.container}> 
-          <form style={ formStyle } onSubmit={onSubmit}>
+          <form style={ formStyle } onSubmit={handleSubmit}>
             <TextField
               required
               id="name"
@@ -132,7 +126,7 @@ export default function AddPet(props) {
               onChange={handleQuirkyFactChange}
               value={quirkyFact}
             />
-            <Upload />
+            <Upload onUpload={handleUpload}/>
           </form>
             <Button variant="outlined" className={classes.button} onClick={() => props.setShowForm(false)}>
               Cancel
