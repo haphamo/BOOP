@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import UploadProfilePhoto from './UploadProfilePhoto';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -52,7 +52,7 @@ export default function AddPet(props) {
 
   const currentUser = props.userId
   const [name, setName] = useState('')
-  const [age, setAge] = useState(0)
+  const [age, setAge] = useState('')
   const [breed, setBreed] = useState('')
   const [quirkyFact, setQuirkyFact] = useState('')
   const [profilePhoto, setProfilePhoto] = useState('')
