@@ -26,6 +26,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 export default function App() {
  const [userId, setUserId] = useState(undefined)
+ console.log("Current user who is logged in: ", userId)
 
  const handleLogin = function(id){
   setUserId(id)
