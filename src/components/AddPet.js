@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
@@ -38,13 +38,30 @@ const avatarStyles = makeStyles(theme => ({
 // Add a new pet
 // Only the owner that is logged in can add a new pet on their profile
 export default function AddPet(props) {
-  const currentUser = props.userId
-  const classes = useStyles();
-  const avatarClasses = avatarStyles();
+  const classes = useStyles()
+  const avatarClasses = avatarStyles()
 
-  // Need to send: current user, name, age, breed, quirky_fact, profile_photo
-  const addPet = function(currentUser, name, ) {
-    axios.post('api/pets', { name, currentUser })
+  const currentUser = props.userId
+  const [name, setName] = useState('')
+  const [age, setAge] = useState(0)
+  const [breed, setBreed] = useState('')
+  const [quirkyFact, setQuirkyFact] = useState('')
+  const [profilePhoto, setProfilePhoto] = useState('')
+
+  const onSubmit = function (evt) {
+    evt.preventDefault();
+    //validations here
+    addNewPet();
+  }
+  const handleNameChange = function(e) {
+    setName(e.target.value)
+  }
+  const handleAgeChange = function(e) {
+    setAge(parseInt(e.target.value))
+  }
+
+  const addNewPet = function() {
+    axios.post('api/pets', { name, age, breed, quirkyFact, currentUser, profilePhoto })
 
     .then(res => {
       console.log("Added a new  pet: ", res)
