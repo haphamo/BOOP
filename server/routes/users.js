@@ -245,22 +245,24 @@ module.exports = db => {
 
   // Accept a Friend Request
   // Only the owner that is logged in can make a connection
-  router.put("/:id/notifications/accept", (req, res) => {
+  router.post("/:id/notifications/accept", (req, res) => {
     const userId = req.session.user_id
-    const receiverId = req.body.receiver_id
-    const status = 'ACCEPTED'
+    const senderId = req.body.sender_id
+    // const status = req.body.status
     db.query( 
       `UPDATE connections 
-      SET sender_id=$1, receiver_id=$2, status=$3
-      WHERE sender_id=$1
-      AND receiver_id=$2`
-      , [userId, receiverId, status])
+      SET status=$1
+      WHERE sender_id=$2
+      AND receiver_id=$3
+      AND status=$4`
+      , ['ACCEPTED', parseInt(senderId), parseInt(userId), 'PENDING'])
     .then(result => {
+      console.log(result)
       res.json({
         status: 'Success',
         user: userId,
         result: result.rows,
-        message: `${status} friend request`
+        message: 'Accepted friend request'
       })
     })
     .catch(err => {
@@ -271,22 +273,22 @@ module.exports = db => {
 
   // Decline a Friend Request
   // Only the owner that is logged in can make a connection
-  router.put("/:id/notifications/decline", (req, res) => {
+  router.post("/:id/notifications/decline", (req, res) => {
     const userId = req.session.user_id
-    const receiverId = req.body.receiver_id
-    const status = 'DECLINED'
+    const senderId = req.body.sender_id
+    // const status = req.body.status
     db.query( 
       `UPDATE connections 
-      SET sender_id=$1, receiver_id=$2, status=$3
+      SET status=$1
       WHERE sender_id=$1
       AND receiver_id=$2`
-      , [userId, receiverId, status])
+      , ['PENDING', senderId, userId, 'DECLINED'])
     .then(result => {
       res.json({
         status: 'Success',
         user: userId,
         result: result.rows,
-        message: `${status} friend request`
+        message: 'Declined friend request'
       })
     })
     .catch(err => {

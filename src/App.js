@@ -72,7 +72,7 @@ const connect = function(userId, receiverId, status, callback){
 }
 
 const declineFriendRequest = function(userId, receiverId, status, callback){
-  axios.put(`api/users/${userId}/notifications/decline`, { receiver_id: receiverId, status: status })
+  axios.post(`api/users/${userId}/notifications/decline`, { receiver_id: receiverId, status: status })
   
   .then(res => {
     callback()
@@ -84,7 +84,7 @@ const declineFriendRequest = function(userId, receiverId, status, callback){
 }
 
 const acceptFriendRequest = function(userId, receiverId, status, callback){
-  axios.put(`api/users/${userId}/notifications/accept`, { receiver_id: receiverId, status: status })
+  axios.post(`api/users/${userId}/notifications/accept`, { receiver_id: receiverId, status: status })
   
   .then(res => {
     callback()
