@@ -1,9 +1,10 @@
-import React from 'react';
+import React , { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
+import axios from 'axios'
 
 // pet Favourite categories
 const categories = [
@@ -51,7 +52,8 @@ const useStyles = makeStyles(theme => ({
     alignContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingBottom: '2em'
   },
   largeButton: {
     transform: 'scale(1.8)'
@@ -60,22 +62,32 @@ const useStyles = makeStyles(theme => ({
 
 export default function PetFavForm(props) {
   const classes = useStyles();
-  const [category, setCategory] = React.useState('EUR');
+  const [category, setCategory] = useState('');
+  const [favourite, setFavourite] = useState('')
 
-  const handleChange = event => {
-    setCategory(event.target.value);
+  const onSubmit = function (evt) {
+    evt.preventDefault()
+    sumbitPetFav()
+  }
+
+  const handleCategoryChange = e => {
+    setCategory(e.target.value);
   };
+  const sumbitPetFav = function() {
+    
+  }
+
 
   return (
-    <form className={classes.container} noValidate autoComplete="off">
+    <form className={classes.container} noValidate autoComplete="off" onSubmit={onSubmit}>
       <div className={classes.formStyle}>
         <TextField
-          id="standard-select-category"
+          id="category"
           select
           label="Category"
           className={classes.textField}
           value={category}
-          onChange={handleChange}
+          onChange={handleCategoryChange}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
@@ -89,7 +101,12 @@ export default function PetFavForm(props) {
             </MenuItem>
           ))}
         </TextField>
-        <TextField id="standard-basic" className={classes.textField} label="Favourite"/>
+        <TextField 
+          id="standard-basic" 
+          className={classes.textField} 
+          label="Favourite"
+          value={favourite}
+          onChange={setFavourite}/>
         <div className="buttons" className={ classes.buttonStyles }>
         <CancelOutlinedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
         <CheckCircleOutlineRoundedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
