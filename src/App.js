@@ -82,7 +82,7 @@ const declineFriendRequest = function( userId, receiver_id, status){
   })
 }
 
-const acceptFriendRequest = function(userId, receiver_id, status){
+const acceptFriendRequest = function(userId, receiver_id, status) {
   axios.post(`api/users/${userId}/notifications/accept`, { sender_id: receiver_id, status: status })
   
   .then(res => {
@@ -92,7 +92,6 @@ const acceptFriendRequest = function(userId, receiver_id, status){
     console.log(err)
   })
 }
-
 
 // Pets with no connections (PENDING, ACCEPTED, DECLINED)
 function DogsNearby(props) {
@@ -170,7 +169,7 @@ function Profile(props) {
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
       <hr></hr>
-      {showForm ? <PetForm setShowForm={setShowForm}/> : 
+      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} /> : 
       <UserProfile userId={props.userId} />}
     </div>
   )
