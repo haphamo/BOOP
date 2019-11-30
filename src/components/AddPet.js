@@ -79,7 +79,6 @@ export default function AddPet(props) {
     setProfilePhoto()
   }
 
-  
   const addNewPet = function() {
     axios.post('api/pets', { name, age, breed, quirky_fact: quirkyFact, owner_id: userId, profile_photo: profilePhoto })
     .then(res => {
