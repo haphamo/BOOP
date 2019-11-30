@@ -52,7 +52,6 @@ let data = {
  
 export default function PetFav(props) {
 
-  console.log('props', props)
   const classes = useStyles();
 
   return (

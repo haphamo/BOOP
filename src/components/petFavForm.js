@@ -1,4 +1,5 @@
 import React , { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -61,13 +62,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function PetFavForm(props) {
+  // id is the pet id
+  let {id} = useParams()
+
   const classes = useStyles();
   const [category, setCategory] = useState('');
-  const [favourite, setFavourite] = useState('')
+  // The state below is the name of the favourite item
+  const [name, setName] = useState('')
 
   const onSubmit = function (evt) {
     evt.preventDefault()
-    sumbitPetFav()
+    submitPetFav(name, category)
   }
 
   const handleCategoryChange = e => {
@@ -75,16 +80,16 @@ export default function PetFavForm(props) {
   };
 
   const handleFavouriteChange = e => {
-    setFavourite(e.target.value);
+    setName(e.target.value);
   };
-  const sumbitPetFav = function() {
-    // axios.post(``)
-    console.log('props on petFavForm', props)
+  const submitPetFav = function(name, category) {
+    axios.post(`/api/pets/${id}/favourites`, { name, category, id })
+
   }
 
 
   return (
-    <form className={classes.container} noValidate autoComplete="off" onSubmit={onSubmit}>
+    <form className={classes.container} onSubmit={onSubmit} noValidate autoComplete="off" >
       <div className={classes.formStyle}>
         <TextField
           id="category"
@@ -110,11 +115,14 @@ export default function PetFavForm(props) {
           id="standard-basic" 
           className={classes.textField} 
           label="Favourite"
-          value={favourite}
+          value={name}
           onChange={handleFavouriteChange}/>
         <div className="buttons" className={ classes.buttonStyles }>
-        <CancelOutlinedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
-        <CheckCircleOutlineRoundedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
+
+          <CancelOutlinedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
+          <button>
+            <CheckCircleOutlineRoundedIcon className={classes.largeButton} type="submit" />
+          </button>
         </div>
 
       </div>

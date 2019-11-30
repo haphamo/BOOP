@@ -11,7 +11,7 @@ import './App.scss';
 import BottomNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
-import PetForm from './components/Form';
+import AddPet from './components/AddPet';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
@@ -25,7 +25,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 export default function App() {
  const [userId, setUserId] = useState(undefined)
-  console.log('the user id:', userId)
+ console.log("Current user who is logged in: ", userId)
 
  const handleLogin = function(id){
   setUserId(id)
@@ -105,7 +105,6 @@ const declineFriendRequest = function( userId, receiver_id, status){
   axios.post(`api/users/${userId}/notifications/decline`, { sender_id: receiver_id, status: status })
   
   .then(res => {
-
     console.log('res', res)
   })
   .catch(err => {
@@ -113,7 +112,7 @@ const declineFriendRequest = function( userId, receiver_id, status){
   })
 }
 
-const acceptFriendRequest = function(userId, receiver_id, status){
+const acceptFriendRequest = function(userId, receiver_id, status) {
   axios.post(`api/users/${userId}/notifications/accept`, { sender_id: receiver_id, status: status })
   
   .then(res => {
@@ -143,13 +142,14 @@ function DogsNearby(props) {
   const petNameTextStyle = {
     'textAlign': 'center'
   }
-  const requestConnection = function(receiverId) {
+  const requestConnection = function(ownerId) {
     const callback = () => setCurrentDogIndex(prev => prev+1)
-    connect(props.userId, receiverId, 'PENDING', callback)
+    connect(props.userId, ownerId, 'PENDING', callback)
   }
-  const declineConnection = function(receiverId) {
+  const declineConnection = function(ownerId) {
     const callback = () => setCurrentDogIndex(prev => prev+1)
-    connect(props.userId, receiverId, 'DECLINED', callback)
+    connect(props.userId, ownerId, 'DECLINED', callback)
+   
   }
 
   return (
@@ -168,10 +168,10 @@ function DogsNearby(props) {
           />
           <div className="buttons">
             <ArrowBackRoundedIcon 
-              onClick={ () => declineConnection(dogsNearby[currentDogIndex].receiver_id)} 
+              onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)} 
             />
             <FavoriteRoundedIcon 
-              onClick={() => requestConnection(dogsNearby[currentDogIndex].receiver_id)}
+              onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
              />
            </div>
         </div> : 
@@ -192,28 +192,23 @@ function Profile(props) {
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
       <hr></hr>
-      {showForm ? <PetForm setShowForm={setShowForm}/> : 
+      {showForm ? <AddPet setShowForm={setShowForm} userId={props.userId} /> : 
       <UserProfile userId={props.userId} />}
     </div>
-  );
+  )
 }
-
-// Avatar styles for the Notifications and Friends route
-
 
 // PENDING Friend Requests
 function Notifications(props) {
   const classes = useStyles();
-
   const declineRequest = function(userId, receiver_id) {
     declineFriendRequest(userId, receiver_id, 'DECLINED')
   }
-
    const acceptRequest = function(userId, receiver_id){
     acceptFriendRequest(userId, receiver_id, 'ACCEPTED')
   }
   const [notifications, setNotifications] = useState([])
-  console.log('notifications', notifications)
+
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {
@@ -235,9 +230,7 @@ function Notifications(props) {
               <ClearIcon className={classes.largeButton} onClick={()=> declineRequest(props.userId, notification.receiver_id)}/>
               <PetsIcon className={classes.largeButton} onClick={()=> acceptRequest(props.userId, notification.receiver_id)}/>
             </div>
-
           </div>
-
         </div>
       </div>
     )
@@ -256,9 +249,9 @@ function Notifications(props) {
 
 // ACCEPTED Friend Requests
 function Friends(props) {
-  const classes = useStyles();
-
+  const classes = useStyles()
   const [friends, setFriends] = useState([])
+
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/friends`)
     .then(res => {
@@ -266,7 +259,6 @@ function Friends(props) {
     }).catch(err => {
       console.log(err)
     })
-
   }, [props.userId])
 
   const furryFriends = friends.map(friend => {
@@ -285,7 +277,7 @@ function Friends(props) {
       <hr></hr>
       {furryFriends}
     </div>
-  );
+  )
 }
 
 
