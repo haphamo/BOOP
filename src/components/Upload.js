@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 // Upload images to Pet Gallery
+// Moved the logic up to the parent component (App.js)
 // Assisted by Guy Tonye(mentor)
 export default function Upload(props) {
   return (
