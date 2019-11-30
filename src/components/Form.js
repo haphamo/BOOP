@@ -2,9 +2,6 @@ import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import Upload from './Upload';
-import Avatar from '@material-ui/core/Avatar';
-
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -43,8 +40,8 @@ export default function PetForm(props) {
 
   return (
     <Fragment>
-      <h2>Add a new pet</h2>
-      {/* <h4>All fields are required.</h4> */}
+      <h3>Add a new pet</h3>
+      <em>All fields are required.</em>
       <div className={avatarClasses.root}>
     </div>
     <div className={classes.container}> 
