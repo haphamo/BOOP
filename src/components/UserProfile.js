@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import PetsOnUserPage from './PetOnUserPage';
+import AddPet from './AddPet';
 import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({

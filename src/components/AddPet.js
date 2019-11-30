@@ -76,7 +76,7 @@ export default function AddPet(props) {
   // e.target.value = info.originalUrl (in the Upload component)
   // from the res.json obj
   // Check if this works
-  // Should profile photo be a text field??
+  // Instead of text field what can I use?
   const onUpload = function(info) {
     setProfilePhoto(info.originalUrl)
   }
@@ -133,15 +133,6 @@ export default function AddPet(props) {
               margin="normal"
               onChange={handleQuirkyFactChange}
               value={quirkyFact}
-            />
-            <TextField
-              required
-              id="profilephoto"
-              label="Profile Photo"
-              className={classes.textField}
-              margin="normal"
-              onChange={onUpload}
-              value={profilePhoto}
             />
             <Upload />
           </form>
