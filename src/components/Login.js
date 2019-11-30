@@ -63,9 +63,6 @@ export default function Login (props) {
       <h2>Login</h2>
       <hr></hr>
       <form style={ formStyle } onSubmit={onSubmit}>
-        <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a>
-         {/* <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div> */}
-         
          <TextField
           id="email"
           label="Email"
@@ -85,9 +82,11 @@ export default function Login (props) {
           onChange={handlePasswordChange}
         />
       <Button variant="contained" color="primary" className={classes.button} type="submit" >
-        Log In !
+        Log In
       </Button>
         </form>
+        {/* <a href="http://localhost:3001/auth/facebook">Log In with Facebook</a> */}
+         {/* <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div> */}
     </div>
   );
 }
