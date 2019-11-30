@@ -26,7 +26,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 export default function App() {
  const [userId, setUserId] = useState(undefined)
-  console.log('the user id:', userId)
 
  const handleLogin = function(id){
   setUserId(id)
@@ -75,7 +74,6 @@ const declineFriendRequest = function( userId, receiver_id, status){
   axios.post(`api/users/${userId}/notifications/decline`, { sender_id: receiver_id, status: status })
   
   .then(res => {
-
     console.log('res', res)
   })
   .catch(err => {
@@ -116,8 +114,6 @@ function DogsNearby(props) {
   }
   const requestConnection = function(ownerId) {
     const callback = () => setCurrentDogIndex(prev => prev+1)
-    console.log('props.userId', props.userId)
-    console.log('ownerId', ownerId)
     connect(props.userId, ownerId, 'PENDING', callback)
   }
   const declineConnection = function(ownerId) {
@@ -142,7 +138,7 @@ function DogsNearby(props) {
           />
           <div className="buttons">
             <ArrowBackRoundedIcon 
-              onClick={ () => declineConnection(dogsNearby[currentDogIndex].owner_id)} 
+              onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)} 
             />
             <FavoriteRoundedIcon 
               onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
@@ -155,9 +151,7 @@ function DogsNearby(props) {
 }
 
 function Profile(props) {
-
   const [showForm, setShowForm] = useState(false)
-  
   const styles = {
     display: 'flex',
     'justifyContent': 'space-around',
@@ -178,7 +172,7 @@ function Profile(props) {
       {showForm ? <PetForm setShowForm={setShowForm}/> : 
       <UserProfile userId={props.userId} />}
     </div>
-  );
+  )
 }
 
 // Avatar styles for the Notifications and Friends route
@@ -196,30 +190,26 @@ const useStyles = makeStyles(theme => ({
     width: 170,
     height: 170,
   },
-}));
+}))
 
 // PENDING Friend Requests
 function Notifications(props) {
   const classes = useStyles();
-
   const largeButton = {
     transform: 'scale(1.5)'
   }
-
   const buttonStyle = {
     justifyContent: 'space-around',
     display: 'flex'
   }
-
   const declineRequest = function(userId, receiver_id) {
     declineFriendRequest(userId, receiver_id, 'DECLINED')
   }
-
    const acceptRequest = function(userId, receiver_id){
     acceptFriendRequest(userId, receiver_id, 'ACCEPTED')
   }
   const [notifications, setNotifications] = useState([])
-  console.log('notifications', notifications)
+
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {
@@ -241,9 +231,7 @@ function Notifications(props) {
               <ClearIcon style={largeButton} onClick={()=> declineRequest(props.userId, notification.receiver_id)}/>
               <PetsIcon style={largeButton} onClick={()=> acceptRequest(props.userId, notification.receiver_id)}/>
             </div>
-
           </div>
-
         </div>
       </div>
     )
@@ -254,7 +242,6 @@ function Notifications(props) {
       <h2>Notifications</h2>
       <hr></hr>
       <div className="container">
-
       {friendRequests}
       </div>
     </div>
@@ -263,9 +250,9 @@ function Notifications(props) {
 
 // ACCEPTED Friend Requests
 function Friends(props) {
-  const classes = useStyles();
-
+  const classes = useStyles()
   const [friends, setFriends] = useState([])
+
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/friends`)
     .then(res => {
@@ -273,7 +260,6 @@ function Friends(props) {
     }).catch(err => {
       console.log(err)
     })
-
   }, [props.userId])
 
   const furryFriends = friends.map(friend => {
@@ -292,7 +278,7 @@ function Friends(props) {
       <hr></hr>
       {furryFriends}
     </div>
-  );
+  )
 }
 
 
