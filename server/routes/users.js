@@ -247,7 +247,7 @@ module.exports = db => {
   // Only the owner that is logged in can make a connection
   router.post("/:id/notifications/accept", (req, res) => {
     const userId = req.session.user_id
-    const senderId = req.body.owner_id
+    const senderId = req.body.sender_id
     // const status = req.body.status
     db.query( 
       `UPDATE connections 
@@ -275,14 +275,15 @@ module.exports = db => {
   // Only the owner that is logged in can make a connection
   router.post("/:id/notifications/decline", (req, res) => {
     const userId = req.session.user_id
-    const senderId = req.body.owner_id
+    const senderId = req.body.sender_id
     // const status = req.body.status
     db.query( 
       `UPDATE connections 
       SET status=$1
-      WHERE sender_id=$1
-      AND receiver_id=$2`
-      , ['PENDING', senderId, userId, 'DECLINED'])
+      WHERE sender_id=$2
+      AND receiver_id=$3
+      AND status=$4`
+      , ['DECLINED', senderId, userId, 'PENDING'])
     .then(result => {
       res.json({
         status: 'Success',

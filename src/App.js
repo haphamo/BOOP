@@ -71,8 +71,8 @@ const connect = function(userId, receiverId, status, callback){
   })
 }
 
-const declineFriendRequest = function( userId, owner_id, status){
-  axios.post(`api/users/${userId}/notifications/decline`, { sender_id: owner_id, status: status })
+const declineFriendRequest = function( userId, receiver_id, status){
+  axios.post(`api/users/${userId}/notifications/decline`, { sender_id: receiver_id, status: status })
   
   .then(res => {
 
@@ -83,8 +83,8 @@ const declineFriendRequest = function( userId, owner_id, status){
   })
 }
 
-const acceptFriendRequest = function(userId, owner_id, status){
-  axios.post(`api/users/${userId}/notifications/accept`, { sender_id: owner_id, status: status })
+const acceptFriendRequest = function(userId, receiver_id, status){
+  axios.post(`api/users/${userId}/notifications/accept`, { sender_id: receiver_id, status: status })
   
   .then(res => {
     console.log('res', res)
@@ -139,10 +139,10 @@ function DogsNearby(props) {
           />
           <div className="buttons">
             <ArrowBackRoundedIcon 
-              onClick={ () => declineConnection(dogsNearby[currentDogIndex].owner_id)} 
+              onClick={ () => declineConnection(dogsNearby[currentDogIndex].receiver_id)} 
             />
             <FavoriteRoundedIcon 
-              onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
+              onClick={() => requestConnection(dogsNearby[currentDogIndex].receiver_id)}
              />
            </div>
         </div> : 
@@ -208,12 +208,12 @@ function Notifications(props) {
     display: 'flex'
   }
 
-  const declineRequest = function(owner_id) {
-    declineFriendRequest(owner_id, 'DECLINED')
+  const declineRequest = function(userId, receiver_id) {
+    declineFriendRequest(userId, receiver_id, 'DECLINED')
   }
 
-   const acceptRequest = function(owner_id){
-    acceptFriendRequest(owner_id, 'ACCEPTED')
+   const acceptRequest = function(userId, receiver_id){
+    acceptFriendRequest(userId, receiver_id, 'ACCEPTED')
   }
   const [notifications, setNotifications] = useState([])
   console.log('notifications', notifications)
@@ -235,8 +235,8 @@ function Notifications(props) {
           <div className="right-side">
             <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
             <div className="buttons" style={buttonStyle}>
-              <ClearIcon style={largeButton} onClick={()=> declineRequest(notification.receiver_id)}/>
-              <PetsIcon style={largeButton} onClick={()=> acceptRequest(notification.receiver_id)}/>
+              <ClearIcon style={largeButton} onClick={()=> declineRequest(props.userId, notification.receiver_id)}/>
+              <PetsIcon style={largeButton} onClick={()=> acceptRequest(props.userId, notification.receiver_id)}/>
             </div>
 
           </div>
