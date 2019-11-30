@@ -11,7 +11,7 @@ import './App.scss';
 import BottomNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
-import PetForm from './components/Form';
+import AddPet from './components/AddPet';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
@@ -26,6 +26,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 export default function App() {
  const [userId, setUserId] = useState(undefined)
+ console.log("Current user who is logged in: ", userId)
 
  const handleLogin = function(id){
   setUserId(id)
@@ -81,7 +82,7 @@ const declineFriendRequest = function( userId, receiver_id, status){
   })
 }
 
-const acceptFriendRequest = function(userId, receiver_id, status){
+const acceptFriendRequest = function(userId, receiver_id, status) {
   axios.post(`api/users/${userId}/notifications/accept`, { sender_id: receiver_id, status: status })
   
   .then(res => {
@@ -91,7 +92,6 @@ const acceptFriendRequest = function(userId, receiver_id, status){
     console.log(err)
   })
 }
-
 
 // Pets with no connections (PENDING, ACCEPTED, DECLINED)
 function DogsNearby(props) {
@@ -169,7 +169,7 @@ function Profile(props) {
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
       <hr></hr>
-      {showForm ? <PetForm setShowForm={setShowForm}/> : 
+      {showForm ? <AddPet setShowForm={setShowForm} userId={props.userId} /> : 
       <UserProfile userId={props.userId} />}
     </div>
   )

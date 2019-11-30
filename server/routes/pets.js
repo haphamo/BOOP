@@ -42,6 +42,51 @@ module.exports = db => {
     })
   })
 
+  // Get all pet photos
+  router.get("/images", (req, res) => {
+    db.query(
+      `SELECT pets.id AS pet_id,
+              pets.name AS name,
+              images.id AS image_id,
+              images.url AS photo 
+      FROM images
+      JOIN pets ON pets.id = pet_id`)
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        result: result.rows,
+        message: 'Retrieved all the pet pictures' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Get all pet favourites
+  router.get("/favourites", (req, res) => {
+    db.query(
+      `SELECT pets.name AS pet,
+              pet_favourites.category AS category, 
+              pet_favourites.name AS name
+      FROM pet_favourites
+      JOIN pets ON pets.id = pet_id`)
+    .then(result => {
+      res.status(200)
+      res.json({ 
+        status: 'Success',
+        result: result.rows,
+        message: 'Retrieved all the pet favourites' 
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
   // Get a single pet and its favourite things by id
   router.get("/:id", (req, res) => {
     const userId = req.session.user_id
@@ -118,51 +163,6 @@ module.exports = db => {
         status: 'Success',
         user: userId,
         message: `Removed ${result.rowCount} pet` 
-      })
-    })
-    .catch(err => {
-      res.status(500)
-      res.json({ error: err.message })
-    })
-  })
-
-  // Get all pet photos
-  router.get("/images", (req, res) => {
-    db.query(
-      `SELECT pets.id AS pet_id,
-              pets.name AS name,
-              images.id AS image_id,
-              images.url AS photo 
-      FROM images
-      JOIN pets ON pets.id = pet_id`)
-    .then(result => {
-      res.status(200)
-      res.json({ 
-        status: 'Success',
-        result: result.rows,
-        message: 'Retrieved all the pet pictures' 
-      })
-    })
-    .catch(err => {
-      res.status(500)
-      res.json({ error: err.message })
-    })
-  })
-
-  // Get all pet favourites
-  router.get("/favourites", (req, res) => {
-    db.query(
-      `SELECT pets.name AS pet,
-              pet_favourites.category AS category, 
-              pet_favourites.name AS name
-      FROM pet_favourites
-      JOIN pets ON pets.id = pet_id`)
-    .then(result => {
-      res.status(200)
-      res.json({ 
-        status: 'Success',
-        result: result.rows,
-        message: 'Retrieved all the pet favourites' 
       })
     })
     .catch(err => {
