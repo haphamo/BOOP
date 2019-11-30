@@ -11,7 +11,7 @@ import './App.scss';
 import BottomNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
-import AddPet from './components/Form';
+import AddPet from './components/AddPet';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
