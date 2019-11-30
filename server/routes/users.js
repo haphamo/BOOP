@@ -207,14 +207,13 @@ module.exports = db => {
     })
   })
 
-  // Get all pending friend requests 
+  // Get all pending friend requests (NOTIFICATIONS)
   // If a user has more than one pet - the request will include all pets
   // Only the user that is logged in can see their friend requests
   // Status: PENDING friend request
   router.get("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
     const status = req.body.status
-    const connectionId = req.body.connections_id
     db.query(
       `SELECT pets.id AS pet_id,
               pets.name AS pet, 
@@ -225,14 +224,12 @@ module.exports = db => {
      FROM users 
      JOIN pets ON users.id = pets.owner_id
      WHERE users.id 
-     IN (SELECT sender_id AS id,
-                connections.id AS connection_id
+     IN (SELECT sender_id AS id
              FROM connections
              WHERE receiver_id = $1
-             AND connections.status = $2
-             AND connections_id = $3) 
+             AND connections.status = $2) 
      AND users.id != $1`
-      , [userId, status, connectionId])
+      , [userId, status])
     .then(result => {
       res.json({
         status: 'Success',
@@ -253,12 +250,12 @@ module.exports = db => {
     const userId = req.session.user_id
     const receiverId = req.body.receiver_id
     const status = req.body.status
-    const connectionId = req.body.connections_id
     db.query( 
       `UPDATE connections 
       SET sender_id=$1, receiver_id=$2, status=$3
-      WHERE id=$4`
-      , [userId, receiverId, status, connectionId])
+      WHERE sender_id=$1
+      AND receiver_id=$2`
+      , [userId, receiverId, status])
     .then(result => {
       res.json({
         status: 'Success',
