@@ -213,7 +213,6 @@ module.exports = db => {
   // Status: PENDING friend request
   router.get("/:id/notifications", (req, res) => {
     const userId = req.session.user_id
-    const status = req.body.status
     db.query(
       `SELECT pets.id AS pet_id,
               pets.name AS pet, 
@@ -229,7 +228,7 @@ module.exports = db => {
              WHERE receiver_id = $1
              AND connections.status = $2) 
      AND users.id != $1`
-      , [userId, status])
+      , [userId, 'PENDING'])
     .then(result => {
       res.json({
         status: 'Success',
@@ -244,12 +243,38 @@ module.exports = db => {
     })
   })
 
-  // A connection status is either ACCEPT or DECLINE
+  // Accept a Friend Request
   // Only the owner that is logged in can make a connection
-  router.put("/:id/notifications", (req, res) => {
+  router.put("/:id/notifications/accept", (req, res) => {
     const userId = req.session.user_id
     const receiverId = req.body.receiver_id
-    const status = req.body.status
+    const status = 'ACCEPTED'
+    db.query( 
+      `UPDATE connections 
+      SET sender_id=$1, receiver_id=$2, status=$3
+      WHERE sender_id=$1
+      AND receiver_id=$2`
+      , [userId, receiverId, status])
+    .then(result => {
+      res.json({
+        status: 'Success',
+        user: userId,
+        result: result.rows,
+        message: `${status} friend request`
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
+
+  // Decline a Friend Request
+  // Only the owner that is logged in can make a connection
+  router.put("/:id/notifications/decline", (req, res) => {
+    const userId = req.session.user_id
+    const receiverId = req.body.receiver_id
+    const status = 'DECLINED'
     db.query( 
       `UPDATE connections 
       SET sender_id=$1, receiver_id=$2, status=$3
