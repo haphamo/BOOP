@@ -1,13 +1,15 @@
+import React, { Fragment, useEffect , useState} from "react";
+import {useParams} from 'react-router-dom';
+import axios from "axios";
+
+import { makeStyles } from '@material-ui/core/styles';
 import PetProfilePhoto from "./PetProfilePhoto";
 import PetInfo from "./PetInfo";
 import PetFav from "./PetFav";
-import React, { Fragment, useEffect , useState} from "react";
 import Upload from './Upload';
-import {useParams} from 'react-router-dom';
-import axios from "axios";
 import Gallery from './Gallery';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import PetFavForm from './petFavForm';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -34,7 +36,9 @@ export default function PetPage(props) {
   const [petFav, setPetFav] = useState([addFav])
   const [petInfo, setPetInfo] = useState('')
   const [petGallery, setPetGallery] = useState([])
-  const [lastUploaded, setLastUploaded] = useState('');
+  const [lastUploaded, setLastUploaded] = useState('')
+  const [showPetFavForm, setShowPetFavForm] = useState(true)
+
   
   useEffect(() => {
     Promise.all([
@@ -73,23 +77,32 @@ export default function PetPage(props) {
   return(
     <Fragment>
       <div className="header" style={ styles }>
-      <Button variant="contained" style={hidden} className={classes.button}>
+        <Button variant="contained" style={hidden} className={classes.button}>
         Default
-      </Button>
-          <h2>{petName}</h2>
-          <Upload setLastUploaded={setLastUploaded}/>
+        </Button>
+        <h2>{petName}</h2>
+        <Upload setLastUploaded={setLastUploaded}/>
       </div>
       <hr></hr>
-      <div className="pet-profile-div" >
-        <PetProfilePhoto 
-        petImg={petAvatar}/>
-      </div>
-      <PetInfo petInfo={petInfo}/>
-      <PetFav petFav={petFav}/>
+      { showPetFavForm ?
       <div>
-      {/* <Upload /> */}
-      <Gallery petGallery={petGallery}/>
+        <div className="pet-profile-div" >
+          <PetProfilePhoto 
+          petImg={petAvatar}/>
+        </div>
+        <PetInfo petInfo={petInfo}/>
+        <PetFav petFav={petFav} setShowPetFavForm={setShowPetFavForm}/>
+        <div>
+          <Gallery petGallery={petGallery}/>
+        </div> 
+      </div> : 
+      <div>
+        <PetFavForm setShowPetFavForm={setShowPetFavForm}/>
+        <PetFav petFav={petFav} setShowPetFavForm={setShowPetFavForm}/>
+        <Gallery petGallery={petGallery}/>
       </div>
+      }
+
     </Fragment>
     
   )

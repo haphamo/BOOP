@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
+// pet Favourite categories
 const categories = [
   {
     value: 'Treat',
@@ -24,23 +25,6 @@ const categories = [
   },
 ];
 
-const formStyle = {
-  width:'100%',
-  display: 'flex',
-  alignContent: 'center',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center'
-}
-
-const buttonStyles = {
-  display: 'flex',
-  justifyContent: 'space-evenly',
-  flexDirection: 'row',
-  width: '80%',
-  paddingTop: '2em'
-}
-
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
@@ -50,18 +34,31 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: '80%',
-
   },
   menu: {
     width: 200,
   },
+  buttonStyles: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    width: '80%',
+    paddingTop: '2em'
+  },
+  formStyle: {
+    width:'100%',
+    display: 'flex',
+    alignContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  largeButton: {
+    transform: 'scale(1.8)'
+  }
 }));
 
-const largeButton = {
-  transform: 'scale(1.8)'
-}
-
-export default function PetFavForm() {
+export default function PetFavForm(props) {
   const classes = useStyles();
   const [category, setCategory] = React.useState('EUR');
 
@@ -71,7 +68,7 @@ export default function PetFavForm() {
 
   return (
     <form className={classes.container} noValidate autoComplete="off">
-      <div style={formStyle}>
+      <div className={classes.formStyle}>
         <TextField
           id="standard-select-category"
           select
@@ -93,9 +90,9 @@ export default function PetFavForm() {
           ))}
         </TextField>
         <TextField id="standard-basic" className={classes.textField} label="Favourite"/>
-        <div className="buttons" style={ buttonStyles }>
-        <CancelOutlinedIcon style={largeButton}/>
-        <CheckCircleOutlineRoundedIcon style={largeButton}/>
+        <div className="buttons" className={ classes.buttonStyles }>
+        <CancelOutlinedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
+        <CheckCircleOutlineRoundedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
         </div>
 
       </div>
