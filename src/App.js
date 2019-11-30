@@ -71,11 +71,11 @@ const connect = function(userId, receiverId, status, callback){
   })
 }
 
-const declineFriendRequest = function(userId, receiverId, status, callback){
-  axios.post(`api/users/${userId}/notifications/decline`, { receiver_id: receiverId, status: status })
+const declineFriendRequest = function( userId, owner_id, status){
+  axios.post(`api/users/${userId}/notifications/decline`, { sender_id: owner_id, status: status })
   
   .then(res => {
-    callback()
+
     console.log('res', res)
   })
   .catch(err => {
@@ -83,11 +83,10 @@ const declineFriendRequest = function(userId, receiverId, status, callback){
   })
 }
 
-const acceptFriendRequest = function(userId, receiverId, status, callback){
-  axios.post(`api/users/${userId}/notifications/accept`, { receiver_id: receiverId, status: status })
+const acceptFriendRequest = function(userId, owner_id, status){
+  axios.post(`api/users/${userId}/notifications/accept`, { sender_id: owner_id, status: status })
   
   .then(res => {
-    callback()
     console.log('res', res)
   })
   .catch(err => {
@@ -209,15 +208,15 @@ function Notifications(props) {
     display: 'flex'
   }
 
-  const declineRequest = function(receiverId) {
-    declineFriendRequest(props.userId, receiverId, 'DECLINED', null)
+  const declineRequest = function(owner_id) {
+    declineFriendRequest(owner_id, 'DECLINED')
   }
 
-   const acceptRequest = function(receiverId){
-    acceptFriendRequest(props.userId, receiverId, 'ACCEPTED', null)
+   const acceptRequest = function(owner_id){
+    acceptFriendRequest(owner_id, 'ACCEPTED')
   }
   const [notifications, setNotifications] = useState([])
-
+  console.log('notifications', notifications)
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {
