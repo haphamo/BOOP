@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -34,9 +35,24 @@ const avatarStyles = makeStyles(theme => ({
   },
 }));
 
-export default function PetForm(props) {
+// Add a new pet
+// Only the owner that is logged in can add a new pet on their profile
+export default function AddPet(props) {
+  const currentUser = props.userId
   const classes = useStyles();
   const avatarClasses = avatarStyles();
+
+  // Need to send: current user, name, age, breed, quirky_fact, profile_photo
+  const addPet = function(currentUser, name, ) {
+    axios.post('api/pets', { name, currentUser })
+
+    .then(res => {
+      console.log("Added a new  pet: ", res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
   return (
     <Fragment>

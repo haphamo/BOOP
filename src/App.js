@@ -11,7 +11,7 @@ import './App.scss';
 import BottomNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
-import PetForm from './components/Form';
+import AddPet from './components/Form';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
@@ -169,7 +169,7 @@ function Profile(props) {
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
       <hr></hr>
-      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} /> : 
+      {showForm ? <AddPet setShowForm={setShowForm} userId={props.userId} /> : 
       <UserProfile userId={props.userId} />}
     </div>
   )
