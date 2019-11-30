@@ -73,13 +73,12 @@ export default function AddPet(props) {
   const handleQuirkyFactChange = function(e) {
     setQuirkyFact(e.target.value)
   }
-  // e.target.value = info.originalUrl (in the Upload component)
-  // from the res.json obj
-  // Check if this works
-  // Instead of text field what can I use?
-  const onUpload = function(info) {
-    setProfilePhoto(info.originalUrl)
+  // AddPet component is in the App.js
+  // How can I get the lastUploaded state from the Upload component?
+  const handleProfilePhotoChange = function() {
+    setProfilePhoto()
   }
+
   
   const addNewPet = function() {
     axios.post('api/pets', { name, age, breed, quirky_fact: quirkyFact, owner_id: userId, profile_photo: profilePhoto })
