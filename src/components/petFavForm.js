@@ -73,8 +73,13 @@ export default function PetFavForm(props) {
   const handleCategoryChange = e => {
     setCategory(e.target.value);
   };
+
+  const handleFavouriteChange = e => {
+    setFavourite(e.target.value);
+  };
   const sumbitPetFav = function() {
-    
+    // axios.post(``)
+    console.log('props on petFavForm', props)
   }
 
 
@@ -106,7 +111,7 @@ export default function PetFavForm(props) {
           className={classes.textField} 
           label="Favourite"
           value={favourite}
-          onChange={setFavourite}/>
+          onChange={handleFavouriteChange}/>
         <div className="buttons" className={ classes.buttonStyles }>
         <CancelOutlinedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
         <CheckCircleOutlineRoundedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
