@@ -16,12 +16,13 @@ import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
 import Login from './components/Login';
-import PetFavForm from './components/petFavForm';
+// import PetFavForm from './components/petFavForm';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
+import ClearIcon from '@material-ui/icons/Clear';
 
 export default function App() {
  const [userId, setUserId] = useState(undefined)
@@ -60,6 +61,7 @@ export default function App() {
 
 const connect = function(userId, receiverId, status, callback){
   axios.post(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
+  
   .then(res => {
     callback()
     console.log('res', res)
@@ -69,7 +71,20 @@ const connect = function(userId, receiverId, status, callback){
   })
 }
 
-// Pets with no connections (PENDING, ACCEPTED, PASSED)
+const respond = function(userId, receiverId, status, callback){
+  axios.put(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
+  
+  .then(res => {
+    callback()
+    console.log('res', res)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
+
+// Pets with no connections (PENDING, ACCEPTED, DECLINED)
 function DogsNearby(props) {
 
   const [dogsNearby, setDogsNearby] = useState([])
@@ -163,21 +178,39 @@ const useStyles = makeStyles(theme => ({
     'flexDirection': 'row',
     'alignItems': 'center'
   },
-  bigAvatar: {
-    width: 100,
-    height: 100,
+  petAvatar: {
+    width: 170,
+    height: 170,
   },
 }));
 
 // PENDING Friend Requests
 function Notifications(props) {
   const classes = useStyles();
+
+  const largeButton = {
+    transform: 'scale(1.5)'
+  }
+
+  const buttonStyle = {
+    justifyContent: 'space-around',
+    display: 'flex'
+  }
+
+  const declineRequest = function(receiverId) {
+    respond(props.userId, receiverId, 'DECLINED', null)
+  }
+
+   const acceptRequest = function(receiverId){
+    respond(props.userId, receiverId, 'ACCEPTED', null)
+  }
   const [notifications, setNotifications] = useState([])
 
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {
       setNotifications(res.data.result)
+      
     }).catch(err => {
       console.log(err)
     })
@@ -187,9 +220,16 @@ function Notifications(props) {
     return (
       <div className="notification-card" key={notification.pet_id}>
         <div className={classes.root}>
-          <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
-          <Avatar alt={notification.owner} src={notification.owner_photo} className={classes.bigAvatar} />
-          <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.bigAvatar} />
+          <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.petAvatar} />
+          <div className="right-side">
+            <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
+            <div className="buttons" style={buttonStyle}>
+              <ClearIcon style={largeButton} onClick={()=> declineRequest(notification.receiver_id)}/>
+              <PetsIcon style={largeButton} onClick={()=> acceptRequest(notification.receiver_id)}/>
+            </div>
+
+          </div>
+
         </div>
       </div>
     )
@@ -199,7 +239,10 @@ function Notifications(props) {
     <div className="header">
       <h2>Notifications</h2>
       <hr></hr>
+      <div className="container">
+
       {friendRequests}
+      </div>
     </div>
   );
 }
