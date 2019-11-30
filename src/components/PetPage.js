@@ -33,13 +33,23 @@ export default function PetPage(props) {
   // define my states
   const [petAvatar, setPetAvatar] = useState('')
   const [petName, setPetName] = useState('')
-  const [petFav, setPetFav] = useState([addFav])
+  const [petFavs, setPetFavs] = useState([addFav])
   const [petInfo, setPetInfo] = useState('')
   const [petGallery, setPetGallery] = useState([])
   const [lastUploaded, setLastUploaded] = useState('')
   const [showPetFavForm, setShowPetFavForm] = useState(true)
 
-  
+  const submitPetFav = function(name, category) {
+    const newFav = { name, category, id }
+    axios.post(`/api/pets/${id}/favourites`, newFav)
+    .then(() => {
+      setPetFavs([...petFavs, newFav])
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   useEffect(() => {
     Promise.all([
       axios.get(`/api/pets/${id}`),
@@ -51,11 +61,11 @@ export default function PetPage(props) {
       setPetAvatar(all[0].data.result[0].profile_photo)
       setPetInfo(all[0].data.result[0].quirky_fact)
       setPetGallery(all[1].data.result)
-      
+      console.log('this one', all[0].data.result[0])
       let category = all[0].data.result
       // const fav = {}
       // category.map(item => {fav[item.category]=item.favourite_item}) 
-      setPetFav([addFav, ...category]);
+      setPetFavs([addFav, ...category]);
       
     })
     .catch(err => {
@@ -91,14 +101,14 @@ export default function PetPage(props) {
           petImg={petAvatar}/>
         </div>
         <PetInfo petInfo={petInfo}/>
-        <PetFav petFav={petFav} setShowPetFavForm={setShowPetFavForm}/>
+        <PetFav petFavs={petFavs} setShowPetFavForm={setShowPetFavForm}/>
         <div>
           <Gallery petGallery={petGallery}/>
         </div> 
       </div> : 
       <div>
-        <PetFavForm setShowPetFavForm={setShowPetFavForm}/>
-        <PetFav petFav={petFav} setShowPetFavForm={setShowPetFavForm}/>
+        <PetFavForm onCreatePetFav={submitPetFav} setShowPetFavForm={setShowPetFavForm}/>
+        <PetFav petFavs={petFavs} setShowPetFavForm={setShowPetFavForm}/>
         <Gallery petGallery={petGallery}/>
       </div>
       }

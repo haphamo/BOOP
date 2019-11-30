@@ -49,7 +49,6 @@ export default function Login (props) {
   // useEffect(()=> {
   // }, [])
 
-
  let userLogin = function () {
    axios.post(`/login`, {email, password}, { withCredentials: true})
    .then(res => {

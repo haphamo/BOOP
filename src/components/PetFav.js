@@ -26,7 +26,8 @@ const useStyles = makeStyles(theme => ({
   },
   imgStyle: {
     height: '60%',
-    "paddingTop": '10%'
+    "paddingTop": '10%',
+    width: 'fit-content'
   },
   listItemStyle: {
     width:"100%",
@@ -58,7 +59,7 @@ export default function PetFav(props) {
     <div className={classes.root} >
       <GridList className={classes.listItemStyle} className={classes.gridList} cols={2.5}>
         
-        {props.petFav.map(item => (
+        {props.petFavs.map(item => (
           <GridListTile className={ classes.fixedHeight } onClick={()=> props.setShowPetFavForm(false)}>
             <img 
             key={item.favourite_id}

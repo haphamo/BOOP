@@ -1,4 +1,4 @@
-import React , { useState, useEffect } from 'react';
+import React , { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import axios from 'axios'
+import PetOnUserPage from './PetOnUserPage';
 
 // pet Favourite categories
 const categories = [
@@ -62,8 +63,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function PetFavForm(props) {
-  // id is the pet id
-  let {id} = useParams()
+
 
   const classes = useStyles();
   const [category, setCategory] = useState('');
@@ -72,7 +72,7 @@ export default function PetFavForm(props) {
 
   const onSubmit = function (evt) {
     evt.preventDefault()
-    submitPetFav(name, category)
+    props.onCreatePetFav(name, category)
   }
 
   const handleCategoryChange = e => {
@@ -82,10 +82,8 @@ export default function PetFavForm(props) {
   const handleFavouriteChange = e => {
     setName(e.target.value);
   };
-  const submitPetFav = function(name, category) {
-    axios.post(`/api/pets/${id}/favourites`, { name, category, id })
 
-  }
+
 
 
   return (
@@ -121,7 +119,7 @@ export default function PetFavForm(props) {
 
           <CancelOutlinedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
           <button>
-            <CheckCircleOutlineRoundedIcon className={classes.largeButton} type="submit" />
+            <CheckCircleOutlineRoundedIcon className={classes.largeButton} type="submit"/>
           </button>
         </div>
 
