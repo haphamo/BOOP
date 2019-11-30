@@ -71,11 +71,11 @@ const connect = function(userId, receiverId, status, callback){
   })
 }
 
-const declineFriendRequest = function(userId, receiverId, status, callback){
-  axios.post(`api/users/${userId}/notifications/decline`, { receiver_id: receiverId, status: status })
+const declineFriendRequest = function( userId, receiver_id, status){
+  axios.post(`api/users/${userId}/notifications/decline`, { sender_id: receiver_id, status: status })
   
   .then(res => {
-    callback()
+
     console.log('res', res)
   })
   .catch(err => {
@@ -83,11 +83,10 @@ const declineFriendRequest = function(userId, receiverId, status, callback){
   })
 }
 
-const acceptFriendRequest = function(userId, receiverId, status, callback){
-  axios.post(`api/users/${userId}/notifications/accept`, { receiver_id: receiverId, status: status })
+const acceptFriendRequest = function(userId, receiver_id, status){
+  axios.post(`api/users/${userId}/notifications/accept`, { sender_id: receiver_id, status: status })
   
   .then(res => {
-    callback()
     console.log('res', res)
   })
   .catch(err => {
@@ -140,10 +139,10 @@ function DogsNearby(props) {
           />
           <div className="buttons">
             <ArrowBackRoundedIcon 
-              onClick={ () => declineConnection(dogsNearby[currentDogIndex].owner_id)} 
+              onClick={ () => declineConnection(dogsNearby[currentDogIndex].receiver_id)} 
             />
             <FavoriteRoundedIcon 
-              onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
+              onClick={() => requestConnection(dogsNearby[currentDogIndex].receiver_id)}
              />
            </div>
         </div> : 
@@ -209,15 +208,15 @@ function Notifications(props) {
     display: 'flex'
   }
 
-  const declineRequest = function(receiverId) {
-    declineFriendRequest(props.userId, receiverId, 'DECLINED', null)
+  const declineRequest = function(userId, receiver_id) {
+    declineFriendRequest(userId, receiver_id, 'DECLINED')
   }
 
-   const acceptRequest = function(receiverId){
-    acceptFriendRequest(props.userId, receiverId, 'ACCEPTED', null)
+   const acceptRequest = function(userId, receiver_id){
+    acceptFriendRequest(userId, receiver_id, 'ACCEPTED')
   }
   const [notifications, setNotifications] = useState([])
-
+  console.log('notifications', notifications)
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {
@@ -236,8 +235,8 @@ function Notifications(props) {
           <div className="right-side">
             <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
             <div className="buttons" style={buttonStyle}>
-              <ClearIcon style={largeButton} onClick={()=> declineRequest(notification.receiver_id)}/>
-              <PetsIcon style={largeButton} onClick={()=> acceptRequest(notification.receiver_id)}/>
+              <ClearIcon style={largeButton} onClick={()=> declineRequest(props.userId, notification.receiver_id)}/>
+              <PetsIcon style={largeButton} onClick={()=> acceptRequest(props.userId, notification.receiver_id)}/>
             </div>
 
           </div>
