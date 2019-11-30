@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import UploadProfilePhoto from './UploadProfilePhoto';
+import Upload from './Upload';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -142,6 +142,7 @@ export default function AddPet(props) {
               onChange={handleProfilePhotoChange}
               value={profilePhoto}
             />
+            <Upload setLastUploaded={setLastUploaded}/>
           </form>
             <Button variant="outlined" className={classes.button} onClick={() => props.setShowForm(false)}>
               Cancel
