@@ -114,13 +114,16 @@ function DogsNearby(props) {
   const petNameTextStyle = {
     'textAlign': 'center'
   }
-  const requestConnection = function(receiverId) {
+  const requestConnection = function(ownerId) {
     const callback = () => setCurrentDogIndex(prev => prev+1)
-    connect(props.userId, receiverId, 'PENDING', callback)
+    console.log('props.userId', props.userId)
+    console.log('ownerId', ownerId)
+    connect(props.userId, ownerId, 'PENDING', callback)
   }
-  const declineConnection = function(receiverId) {
+  const declineConnection = function(ownerId) {
     const callback = () => setCurrentDogIndex(prev => prev+1)
-    connect(props.userId, receiverId, 'DECLINED', callback)
+    connect(props.userId, ownerId, 'DECLINED', callback)
+   
   }
 
   return (
@@ -139,10 +142,10 @@ function DogsNearby(props) {
           />
           <div className="buttons">
             <ArrowBackRoundedIcon 
-              onClick={ () => declineConnection(dogsNearby[currentDogIndex].receiver_id)} 
+              onClick={ () => declineConnection(dogsNearby[currentDogIndex].owner_id)} 
             />
             <FavoriteRoundedIcon 
-              onClick={() => requestConnection(dogsNearby[currentDogIndex].receiver_id)}
+              onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
              />
            </div>
         </div> : 
