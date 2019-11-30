@@ -49,8 +49,7 @@ const formStyle = {
 export default function AddPet(props) {
   const classes = useStyles()
   const avatarClasses = avatarStyles()
-
-  const currentUser = props.userId
+  const userId = props.userId
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
   const [breed, setBreed] = useState('')
@@ -74,14 +73,16 @@ export default function AddPet(props) {
   const handleQuirkyFactChange = function(e) {
     setQuirkyFact(e.target.value)
   }
-  const handleProfilePhotoChange = function(e) {
-    setProfilePhoto(e.target.value)
+  // e.target.value = info.originalUrl (in the Upload component)
+  // from the res.json obj
+  // Check if this works
+  // Should profile photo be a text field??
+  const onUpload = function(info) {
+    setProfilePhoto(info.originalUrl)
   }
   
-  
   const addNewPet = function() {
-    axios.post('api/pets', { name, age, breed, quirkyFact, currentUser, profilePhoto })
-
+    axios.post('api/pets', { name, age, breed, quirky_fact: quirkyFact, owner_id: userId, profile_photo: profilePhoto })
     .then(res => {
       console.log("Added a new  pet: ", res)
     })
@@ -139,10 +140,10 @@ export default function AddPet(props) {
               label="Profile Photo"
               className={classes.textField}
               margin="normal"
-              onChange={handleProfilePhotoChange}
+              onChange={onUpload}
               value={profilePhoto}
             />
-            <Upload setLastUploaded={setLastUploaded}/>
+            <Upload />
           </form>
             <Button variant="outlined" className={classes.button} onClick={() => props.setShowForm(false)}>
               Cancel
