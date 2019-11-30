@@ -11,7 +11,7 @@ import './App.scss';
 import BottomNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
-import AddPet from './components/AddPet';
+import PetForm from './components/PetForm';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
@@ -69,6 +69,16 @@ export default function App() {
   //     props.setLastUploaded(info.originalUrl);
   //   })
   // }
+
+  const addNewPet = function({ name, age, breed, quirkyFact, userId, profilePhoto }) {
+    axios.post('api/pets', { name, age, breed, quirky_fact: quirkyFact, owner_id: userId, profile_photo: profilePhoto })
+    .then(res => {
+      console.log("Added a new  pet: ", res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
 const connect = function(userId, receiverId, status, callback){
   axios.post(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
@@ -180,7 +190,7 @@ function Profile(props) {
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
       <hr></hr>
-      {showForm ? <AddPet setShowForm={setShowForm} userId={props.userId} /> : 
+      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} /> : 
       <UserProfile userId={props.userId} />}
     </div>
   )

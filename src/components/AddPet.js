@@ -46,7 +46,7 @@ const formStyle = {
 
 // Add a new pet
 // Only the owner that is logged in can add a new pet on their profile
-export default function AddPet(props) {
+export default function PetForm(props) {
   const classes = useStyles()
   const avatarClasses = avatarStyles()
   const userId = props.userId
