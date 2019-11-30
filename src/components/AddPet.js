@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react';
+import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
@@ -10,12 +11,14 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap',
     'flex-direction': 'column'
   },
-  input: {
-    margin: theme.spacing(1),
-  },
   button: {
     margin: theme.spacing(1),
   },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  }
 }));
 
 const avatarStyles = makeStyles(theme => ({
@@ -34,6 +37,12 @@ const avatarStyles = makeStyles(theme => ({
     'border-color': 'coral'
   },
 }));
+
+const formStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center'
+}
 
 // Add a new pet
 // Only the owner that is logged in can add a new pet on their profile
@@ -59,7 +68,17 @@ export default function AddPet(props) {
   const handleAgeChange = function(e) {
     setAge(parseInt(e.target.value))
   }
-
+  const handleBreedChange = function(e) {
+    setBreed(e.target.value)
+  }
+  const handleQuirkyFactChange = function(e) {
+    setQuirkyFact(e.target.value)
+  }
+  const handleProfilePhotoChange = function(e) {
+    setProfilePhoto(e.target.value)
+  }
+  
+  
   const addNewPet = function() {
     axios.post('api/pets', { name, age, breed, quirkyFact, currentUser, profilePhoto })
 
@@ -75,52 +94,62 @@ export default function AddPet(props) {
     <Fragment>
       <h3>Add a new pet</h3>
       <em>All fields are required.</em>
-      <div className={avatarClasses.root}>
-    </div>
-    <div className={classes.container}> 
-      <Input
-        placeholder="Pet Name"
-        className={classes.input}
-        inputProps={{
-          'aria-label': 'description',
-        }}
-      />
-      <Input
-        placeholder="Age"
-        className={classes.input}
-        inputProps={{
-          'aria-label': 'description',
-        }}
-      />
-       <Input
-        placeholder="Quirky Fact"
-        className={classes.input}
-        inputProps={{
-          'aria-label': 'description',
-        }}
-      />
-       <Input
-        placeholder="Breed"
-        className={classes.input}
-        inputProps={{
-          'aria-label': 'description',
-        }}
-      />
-       <Input
-        placeholder="Add a Profile Photo (url)"
-        className={classes.input}
-        inputProps={{
-          'aria-label': 'description',
-        }}
-      />
-      <Button variant="outlined" className={classes.button} onClick={() => props.setShowForm(false)}>
-        Cancel
-      </Button>
-      <Button variant="outlined" className={classes.button}>
-        Submit
-      </Button>
-
-    </div>
+        <div className={avatarClasses.root}></div>
+        <div className={classes.container}> 
+          <form style={ formStyle } onSubmit={onSubmit}>
+            <TextField
+              required
+              id="name"
+              label="Name"
+              className={classes.textField}
+              margin="normal"
+              onChange={handleNameChange}
+              value={name}
+            />
+            <TextField
+              required
+              id="age"
+              label="Age"
+              className={classes.textField}
+              margin="normal"
+              onChange={handleAgeChange}
+              value={age}
+            />
+            <TextField
+              required
+              id="breed"
+              label="Breed"
+              className={classes.textField}
+              margin="normal"
+              onChange={handleBreedChange}
+              value={breed}
+            />
+            <TextField
+              required
+              id="quirkyfact"
+              label="Quirky Fact"
+              className={classes.textField}
+              margin="normal"
+              onChange={handleQuirkyFactChange}
+              value={quirkyFact}
+            />
+            <TextField
+              required
+              id="profilephoto"
+              label="Profile Photo"
+              className={classes.textField}
+              margin="normal"
+              onChange={handleProfilePhotoChange}
+              value={profilePhoto}
+            />
+          </form>
+            <Button variant="outlined" className={classes.button} onClick={() => props.setShowForm(false)}>
+              Cancel
+            </Button>
+            <Button variant="outlined" className={classes.button}>
+              Submit
+            </Button> 
+      </div>
     </Fragment>
   );
 }
