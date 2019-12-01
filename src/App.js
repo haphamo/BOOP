@@ -62,16 +62,6 @@ export default function App() {
   );
 }
 
-// const addNewPet = function({ name, age, breed, quirkyFact, userId, profilePhoto }) {
-//   axios.post('api/pets', { name, age, breed, quirky_fact: quirkyFact, owner_id: userId, profile_photo: profilePhoto })
-//   .then(res => {
-//     console.log("Added a new  pet: ", res)
-//   })
-//   .catch(err => {
-//      console.log(err)
-//   })
-// }
-
 // This function takes the response from Uploadcare and sends the url to the database
 // const onUpload = function(info) {
 //   // Save the image to the database
@@ -207,12 +197,14 @@ function DogsNearby(props) {
 function Profile(props) {
   const classes = useStyles();
   const [showForm, setShowForm] = useState(false)
+  const [pet, setPet] = useState({})
 
-  const addNewPet = function(name, age, breed, quirkyFact, userId, profilePhoto) {
-    const pet = { name, age, breed, quirky_fact: quirkyFact, owner_id: userId, profile_photo: profilePhoto }
-    axios.post('api/pets', pet)
+  const addNewPet = function(name, age, breed, quirky_fact, userId, profile_photo) {
+    const newPet = { name, age, breed, quirky_fact, owner_id: userId, profile_photo }
+    axios.post('api/pets', newPet)
     .then(res => {
       console.log("Added a new pet: ", res)
+      setPet(...pet, newPet)
     })
     .catch(err => {
       console.log(err)
