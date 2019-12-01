@@ -91,7 +91,7 @@ export default function PetPage(props) {
         Default
         </Button>
         <h2>{petName}</h2>
-        <Upload setLastUploaded={setLastUploaded}/>
+        <Upload setLastUploaded={setLastUploaded} onUpload={props.onUpload} />
       </div>
       <hr></hr>
       { showPetFavForm ?

@@ -11,7 +11,7 @@ import './App.scss';
 import BottomNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import PetPage from './components/PetPage';
-import AddPet from './components/AddPet';
+import PetForm from './components/PetForm';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
@@ -61,6 +61,15 @@ export default function App() {
     </Router>
   );
 }
+
+// This function takes the response from Uploadcare and sends the url to the database
+// const onUpload = function(info) {
+//   // Save the image to the database
+//   axios.post('api/pets/images', {
+//     url: info.originalUrl
+//   })
+// }
+
 // Styling for components below
 const useStyles = makeStyles(theme => ({
   root: {
@@ -91,7 +100,8 @@ const useStyles = makeStyles(theme => ({
   hidden: {
     visibility: 'hidden'
   }
-}));
+}))
+
 // Helper functions
 const connect = function(userId, receiverId, status, callback){
   axios.post(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
@@ -187,6 +197,19 @@ function DogsNearby(props) {
 function Profile(props) {
   const classes = useStyles();
   const [showForm, setShowForm] = useState(false)
+  const [pet, setPet] = useState({})
+
+  const addNewPet = function(name, age, breed, quirky_fact, userId, profile_photo) {
+    const newPet = { name, age, breed, quirky_fact, owner_id: userId, profile_photo }
+    axios.post('api/pets', newPet)
+    .then(res => {
+      console.log("Added a new pet: ", res)
+      setPet(...pet, newPet)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
 
   return (
     <div>
@@ -196,7 +219,7 @@ function Profile(props) {
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
       <hr></hr>
-      {showForm ? <AddPet setShowForm={setShowForm} userId={props.userId} /> : 
+      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} onAddPet={addNewPet} /> : 
       <UserProfile userId={props.userId} />}
     </div>
   )

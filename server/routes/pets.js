@@ -24,9 +24,9 @@ module.exports = db => {
   router.post("/", (req, res) => {
     const userId = req.session.user_id
     db.query(
-      `INSERT INTO pets (name, age, breed, quirky_fact, profile_photo)
-      VALUES ($1, $2, $3, $4, $5)`
-      , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, req.body.profile_photo])
+      `INSERT INTO pets (name, age, breed, quirky_fact, owner_id, profile_photo)
+      VALUES ($1, $2, $3, $4, $5, $6)`
+      , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, req.body.owner_id, req.body.profile_photo])
     .then(result => {
       res.status(201) 
       res.json({ 
