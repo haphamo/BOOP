@@ -35,7 +35,6 @@ export default function App() {
     <Router>
       <div>
         <Switch>
-
           <Route exact path="/">
           {userId ?  <DogsNearby 
             userId={userId}
@@ -54,7 +53,7 @@ export default function App() {
             <Notifications userId={userId} />
           </Route>
           <Route path="/pets/:id">
-          <PetPage />
+            <PetPage />
           </Route>
         </Switch>
       </div>
@@ -231,7 +230,7 @@ function Notifications(props) {
           <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.petAvatar} />
           <div className="right-side">
             <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
-            <div className="buttons" className={classes.buttonStyle}>
+            <div className={classes.buttonStyle}>
               <ClearIcon className={classes.largeButton} onClick={()=> declineRequest(props.userId, notification.receiver_id)}/>
               <PetsIcon className={classes.largeButton} onClick={()=> acceptRequest(props.userId, notification.receiver_id)}/>
             </div>
