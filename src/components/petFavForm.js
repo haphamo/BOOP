@@ -1,5 +1,4 @@
-import React , { useState, useEffect, useCallback } from 'react';
-import { useParams } from 'react-router-dom'
+import React , { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -24,6 +23,11 @@ const categories = [
     value: 'Vet',
     label: 'Vet',
   },
+  {
+    value: 'Groomer',
+    label: 'Groomer',
+  },
+
 ];
 
 const useStyles = makeStyles(theme => ({
@@ -112,7 +116,7 @@ export default function PetFavForm(props) {
         <div className={ classes.buttonStyles }>
           <CancelOutlinedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
           <button>
-            <CheckCircleOutlineRoundedIcon className={classes.largeButton} type="submit"/>
+            <CheckCircleOutlineRoundedIcon className={classes.largeButton} type="submit" />
           </button>
         </div>
 

@@ -18,6 +18,12 @@ const useStyles = makeStyles(theme => ({
   input: {
     display: 'none',
   },
+  styles: {
+    display: 'flex',
+    'justifyContent': 'space-around',
+    'alignItems': 'center'
+  },
+
 }));
 
 export default function PetPage(props) {
@@ -27,7 +33,6 @@ export default function PetPage(props) {
   // initial state of fav bar will always have an add button
   const addFav = { category: 'Add', favourite_id: 0}
 
-  // hidden button style
   const classes = useStyles();
   
   // define my states
@@ -39,11 +44,16 @@ export default function PetPage(props) {
   const [lastUploaded, setLastUploaded] = useState('')
   const [showPetFavForm, setShowPetFavForm] = useState(true)
 
+
+  
   const submitPetFav = function(name, category) {
     const newFav = { name, category, id }
+
     axios.post(`/api/pets/${id}/favourites`, newFav)
     .then(() => {
       setPetFavs([...petFavs, newFav])
+      setShowPetFavForm(true)
+
     })
     .catch(err => {
       console.log(err)
@@ -75,11 +85,6 @@ export default function PetPage(props) {
     
   }, [lastUploaded, id])
 
-  const styles = {
-    display: 'flex',
-    'justifyContent': 'space-around',
-    'alignItems': 'center'
-  }
   //the first button in the header is hidden to center the name of the pet
   const hidden = {
     visibility: 'hidden'
@@ -87,7 +92,7 @@ export default function PetPage(props) {
   
   return(
     <Fragment>
-      <div className="header" style={ styles }>
+      <div className={classes.styles}>
         <Button variant="contained" style={hidden} className={classes.button}>
         Default
         </Button>
