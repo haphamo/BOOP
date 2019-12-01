@@ -111,7 +111,8 @@ const useStyles = makeStyles(theme => ({
   hidden: {
     visibility: 'hidden'
   }
-}));
+}))
+
 // Helper functions
 const connect = function(userId, receiverId, status, callback){
   axios.post(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })

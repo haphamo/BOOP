@@ -38,6 +38,7 @@ export default function PetPage(props) {
   const [petGallery, setPetGallery] = useState([])
   const [lastUploaded, setLastUploaded] = useState('')
   const [showPetFavForm, setShowPetFavForm] = useState(true)
+  const onUpload = props.onUpload
 
   const submitPetFav = function(name, category) {
     const newFav = { name, category, id }
@@ -91,7 +92,7 @@ export default function PetPage(props) {
         Default
         </Button>
         <h2>{petName}</h2>
-        <Upload setLastUploaded={setLastUploaded}/>
+        <Upload setLastUploaded={setLastUploaded} onUpload={props.onUpload} />
       </div>
       <hr></hr>
       { showPetFavForm ?

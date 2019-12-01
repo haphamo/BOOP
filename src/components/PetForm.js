@@ -47,11 +47,11 @@ const formStyle = {
 // Add a new pet
 // Only the owner that is logged in can add a new pet on their profile
 export default function PetForm(props) {
+  const userId = props.userId
+  const addNewPet = props.addNewPet
+  const onUpload = props.onUpload
   const classes = useStyles()
   const avatarClasses = avatarStyles()
-  const userId = props.userId
-  // Where am I passing this function?
-  // const addNewPet = props.addNewPet
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
   const [breed, setBreed] = useState('')
