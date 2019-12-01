@@ -217,7 +217,7 @@ function Profile(props) {
     </div>
       <hr></hr>
       {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} addNewPet={addNewPet} onUpload={onUpload} /> : 
-      <UserProfile userId={props.userId} />}
+      <UserProfile userId={props.userId} onUpload={onUpload} />}
     </div>
   )
 }
