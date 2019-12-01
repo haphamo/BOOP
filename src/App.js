@@ -4,7 +4,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  useParams
 } from "react-router-dom";
 
 import './App.scss';
@@ -62,8 +63,11 @@ export default function App() {
 // This function takes the response from Uploadcare and sends the url to the database
 // Need to move lastUploaded/setLastUploaded here!!
 // How to get the pet.id ????
-const onUpload = (info) => {
+// This is the pet.id
+const { id } = useParams()
+const onUpload = function(info) {
   // Save the image to the database
+  
   axios.post(`/api/pets/${id}/images`, { 
      url: info.originalUrl 
   })
