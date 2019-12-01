@@ -27,7 +27,6 @@ export default function UserProfile(props) {
   const [userName, setUserName] = useState('')
   const [petData, setPetData] = useState([])
 
-
   useEffect(()=> {
     // id is the user_id that comes from the cookie
     axios.get(`/api/users/${props.userId}/pets`)

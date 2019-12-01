@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import Upload from './Upload';
+// import Upload from './Upload';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -48,23 +48,18 @@ const formStyle = {
 // Only the owner that is logged in can add a new pet on their profile
 export default function PetForm(props) {
   const userId = props.userId
-  const addNewPet = props.addNewPet
-  const onUpload = props.onUpload
   const classes = useStyles()
   const avatarClasses = avatarStyles()
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
   const [breed, setBreed] = useState('')
   const [quirkyFact, setQuirkyFact] = useState('')
-  const [profilePhoto, setProfilePhoto] = useState(onUpload)
+  const [profilePhoto, setProfilePhoto] = useState('')
 
   const handleSubmit = function (evt) {
     evt.preventDefault();
     //validations here
-    const pet = {
-      name, age, breed, quirkyFact, userId, profilePhoto
-    }
-    props.onSubmit(pet);
+    addNewPet();
   }
   const handleNameChange = function(e) {
     setName(e.target.value)
@@ -78,9 +73,23 @@ export default function PetForm(props) {
   const handleQuirkyFactChange = function(e) {
     setQuirkyFact(e.target.value)
   }
-  const handleUpload = function(info) {
-    setProfilePhoto(info.originalUrl)
+   const handleProfilePhotoChange = function(e) {
+    setProfilePhoto(e.target.value)
   }
+  // const handleUpload = function(info) {
+  //   setProfilePhoto(info.originalUrl)
+  // }
+
+  const addNewPet = function(name, age, breed, quirkyFact, userId) {
+    const pet = { name, age, breed, quirky_fact: quirkyFact, owner_id: userId }
+    axios.post('api/pets', pet)
+    .then(res => {
+      console.log("Added a new  pet: ", res)
+    })
+    .catch(err => {
+       console.log(err)
+    })
+}
 
   return (
     <Fragment>
@@ -125,12 +134,21 @@ export default function PetForm(props) {
               onChange={handleQuirkyFactChange}
               value={quirkyFact}
             />
-            <Upload onUpload={handleUpload}/>
+            <TextField
+              required
+              id="profilephoto"
+              label="Profile Photo Url"
+              className={classes.textField}
+              margin="normal"
+              onChange={handleProfilePhotoChange}
+              value={profilePhoto}
+            />
+            {/* <Upload onUpload={handleUpload}/> */}
           </form>
             <Button variant="outlined" className={classes.button} onClick={() => props.setShowForm(false)}>
               Cancel
             </Button>
-            <Button variant="outlined" className={classes.button}>
+            <Button variant="outlined" className={classes.button} type="submit">
               Submit
             </Button> 
       </div>

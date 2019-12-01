@@ -208,6 +208,17 @@ function Profile(props) {
   const classes = useStyles();
   const [showForm, setShowForm] = useState(false)
 
+  const addNewPet = function(name, age, breed, quirkyFact, userId, profilePhoto) {
+    const pet = { name, age, breed, quirky_fact: quirkyFact, owner_id: userId, profile_photo: profilePhoto }
+    axios.post('api/pets', pet)
+    .then(res => {
+      console.log("Added a new pet: ", res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+
   return (
     <div>
       <div className={ classes.profileStyles }>
@@ -216,7 +227,7 @@ function Profile(props) {
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
       <hr></hr>
-      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} /> : 
+      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} onAddPet={addNewPet} /> : 
       <UserProfile userId={props.userId} />}
     </div>
   )
