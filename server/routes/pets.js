@@ -87,7 +87,7 @@ module.exports = db => {
     })
   })
 
-  // Get a single pet and its favourite things by id
+  // Get a single pet's profile information 
   router.get("/:id", (req, res) => {
     const userId = req.session.user_id
     const petId = parseInt(req.params.id)
@@ -98,12 +98,8 @@ module.exports = db => {
               pets.quirky_fact AS quirky_fact, 
               pets.profile_photo AS profile_photo,
               users.first_name AS owner,
-              users.city AS home,
-              pet_favourites.id AS favourite_id,
-              pet_favourites.category AS category, 
-              pet_favourites.name AS favourite_item
+              users.city AS home
       FROM pets
-      JOIN pet_favourites ON pet_id = pets.id
       JOIN users ON users.id = pets.owner_id
       WHERE pets.id = $1`
       , [petId])
@@ -113,7 +109,7 @@ module.exports = db => {
         status: 'Success',
         user: userId,
         result: result.rows,
-        message: 'Retrieved all the information about a single pet' 
+        message: 'Retrieved the profile of a single pet' 
       })
     })
     .catch(err => {
@@ -121,6 +117,41 @@ module.exports = db => {
       res.json({ error: err.message })
     })
   })
+
+  // Get a single pet and its favourite things by id
+  // router.get("/:id", (req, res) => {
+  //   const userId = req.session.user_id
+  //   const petId = parseInt(req.params.id)
+  //   db.query(
+  //     `SELECT pets.name AS name, 
+  //             pets.age AS age, 
+  //             pets.breed AS breed, 
+  //             pets.quirky_fact AS quirky_fact, 
+  //             pets.profile_photo AS profile_photo,
+  //             users.first_name AS owner,
+  //             users.city AS home,
+  //             pet_favourites.id AS favourite_id,
+  //             pet_favourites.category AS category, 
+  //             pet_favourites.name AS favourite_item
+  //     FROM pets
+  //     JOIN pet_favourites ON pet_id = pets.id
+  //     JOIN users ON users.id = pets.owner_id
+  //     WHERE pets.id = $1`
+  //     , [petId])
+  //   .then(result => {
+  //     res.status(200)
+  //     res.json({ 
+  //       status: 'Success',
+  //       user: userId,
+  //       result: result.rows,
+  //       message: 'Retrieved all the information about a single pet' 
+  //     })
+  //   })
+  //   .catch(err => {
+  //     res.status(500)
+  //     res.json({ error: err.message })
+  //   })
+  // })
 
   // Edit an existing pet's info by id
   // Changed owner_id as a value to userId since we are using req.session.user_id now

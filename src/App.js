@@ -204,7 +204,7 @@ function Profile(props) {
     axios.post('api/pets', newPet)
     .then(res => {
       console.log("Added a new pet: ", res)
-      setPet(...pet, newPet)
+      setPet(pet)
     })
     .catch(err => {
       console.log(err)
