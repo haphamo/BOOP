@@ -22,6 +22,7 @@ import Avatar from '@material-ui/core/Avatar';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import ClearIcon from '@material-ui/icons/Clear';
+import Homepage from './components/Homepage';
 
 export default function App() {
  const [userId, setUserId] = useState(undefined)
@@ -34,11 +35,15 @@ export default function App() {
     <Router>
       <div>
         <Switch>
+
           <Route exact path="/">
           {userId ?  <DogsNearby 
             userId={userId}
             /> : <Login onLogin={handleLogin} />} 
           </Route>
+          <Route path="/homepage">
+            <Homepage />
+            </Route>
           <Route path="/profile">
             <Profile userId={userId}/>
           </Route>

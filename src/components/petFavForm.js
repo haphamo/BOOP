@@ -5,8 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
-import axios from 'axios'
-import PetOnUserPage from './PetOnUserPage';
 
 // pet Favourite categories
 const categories = [
