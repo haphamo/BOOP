@@ -25,7 +25,7 @@ module.exports = db => {
     const userId = req.session.user_id
     db.query(
       `INSERT INTO pets (name, age, breed, quirky_fact, owner_id, profile_photo)
-      VALUES ($1, $2, $3, $4, $5)`
+      VALUES ($1, $2, $3, $4, $5, $6)`
       , [req.body.name, parseInt(req.body.age), req.body.breed, req.body.quirky_fact, req.body.owner_id, req.body.profile_photo])
     .then(result => {
       res.status(201) 

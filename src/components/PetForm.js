@@ -56,22 +56,21 @@ export default function PetForm(props) {
 
   const onSubmit = function (evt) {
     evt.preventDefault();
-    //validations here
-    addNewPet();
+    props.onAddPet(name, age, breed, quirkyFact, userId, profilePhoto)
   }
-  const handleNameChange = function(e) {
+  const handleNameChange = e => {
     setName(e.target.value)
   }
-  const handleAgeChange = function(e) {
+  const handleAgeChange = e => {
     setAge(e.target.value)
   }
-  const handleBreedChange = function(e) {
+  const handleBreedChange = e => {
     setBreed(e.target.value)
   }
-  const handleQuirkyFactChange = function(e) {
+  const handleQuirkyFactChange = e => {
     setQuirkyFact(e.target.value)
   }
-   const handleProfilePhotoChange = function(e) {
+   const handleProfilePhotoChange = e => {
     setProfilePhoto(e.target.value)
   }
   // Will use the Upload component once we successfully add a new pet into the database
@@ -97,10 +96,8 @@ export default function PetForm(props) {
   // }
 
   return (
-  <div className="header">
-    <h2>Add a Pet</h2>
-      <hr></hr>
-      <form style={ classes.formStyle } onSubmit={onSubmit}>
+    <form className={classes.container} onSubmit={onSubmit}>
+      <div className={classes.formStyle}>
         <TextField
           required
           id="name"
@@ -153,7 +150,7 @@ export default function PetForm(props) {
           <Button variant="outlined" className={classes.button} type="submit">
             Submit
           </Button> 
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }
