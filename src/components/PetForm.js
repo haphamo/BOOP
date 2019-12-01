@@ -56,7 +56,7 @@ export default function PetForm(props) {
   const [age, setAge] = useState('')
   const [breed, setBreed] = useState('')
   const [quirkyFact, setQuirkyFact] = useState('')
-  const [profilePhoto, setProfilePhoto] = useState('')
+  const [profilePhoto, setProfilePhoto] = useState(onUpload)
 
   const handleSubmit = function (evt) {
     evt.preventDefault();
@@ -64,7 +64,6 @@ export default function PetForm(props) {
     const pet = {
       name, age, breed, quirkyFact, userId, profilePhoto
     }
-  
     props.onSubmit(pet);
   }
   const handleNameChange = function(e) {
@@ -79,7 +78,6 @@ export default function PetForm(props) {
   const handleQuirkyFactChange = function(e) {
     setQuirkyFact(e.target.value)
   }
-  // AddPet function is in the App.js and passed down to this component
   const handleUpload = function(info) {
     setProfilePhoto(info.originalUrl)
   }

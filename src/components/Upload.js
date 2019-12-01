@@ -4,15 +4,24 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 // Upload images to Pet Gallery
-// Moved the logic up to the parent component (App.js)
 // Assisted by Guy Tonye(mentor)
 export default function Upload(props) {
+  const { id } = useParams()
+  const onUpload = (info) => {
+    // Save the image to the database
+    axios.post(`/api/pets/${id}/images`, { 
+      url: info.originalUrl 
+    })
+    .then(() => {
+      props.setLastUploaded(info.originalUrl);
+    })
+  }
   return (
     <Fragment>
       <div className="upload">
         <Widget 
           publicKey='e409ed1db8c88f8b8083'
-          onChange={props.onUpload} 
+          onChange={onUpload} 
           clearable
           previewStep='true'
           crop='true'

@@ -4,8 +4,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useParams
+  Link
 } from "react-router-dom";
 
 import './App.scss';
@@ -63,23 +62,23 @@ export default function App() {
   );
 }
 
-// This function takes the response from Uploadcare and sends the url to the database
-const onUpload = function(info) {
-  // Save the image to the database
-  axios.post('api/pets/images', {
-    url: info.originalUrl
-  })
-}
+// const addNewPet = function({ name, age, breed, quirkyFact, userId, profilePhoto }) {
+//   axios.post('api/pets', { name, age, breed, quirky_fact: quirkyFact, owner_id: userId, profile_photo: profilePhoto })
+//   .then(res => {
+//     console.log("Added a new  pet: ", res)
+//   })
+//   .catch(err => {
+//      console.log(err)
+//   })
+// }
 
-const addNewPet = function({ name, age, breed, quirkyFact, userId, profilePhoto }) {
-  axios.post('api/pets', { name, age, breed, quirky_fact: quirkyFact, owner_id: userId, profile_photo: profilePhoto })
-  .then(res => {
-    console.log("Added a new  pet: ", res)
-  })
-  .catch(err => {
-     console.log(err)
-  })
-}
+// This function takes the response from Uploadcare and sends the url to the database
+// const onUpload = function(info) {
+//   // Save the image to the database
+//   axios.post('api/pets/images', {
+//     url: info.originalUrl
+//   })
+// }
 
 // Styling for components below
 const useStyles = makeStyles(theme => ({
@@ -217,8 +216,8 @@ function Profile(props) {
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
       <hr></hr>
-      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} addNewPet={addNewPet} onUpload={onUpload} /> : 
-      <UserProfile userId={props.userId} onUpload={onUpload} />}
+      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} /> : 
+      <UserProfile userId={props.userId} />}
     </div>
   )
 }

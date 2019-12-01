@@ -38,7 +38,6 @@ export default function PetPage(props) {
   const [petGallery, setPetGallery] = useState([])
   const [lastUploaded, setLastUploaded] = useState('')
   const [showPetFavForm, setShowPetFavForm] = useState(true)
-  const onUpload = props.onUpload
 
   const submitPetFav = function(name, category) {
     const newFav = { name, category, id }
