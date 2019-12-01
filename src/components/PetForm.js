@@ -50,6 +50,8 @@ export default function PetForm(props) {
   const classes = useStyles()
   const avatarClasses = avatarStyles()
   const userId = props.userId
+  // Where am I passing this function?
+  // const addNewPet = props.addNewPet
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
   const [breed, setBreed] = useState('')
@@ -77,8 +79,7 @@ export default function PetForm(props) {
   const handleQuirkyFactChange = function(e) {
     setQuirkyFact(e.target.value)
   }
-  // AddPet component is in the App.js
-  // How can I get the lastUploaded state from the Upload component?
+  // AddPet function is in the App.js and passed down to this component
   const handleUpload = function(info) {
     setProfilePhoto(info.originalUrl)
   }

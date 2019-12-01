@@ -59,16 +59,18 @@ export default function App() {
   );
 }
 
-// const { id } = useParams()
-// const onUpload = (info) => {
-//   // Save the image to the database
-//   axios.post(`/api/pets/${id}/images`, { 
-//     url: info.originalUrl 
-//   })
-//   .then(() => {
-//     props.setLastUploaded(info.originalUrl);
-//   })
-// }
+// This function takes the response from Uploadcare and sends the url to the database
+// Need to move lastUploaded/setLastUploaded here!!
+// How to get the pet.id ????
+const onUpload = (info) => {
+  // Save the image to the database
+  axios.post(`/api/pets/${id}/images`, { 
+     url: info.originalUrl 
+  })
+  .then(() => {
+     setLastUploaded(info.originalUrl);
+  })
+ }
 
 const addNewPet = function({ name, age, breed, quirkyFact, userId, profilePhoto }) {
   axios.post('api/pets', { name, age, breed, quirky_fact: quirkyFact, owner_id: userId, profile_photo: profilePhoto })
