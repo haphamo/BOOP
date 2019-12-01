@@ -39,6 +39,34 @@ export default function PetPage(props) {
   const [lastUploaded, setLastUploaded] = useState('')
   const [showPetFavForm, setShowPetFavForm] = useState(true)
 
+  useEffect(() => {
+    Promise.all([
+      axios.get(`/api/pets/${id}`),
+      axios.get(`/api/pets/${id}/images`)
+
+    ])
+    .then(res => {
+      console.log("What is the response", res)
+      setPetName(res[0].data.result[0].name)
+      setPetAvatar(res[0].data.result[0].profile_photo)
+      setPetInfo(res[0].data.result[0].quirky_fact)
+      setPetGallery(res[1].data.result)
+      // setPetName(all[0].data.result[0].name)
+      // setPetAvatar(all[0].data.result[0].profile_photo)
+      // setPetInfo(all[0].data.result[0].quirky_fact)
+      // setPetGallery(all[1].data.result)
+      // console.log('this one', all[0].data.result[0])
+      let category = res[0].data.result
+      // const fav = {}
+      // category.map(item => {fav[item.category]=item.favourite_item}) 
+      setPetFavs([addFav, ...category]);
+    })
+    .catch(err => {
+      console.log('error:', err)
+    })
+    
+  }, [lastUploaded, id])
+
   const submitPetFav = function(name, category) {
     const newFav = { name, category, id }
     axios.post(`/api/pets/${id}/favourites`, newFav)
@@ -49,30 +77,6 @@ export default function PetPage(props) {
       console.log(err)
     })
   }
-
-  useEffect(() => {
-    Promise.all([
-      axios.get(`/api/pets/${id}`),
-      axios.get(`/api/pets/${id}/images`)
-
-    ])
-    .then(all => {
-      setPetName(all[0].data.result[0].name)
-      setPetAvatar(all[0].data.result[0].profile_photo)
-      setPetInfo(all[0].data.result[0].quirky_fact)
-      setPetGallery(all[1].data.result)
-      console.log('this one', all[0].data.result[0])
-      let category = all[0].data.result
-      // const fav = {}
-      // category.map(item => {fav[item.category]=item.favourite_item}) 
-      setPetFavs([addFav, ...category]);
-      
-    })
-    .catch(err => {
-      console.log('error:', err)
-    })
-    
-  }, [lastUploaded, id])
 
   const styles = {
     display: 'flex',
