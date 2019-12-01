@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
 // import Upload from './Upload';
 
 const useStyles = makeStyles(theme => ({
@@ -24,23 +23,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center'
   }
 }));
-
-// const avatarStyles = makeStyles(theme => ({
-//   root: {
-//     display: 'flex',
-//     '& > *': {
-//       margin: theme.spacing(1),
-//     },
-//     'flex-direction': 'column',
-//     'align-items': 'center'
-//   },
-//   bigAvatar: {
-//     width: 170,
-//     height: 170,
-//     'border-style': 'solid',
-//     'border-color': 'coral'
-//   },
-// }));
 
 // Add a new pet
 // Only the owner that is logged in can add a new pet on their profile
@@ -76,23 +58,6 @@ export default function PetForm(props) {
   // Will use the Upload component once we successfully add a new pet into the database
   // const handleUpload = function(info) {
   //   setProfilePhoto(info.originalUrl)
-  // }
-
-  // const addNewPet = function() {
-  //   axios.post('api/pets/', {
-  //     name, 
-  //     age, 
-  //     breed, 
-  //     quirky_fact: quirkyFact, 
-  //     owner_id: userId, 
-  //     profile_photo: profilePhoto
-  //   })
-  //   .then(res => {
-  //     console.log("Added a new pet: ", res)
-  //   })
-  //   .catch(err => {
-  //     console.log(err)
-  //   })
   // }
 
   return (
