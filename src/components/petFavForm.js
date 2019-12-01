@@ -62,7 +62,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function PetFavForm(props) {
 
-
   const classes = useStyles();
   const [category, setCategory] = useState('');
   // The state below is the name of the favourite item
@@ -80,9 +79,6 @@ export default function PetFavForm(props) {
   const handleFavouriteChange = e => {
     setName(e.target.value);
   };
-
-
-
 
   return (
     <form className={classes.container} onSubmit={onSubmit} noValidate autoComplete="off" >
@@ -113,8 +109,7 @@ export default function PetFavForm(props) {
           label="Favourite"
           value={name}
           onChange={handleFavouriteChange}/>
-        <div className="buttons" className={ classes.buttonStyles }>
-
+        <div className={ classes.buttonStyles }>
           <CancelOutlinedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>
           <button>
             <CheckCircleOutlineRoundedIcon className={classes.largeButton} type="submit"/>

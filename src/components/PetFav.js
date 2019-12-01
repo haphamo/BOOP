@@ -48,7 +48,9 @@ let data = {
   add: "https://image.flaticon.com/icons/svg/149/149145.svg",
   treat: "https://image.flaticon.com/icons/svg/1025/1025349.svg", 
   toy: "https://image.flaticon.com/icons/svg/802/802340.svg",
-  park: "https://image.flaticon.com/icons/svg/189/189502.svg"
+  park: "https://image.flaticon.com/icons/svg/189/189502.svg",
+  vet: "https://image.flaticon.com/icons/svg/543/543161.svg",
+  groomer: "https://image.flaticon.com/icons/svg/543/543172.svg"
 }
  
 export default function PetFav(props) {

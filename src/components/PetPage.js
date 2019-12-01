@@ -61,7 +61,8 @@ export default function PetPage(props) {
       setPetAvatar(all[0].data.result[0].profile_photo)
       setPetInfo(all[0].data.result[0].quirky_fact)
       setPetGallery(all[1].data.result)
-      console.log('this one', all[0].data.result[0])
+      console.log('this one', all[0].data.result)
+      console.log('petFavs', petFavs)
       let category = all[0].data.result
       // const fav = {}
       // category.map(item => {fav[item.category]=item.favourite_item}) 
