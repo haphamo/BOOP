@@ -17,13 +17,13 @@ import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
 import Login from './components/Login';
-// import PetFavForm from './components/petFavForm';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import ClearIcon from '@material-ui/icons/Clear';
+import Homepage from './components/Homepage';
 
 export default function App() {
  const [userId, setUserId] = useState(undefined)
@@ -41,6 +41,9 @@ export default function App() {
             userId={userId}
             /> : <Login onLogin={handleLogin} />} 
           </Route>
+          <Route path="/homepage">
+            <Homepage />
+            </Route>
           <Route path="/profile">
             <Profile userId={userId}/>
           </Route>
@@ -51,7 +54,7 @@ export default function App() {
             <Notifications userId={userId} />
           </Route>
           <Route path="/pets/:id">
-          <PetPage />
+            <PetPage />
           </Route>
         </Switch>
       </div>
@@ -59,6 +62,7 @@ export default function App() {
     </Router>
   );
 }
+<<<<<<< HEAD
 
 // This function takes the response from Uploadcare and sends the url to the database
 // Need to move lastUploaded/setLastUploaded here!!
@@ -86,6 +90,40 @@ const addNewPet = function({ name, age, breed, quirkyFact, userId, profilePhoto 
   })
 }
 
+=======
+// Styling for components below
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+    'justifyContent': 'center',
+    'flexDirection': 'row',
+    'alignItems': 'center'
+  },
+  petAvatar: {
+    width: 170,
+    height: 170,
+  },
+  largeButton: {
+    transform: 'scale(1.5)'
+  },
+  buttonStyle: {
+    justifyContent: 'space-around',
+    display: 'flex'
+  },
+  profileStyles: {
+    display: 'flex',
+    'justifyContent': 'space-around',
+    'alignItems': 'center'
+  },
+  hidden: {
+    visibility: 'hidden'
+  }
+}));
+// Helper functions
+>>>>>>> master
 const connect = function(userId, receiverId, status, callback){
   axios.post(`api/users/${userId}/notifications`, { receiver_id: receiverId, status: status })
   
@@ -178,20 +216,13 @@ function DogsNearby(props) {
 }
 
 function Profile(props) {
+  const classes = useStyles();
   const [showForm, setShowForm] = useState(false)
-  const styles = {
-    display: 'flex',
-    'justifyContent': 'space-around',
-    'alignItems': 'center'
-  }
-  const hidden = {
-    visibility: 'hidden'
-  }
 
   return (
     <div>
-      <div style={ styles }className="my-profile-header">
-        <PetsIcon style={ hidden }/>
+      <div className={ classes.profileStyles }>
+        <PetsIcon className={ classes.hidden }/>
         <h2 className="my-profile-text">My Profile</h2>
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
@@ -202,33 +233,9 @@ function Profile(props) {
   )
 }
 
-// Avatar styles for the Notifications and Friends route
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-    'justifyContent': 'center',
-    'flexDirection': 'row',
-    'alignItems': 'center'
-  },
-  petAvatar: {
-    width: 170,
-    height: 170,
-  },
-}))
-
 // PENDING Friend Requests
 function Notifications(props) {
   const classes = useStyles();
-  const largeButton = {
-    transform: 'scale(1.5)'
-  }
-  const buttonStyle = {
-    justifyContent: 'space-around',
-    display: 'flex'
-  }
   const declineRequest = function(userId, receiver_id) {
     declineFriendRequest(userId, receiver_id, 'DECLINED')
   }
@@ -254,9 +261,9 @@ function Notifications(props) {
           <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.petAvatar} />
           <div className="right-side">
             <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
-            <div className="buttons" style={buttonStyle}>
-              <ClearIcon style={largeButton} onClick={()=> declineRequest(props.userId, notification.receiver_id)}/>
-              <PetsIcon style={largeButton} onClick={()=> acceptRequest(props.userId, notification.receiver_id)}/>
+            <div className={classes.buttonStyle}>
+              <ClearIcon className={classes.largeButton} onClick={()=> declineRequest(props.userId, notification.receiver_id)}/>
+              <PetsIcon className={classes.largeButton} onClick={()=> acceptRequest(props.userId, notification.receiver_id)}/>
             </div>
           </div>
         </div>
