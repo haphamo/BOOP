@@ -20,7 +20,8 @@ const useStyles = makeStyles(theme => ({
   formStyle: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%'
   }
 }));
 

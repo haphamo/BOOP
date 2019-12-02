@@ -15,12 +15,10 @@ import PetPage from './components/PetPage';
 import PetForm from './components/PetForm';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
-import PetInfo from './components/PetInfo';
-import Login from './components/Login';
+import PetInfoDashboard from './components/petInfoDashboard';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
-import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import ClearIcon from '@material-ui/icons/Clear';
 import Homepage from './components/Homepage';
 
@@ -31,6 +29,7 @@ export default function App() {
  const handleLogin = function(id){
   setUserId(id)
  }
+
   return (
     <Router>
       <div>
@@ -38,7 +37,7 @@ export default function App() {
           <Route exact path="/">
           {userId ?  <DogsNearby 
             userId={userId}
-            /> : <Login onLogin={handleLogin} />} 
+            /> : <Homepage onLogin={handleLogin} />} 
           </Route>
           <Route path="/homepage">
             <Homepage />
@@ -86,11 +85,13 @@ const useStyles = makeStyles(theme => ({
     height: 170,
   },
   largeButton: {
-    transform: 'scale(1.5)'
+    // transform: 'scale(0.4)'
+    height: '20%'
   },
   buttonStyle: {
     justifyContent: 'space-around',
-    display: 'flex'
+    display: 'flex',
+    // height: '300px'
   },
   profileStyles: {
     display: 'flex',
@@ -117,9 +118,9 @@ const connect = function(userId, receiverId, status, callback){
 
 const declineFriendRequest = function( userId, receiver_id, status){
   axios.post(`api/users/${userId}/notifications/decline`, { sender_id: receiver_id, status: status })
-  
   .then(res => {
     console.log('res', res)
+    
   })
   .catch(err => {
     console.log(err)
@@ -139,7 +140,7 @@ const acceptFriendRequest = function(userId, receiver_id, status) {
 
 // Pets with no connections (PENDING, ACCEPTED, DECLINED)
 function DogsNearby(props) {
-
+  const classes = useStyles();
   const [dogsNearby, setDogsNearby] = useState([])
   const [currentDogIndex, setCurrentDogIndex] = useState(0)
   
@@ -168,7 +169,7 @@ function DogsNearby(props) {
 
   return (
     <div>
-      <h2 className="header">DogsNearby</h2>
+      <h2 className="header">Nearby</h2>
       <hr></hr>
       { dogsNearby && dogsNearby.length > 0 && dogsNearby[currentDogIndex] ? 
         <div key={dogsNearby[currentDogIndex].owner_id}>
@@ -177,16 +178,16 @@ function DogsNearby(props) {
             petId={dogsNearby[currentDogIndex].pet_id}
             petImg={dogsNearby[currentDogIndex].photo}
           />
-          <PetInfo 
+          <PetInfoDashboard 
             petInfo={dogsNearby[currentDogIndex].quirky_fact}
           />
-          <div className="buttons">
-            <ArrowBackRoundedIcon 
-              onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)} 
-            />
-            <FavoriteRoundedIcon 
-              onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
-             />
+          <div className={classes.buttonStyle}>
+
+            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/585/585956.svg" alt="skip" onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)}>
+            </input>
+            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/585/585962.svg" alt="addFriend" onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}>
+            </input>
+    
            </div>
         </div> : 
         <small>No More furry friends left !</small> }
@@ -222,7 +223,7 @@ function Profile(props) {
         <h2 className="my-profile-text">My Profile</h2>
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
-      <hr></hr>
+    
       {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} onAddPet={addNewPet} handleCreatePet={handleCreatePet}/> : 
       <UserProfile userId={props.userId} />}
     </div>
@@ -232,14 +233,29 @@ function Profile(props) {
 // PENDING Friend Requests
 function Notifications(props) {
   const classes = useStyles();
-  const declineRequest = function(userId, receiver_id) {
-    declineFriendRequest(userId, receiver_id, 'DECLINED')
-  }
-   const acceptRequest = function(userId, receiver_id){
-    acceptFriendRequest(userId, receiver_id, 'ACCEPTED')
-  }
   const [notifications, setNotifications] = useState([])
 
+  const declineRequest = function(userId, receiver_id) {
+    declineFriendRequest(userId, receiver_id, 'DECLINED')
+    reRender()
+  }
+
+   const acceptRequest = function(userId, receiver_id){
+    acceptFriendRequest(userId, receiver_id, 'ACCEPTED')
+    reRender()
+  }
+
+  // this function re renders the notifications once you've either accepted or declined
+  const reRender = function(){
+    axios.get(`/api/users/${props.userId}/notifications`)
+    .then(res => {
+      setNotifications(res.data.result)
+      
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+  //this is the first request to retrieve the notifications
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {
