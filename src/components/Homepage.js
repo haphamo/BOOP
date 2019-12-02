@@ -96,7 +96,9 @@ export default function Homepage (props) {
         : 
       <div>
       <h1>Homepage</h1>
-      <button onClick={()=> setShowLogin(true)}>click here to login</button>
+      <Button onClick={()=> setShowLogin(true)}variant="contained" color="secondary">
+        Log In
+      </Button>
       </div>
       }
     </div>

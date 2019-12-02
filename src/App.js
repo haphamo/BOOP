@@ -15,7 +15,7 @@ import PetPage from './components/PetPage';
 import PetForm from './components/PetForm';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
-import PetInfo from './components/PetInfo';
+import PetInfoDashboard from './components/petInfoDashboard';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -179,14 +179,14 @@ function DogsNearby(props) {
             petId={dogsNearby[currentDogIndex].pet_id}
             petImg={dogsNearby[currentDogIndex].photo}
           />
-          <PetInfo 
+          <PetInfoDashboard 
             petInfo={dogsNearby[currentDogIndex].quirky_fact}
           />
           <div className={classes.buttonStyle}>
 
-            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/137/137607.svg" alt="skip" onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)}>
+            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/585/585956.svg" alt="skip" onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)}>
             </input>
-            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/137/137606.svg" alt="addFriend" onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}>
+            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/585/585962.svg" alt="addFriend" onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}>
             </input>
     
            </div>
@@ -224,7 +224,7 @@ function Profile(props) {
         <h2 className="my-profile-text">My Profile</h2>
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
-      <hr></hr>
+    
       {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} onAddPet={addNewPet} handleCreatePet={handleCreatePet}/> : 
       <UserProfile userId={props.userId} />}
     </div>

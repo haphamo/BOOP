@@ -20,11 +20,10 @@ export default function PetInfo(props) {
         
       </Typography>
 
-      
       <Typography component="p">
-        {props.petInfo.name}
-        <br></br>
         {props.petInfo.breed}
+        <br></br>
+        {props.petInfo.age} {props.petInfo.age > 1 ? <em>years old</em> : <em>year old</em>}
         <br></br>
         {props.petInfo.quirky_fact}
         {/* {props.petInfo} */}
