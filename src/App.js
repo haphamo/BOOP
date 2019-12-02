@@ -16,11 +16,11 @@ import PetForm from './components/PetForm';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
-import Login from './components/Login';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
-import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
+// import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import ClearIcon from '@material-ui/icons/Clear';
 import Homepage from './components/Homepage';
 
@@ -31,6 +31,8 @@ export default function App() {
  const handleLogin = function(id){
   setUserId(id)
  }
+
+ 
   return (
     <Router>
       <div>
@@ -38,7 +40,7 @@ export default function App() {
           <Route exact path="/">
           {userId ?  <DogsNearby 
             userId={userId}
-            /> : <Login onLogin={handleLogin} />} 
+            /> : <Homepage onLogin={handleLogin} />} 
           </Route>
           <Route path="/homepage">
             <Homepage />
@@ -86,7 +88,7 @@ const useStyles = makeStyles(theme => ({
     height: 170,
   },
   largeButton: {
-    transform: 'scale(1.5)'
+    transform: 'scale(0.4)'
   },
   buttonStyle: {
     justifyContent: 'space-around',
@@ -139,7 +141,7 @@ const acceptFriendRequest = function(userId, receiver_id, status) {
 
 // Pets with no connections (PENDING, ACCEPTED, DECLINED)
 function DogsNearby(props) {
-
+  const classes = useStyles();
   const [dogsNearby, setDogsNearby] = useState([])
   const [currentDogIndex, setCurrentDogIndex] = useState(0)
   
@@ -181,9 +183,12 @@ function DogsNearby(props) {
             petInfo={dogsNearby[currentDogIndex].quirky_fact}
           />
           <div className="buttons">
-            <ArrowBackRoundedIcon 
-              onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)} 
-            />
+
+            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/137/137607.svg" alt="skip" onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)}>
+            </input>
+    
+              
+            
             <FavoriteRoundedIcon 
               onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
              />
