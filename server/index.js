@@ -8,15 +8,17 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const pino = require('express-pino-logger')();
 const bodyParser = require('body-parser');
-const path = require('path');
-// const favicon = require('serve-favicon');
-// const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+const path = require('path');
 const cors = require('cors'); 
-// const fileUpload = require('express-fileupload'); 
-
 const app = express();
+// const bcrypt = require('bcrypt');
+// const session = require('express-session');
+// const config = require('../configuration/config');
+// const favicon = require('serve-favicon');
+// const logger = require('morgan');
+// const fileUpload = require('express-fileupload'); 
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -45,7 +47,6 @@ app.use(cookieSession({
 
 // Parse cookies
 app.use(cookieParser());
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -66,46 +67,127 @@ app.use(cors({
   origin: "http://localhost:3000/",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   optionsSuccessStatus: 204
-}));
+}))
 // app.use(fileUpload());
 
 passport.use(new FacebookStrategy({
   clientID: process.env.FACEBOOK_CLIENT_ID,
   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
   callbackURL: "http://localhost:3000/",
+  profileFields: ['id', 'displayName','email'],
   enableProof: true
 },
-function(accessToken, refreshToken, profile, cb) {
-  User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-    return cb(err, user);
-  });
-}
-));
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      return cb(err, user);
+    })
+  }
+))
 
 passport.serializeUser(function(user, cb) {
-  cb(null, user);
-});
+  cb(null, user)
+})
 
 passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
-});
+  cb(null, obj)
+})
 
-// Define routes
-// Move to auth-routes.js later
-app.get('/auth/facebook', 
-  passport.authenticate('facebook', { session: false }),
-  function(req, res) {
-    res.json({ id: req.user.id, username: req.user.username });
+// Register, Login and Logout Routes
+// Create a new user
+// POST /register
+app.post("/register", (req, res) => {
+  // Check if the user exists in the the database, if not create a new user
+  const existingUser = db.query(`SELECT * FROM users WHERE email = $1`, [req.body.email])
+  if(existingUser) {
+    res.status(400)
+    res.json({
+      status: 400,
+      message: 'Email already exists!'
+    })
+  } else {
+    db.query(
+      `INSERT INTO users (first_name, last_name, email, password, city, post_code, profile_photo)
+      VALUES ($1, $2, $3, $4, $5, $6)`
+      , [req.body.first_name, 
+         req.body.last_name, 
+         req.body.email, 
+         req.body.password, 
+         req.body.city, 
+         req.body.post_code, 
+         req.body.profile_photo])
+      .then(result => {
+        res.status(201)
+        res.json({ 
+          status: 'Success',
+          result: result.rows,
+          message: 'Created a new user' 
+      })
+    })
+      .catch(err => {
+        res.status(500)
+        res.json({ 
+          status: 500,
+          error: err.message 
+      })
+    })
   }
-  );
+})
+
+// POST /login
+// Will implement bcrypt later
+app.post("/login", (req, res) => {  
+    db.query(`SELECT * FROM users WHERE email = $1`, [req.body.email])
+    .then(data => {
+    if(data.rows.length) {
+      let existingUser = data.rows[0]
+      if(req.body.password === existingUser.password) {
+        req.session.user_id = existingUser.id
+        res.json({
+          loggedIn: true, 
+          userId: existingUser.id
+        })
+      } else {
+        res.json({
+          loggedIn: false
+        })
+      }
+    }
+  })
+})
+
+// POST /logout
+app.post("/logout", (req, res) => {
+  req.session = null
+  res.json({
+    loggedOut: true
+  })
+})
+
+// Route for authenticating with Facebook 
+// In auth-routes.js - will test to see if it works from there before deleting
+// Session cookie is not being recognized in the log in
+app.get('/auth/facebook', 
+  passport.authenticate('facebook'),
+  function(req, res) {
+    console.log("What is the request?", req)
+    console.log("What is the response?", res)
+    res.json({ 
+      loggedIn: true,
+      id: req.session.user_id, 
+      username: req.user.username 
+    })
+  }
+)
 
 app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/login' }));
+  passport.authenticate('facebook', { successRedirect: 'http://localhost:3000/',
+                                      failureRedirect: '/login' }))
 
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-});
+  console.log(`Server is listening on port ${PORT}`)
+})
+
+
 
 
 

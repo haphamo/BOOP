@@ -3,9 +3,9 @@ import { Widget } from '@uploadcare/react-widget';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-// Upload images to Pet Gallery
+// Upload pet profile photo when adding a new pet
 // Assisted by Guy Tonye(mentor)
-export default function Upload(props) {
+export default function UploadProfilePhoto(props) {
   const { id } = useParams()
   const onUpload = (info) => {
     // Save the image to the database

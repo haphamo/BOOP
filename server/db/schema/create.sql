@@ -9,9 +9,10 @@ CREATE TABLE users (
   first_name VARCHAR(255) NOT NULL,
   last_name VARCHAR(255) NOT NULL,
   email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
   city VARCHAR(255) NOT NULL,
   post_code VARCHAR(255) NOT NULL,
-  profile_photo VARCHAR(255) NOT NULL
+  profile_photo VARCHAR(255)
 );
 
 CREATE TABLE pets (
@@ -21,7 +22,7 @@ CREATE TABLE pets (
   breed VARCHAR(255) NOT NULL,
   quirky_fact VARCHAR(255) NOT NULL,
   owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  profile_photo VARCHAR(255) NOT NULL
+  profile_photo VARCHAR(255)
 );
 
 CREATE TABLE pet_favourites (
@@ -41,5 +42,5 @@ CREATE TABLE connections (
   id SERIAL PRIMARY KEY NOT NULL,
   sender_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   receiver_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  status INTEGER NOT NULL
+  status VARCHAR(255) NOT NULL
 );
