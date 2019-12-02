@@ -57,10 +57,9 @@ export default function PetPage(props) {
       // setPetInfo(all[0].data.result[0].quirky_fact)
       // setPetGallery(all[1].data.result)
       // console.log('this one', all[0].data.result[0])
-      let category = res[2].data.result
-      // const fav = {}
-      // category.map(item => {fav[item.category]=item.favourite_item}) 
-      setPetFavs([addFav, ...category]);
+      let favourites = res[2].data.result
+
+      setPetFavs([addFav, ...favourites]);
     })
     .catch(err => {
       console.log('error:', err)
