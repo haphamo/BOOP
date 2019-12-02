@@ -43,29 +43,36 @@ export default function PetPage(props) {
   const [petGallery, setPetGallery] = useState([])
   const [lastUploaded, setLastUploaded] = useState('')
   const [showPetFavForm, setShowPetFavForm] = useState(true)
+  const [listOfPets, setListOfPets] = useState([])
+
+
   useEffect(() => {
     Promise.all([
       axios.get(`/api/pets/${id}`),
       axios.get(`/api/pets/${id}/images`),
-      axios.get(`/api/pets/${id}/favourites`)
+      axios.get(`/api/pets/${id}/favourites`),
+      axios.get(`/api/users/${props.userId}/pets`)
 
     ])
     .then(res => {
-      console.log("What is the response", res)
+      // console.log("What is the response", res)
       setPetName(res[0].data.result[0].name)
       setPetAvatar(res[0].data.result[0].profile_photo)
       setPetInfo(res[0].data.result[0])
       setPetGallery(res[1].data.result)
-      // console.log('this one', all[0].data.result[0])
       let favourites = res[2].data.result
 
       setPetFavs([addFav, ...favourites]);
+      setListOfPets(res[3].data.result)
+    
     })
     .catch(err => {
       console.log('error:', err)
     })
     
   }, [lastUploaded, id])
+
+  // console.log()
 
   const submitPetFav = function(favourite_item, category) {
     const newFav = { favourite_item, category, id }
@@ -83,7 +90,16 @@ export default function PetPage(props) {
   const hidden = {
     visibility: 'hidden'
   }
-  
+
+
+  let allPets = listOfPets.map(pet => (pet.pet_id))
+  console.log('allPets', allPets)
+  console.log('id', Number(id))
+  console.log('test', allPets.includes(Number(id)))
+
+  //this function will check if the user is allowed to upload images for the given pet
+ 
+
   return(
     <Fragment>
       <div className={classes.styles}>
@@ -91,7 +107,15 @@ export default function PetPage(props) {
         Default
         </Button>
         <h2>{petName}</h2>
-        <Upload setLastUploaded={setLastUploaded} onUpload={props.onUpload} />
+        {/* Add LOGIC: if the id in useparams exists in the array of users pets, show else, do not show */}
+        { allPets.includes(Number(id)) ? <Upload setLastUploaded={setLastUploaded} onUpload={props.onUpload} />  : 
+      <Button variant="contained" style={hidden} className={classes.button}>
+      Default
+      </Button>}
+        
+         
+        
+        
       </div>
       <hr></hr>
       { showPetFavForm ?

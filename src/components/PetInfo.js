@@ -11,8 +11,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function PetInfo(props) {
   const classes = useStyles();
-  console.log('props', typeof props.petInfo)
-  console.log('props', props.petInfo)
 
   return (
     <Paper className={classes.root}>
