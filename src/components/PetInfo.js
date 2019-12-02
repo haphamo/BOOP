@@ -27,6 +27,7 @@ export default function PetInfo(props) {
         {props.petInfo.breed}
         <br></br>
         {props.petInfo.quirky_fact}
+        {/* {props.petInfo} */}
       </Typography>
     </Paper>
   );

@@ -19,8 +19,6 @@ import PetInfo from './components/PetInfo';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
-// import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import ClearIcon from '@material-ui/icons/Clear';
 import Homepage from './components/Homepage';
 
@@ -88,11 +86,13 @@ const useStyles = makeStyles(theme => ({
     height: 170,
   },
   largeButton: {
-    transform: 'scale(0.4)'
+    // transform: 'scale(0.4)'
+    height: '20%'
   },
   buttonStyle: {
     justifyContent: 'space-around',
-    display: 'flex'
+    display: 'flex',
+    // height: '300px'
   },
   profileStyles: {
     display: 'flex',
@@ -170,7 +170,7 @@ function DogsNearby(props) {
 
   return (
     <div>
-      <h2 className="header">DogsNearby</h2>
+      <h2 className="header">Nearby</h2>
       <hr></hr>
       { dogsNearby && dogsNearby.length > 0 && dogsNearby[currentDogIndex] ? 
         <div key={dogsNearby[currentDogIndex].owner_id}>
@@ -182,16 +182,13 @@ function DogsNearby(props) {
           <PetInfo 
             petInfo={dogsNearby[currentDogIndex].quirky_fact}
           />
-          <div className="buttons">
+          <div className={classes.buttonStyle}>
 
             <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/137/137607.svg" alt="skip" onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)}>
             </input>
+            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/137/137606.svg" alt="addFriend" onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}>
+            </input>
     
-              
-            
-            <FavoriteRoundedIcon 
-              onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}
-             />
            </div>
         </div> : 
         <small>No More furry friends left !</small> }
