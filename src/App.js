@@ -52,7 +52,7 @@ export default function App() {
             <Notifications userId={userId} />
           </Route>
           <Route path="/pets/:id">
-            <PetPage />
+            <PetPage userId={userId} />
           </Route>
         </Switch>
       </div>
