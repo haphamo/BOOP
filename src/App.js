@@ -211,6 +211,10 @@ function Profile(props) {
     })
   }
 
+  const handleCreatePet = function(){
+    setShowForm(false)
+  }
+
   return (
     <div>
       <div className={ classes.profileStyles }>
@@ -219,7 +223,7 @@ function Profile(props) {
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
       <hr></hr>
-      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} onAddPet={addNewPet} /> : 
+      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} onAddPet={addNewPet} handleCreatePet={handleCreatePet}/> : 
       <UserProfile userId={props.userId} />}
     </div>
   )

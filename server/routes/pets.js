@@ -88,6 +88,7 @@ module.exports = db => {
   })
 
   // Get a single pet's profile information 
+  // should do a check first if that pet:id exists
   router.get("/:id", (req, res) => {
     const userId = req.session.user_id
     const petId = parseInt(req.params.id)

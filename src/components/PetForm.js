@@ -39,6 +39,7 @@ export default function PetForm(props) {
   const onSubmit = function (evt) {
     evt.preventDefault();
     props.onAddPet(name, age, breed, quirkyFact, userId, profilePhoto)
+    props.handleCreatePet()
   }
   const handleNameChange = e => {
     setName(e.target.value)
@@ -112,7 +113,11 @@ export default function PetForm(props) {
           <Button variant="outlined" className={classes.button} onClick={() => props.setShowForm(false)}>
             Cancel
           </Button>
-          <Button variant="outlined" className={classes.button} type="submit">
+          <Button variant="outlined" 
+          className={classes.button} 
+          type="submit"
+          
+          >
             Submit
           </Button> 
       </div>
