@@ -246,6 +246,7 @@ function Notifications(props) {
   }
 
   // this function re renders the notifications once you've either accepted or declined
+  // this is a bug, only calls function once
   const reRender = function(){
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {
