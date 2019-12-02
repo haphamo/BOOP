@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 
 // the images for the categories of pet favourites
 let data = {
-  add: "https://image.flaticon.com/icons/svg/149/149145.svg",
+  add: "https://image.flaticon.com/icons/svg/1408/1408938.svg",
   treat: "https://image.flaticon.com/icons/svg/1025/1025349.svg", 
   toy: "https://image.flaticon.com/icons/svg/802/802340.svg",
   park: "https://image.flaticon.com/icons/svg/189/189502.svg",
