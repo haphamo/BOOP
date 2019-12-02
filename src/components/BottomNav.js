@@ -15,7 +15,8 @@ const useStyles = makeStyles({
     position: 'fixed',
     bottom: 0,
     
-  }
+  },
+  
 });
 
 export default function BottomNav() {
