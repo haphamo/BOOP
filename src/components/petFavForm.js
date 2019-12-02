@@ -68,12 +68,11 @@ export default function PetFavForm(props) {
 
   const classes = useStyles();
   const [category, setCategory] = useState('');
-  // The state below is the name of the favourite item
-  const [name, setName] = useState('')
+  const [favourite_item, setFavouriteItem] = useState('')
 
   const onSubmit = function (evt) {
     evt.preventDefault()
-    props.onCreatePetFav(name, category)
+    props.onCreatePetFav(favourite_item, category)
   }
 
   const handleCategoryChange = e => {
@@ -81,7 +80,7 @@ export default function PetFavForm(props) {
   };
 
   const handleFavouriteChange = e => {
-    setName(e.target.value);
+    setFavouriteItem(e.target.value);
   };
 
   return (
@@ -111,7 +110,7 @@ export default function PetFavForm(props) {
           id="standard-basic" 
           className={classes.textField} 
           label="Favourite"
-          value={name}
+          value={favourite_item}
           onChange={handleFavouriteChange}/>
         <div className={ classes.buttonStyles }>
           <CancelOutlinedIcon className={classes.largeButton} onClick={() => props.setShowPetFavForm(true)}/>

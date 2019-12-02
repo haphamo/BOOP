@@ -43,7 +43,7 @@ export default function PetPage(props) {
   const [petGallery, setPetGallery] = useState([])
   const [lastUploaded, setLastUploaded] = useState('')
   const [showPetFavForm, setShowPetFavForm] = useState(true)
-
+  console.log('line46', petFavs)
   useEffect(() => {
     Promise.all([
       axios.get(`/api/pets/${id}`),
@@ -72,11 +72,13 @@ export default function PetPage(props) {
     
   }, [lastUploaded, id])
 
-  const submitPetFav = function(name, category) {
-    const newFav = { name, category, id }
+  const submitPetFav = function(favourite_item, category) {
+    const newFav = { favourite_item, category, id }
     axios.post(`/api/pets/${id}/favourites`, newFav)
     .then(() => {
+      console.log('line79', petFavs)
       setPetFavs([...petFavs, newFav])
+      setShowPetFavForm(true)
     })
     .catch(err => {
       console.log(err)
