@@ -21,8 +21,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function UserProfile(props) {
-  console.log('props',props)
-  //define states
+  // console.log('props',props)
   const [userAvatar, setUserAvatar] = useState('')
   const [userName, setUserName] = useState('')
   const [petData, setPetData] = useState([])

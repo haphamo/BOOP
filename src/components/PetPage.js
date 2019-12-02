@@ -20,12 +20,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-<<<<<<< HEAD
-export default function PetPage() {
-=======
 export default function PetPage(props) {
   // this id is of the pet
->>>>>>> master
   let { id } = useParams()
 
   // initial state of fav bar will always have an add button
@@ -46,7 +42,8 @@ export default function PetPage(props) {
   useEffect(() => {
     Promise.all([
       axios.get(`/api/pets/${id}`),
-      axios.get(`/api/pets/${id}/images`)
+      axios.get(`/api/pets/${id}/images`),
+      axios.get(`/api/pets/${id}/favourites`)
 
     ])
     .then(res => {
@@ -60,7 +57,7 @@ export default function PetPage(props) {
       // setPetInfo(all[0].data.result[0].quirky_fact)
       // setPetGallery(all[1].data.result)
       // console.log('this one', all[0].data.result[0])
-      let category = res[0].data.result
+      let category = res[2].data.result
       // const fav = {}
       // category.map(item => {fav[item.category]=item.favourite_item}) 
       setPetFavs([addFav, ...category]);
