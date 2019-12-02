@@ -39,11 +39,10 @@ export default function PetPage(props) {
   const [petAvatar, setPetAvatar] = useState('')
   const [petName, setPetName] = useState('')
   const [petFavs, setPetFavs] = useState([addFav])
-  const [petInfo, setPetInfo] = useState('')
+  const [petInfo, setPetInfo] = useState([])
   const [petGallery, setPetGallery] = useState([])
   const [lastUploaded, setLastUploaded] = useState('')
   const [showPetFavForm, setShowPetFavForm] = useState(true)
-  console.log('line46', petFavs)
   useEffect(() => {
     Promise.all([
       axios.get(`/api/pets/${id}`),
@@ -55,12 +54,8 @@ export default function PetPage(props) {
       console.log("What is the response", res)
       setPetName(res[0].data.result[0].name)
       setPetAvatar(res[0].data.result[0].profile_photo)
-      setPetInfo(res[0].data.result[0].quirky_fact)
+      setPetInfo(res[0].data.result[0])
       setPetGallery(res[1].data.result)
-      // setPetName(all[0].data.result[0].name)
-      // setPetAvatar(all[0].data.result[0].profile_photo)
-      // setPetInfo(all[0].data.result[0].quirky_fact)
-      // setPetGallery(all[1].data.result)
       // console.log('this one', all[0].data.result[0])
       let favourites = res[2].data.result
 
@@ -76,7 +71,6 @@ export default function PetPage(props) {
     const newFav = { favourite_item, category, id }
     axios.post(`/api/pets/${id}/favourites`, newFav)
     .then(() => {
-      console.log('line79', petFavs)
       setPetFavs([...petFavs, newFav])
       setShowPetFavForm(true)
     })
@@ -85,11 +79,6 @@ export default function PetPage(props) {
     })
   }
 
-  // const styles = {
-  //   display: 'flex',
-  //   'justifyContent': 'space-around',
-  //   'alignItems': 'center'
-  // }
   //the first button in the header is hidden to center the name of the pet
   const hidden = {
     visibility: 'hidden'

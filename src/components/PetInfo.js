@@ -11,14 +11,18 @@ const useStyles = makeStyles(theme => ({
 
 export default function PetInfo(props) {
   const classes = useStyles();
+  console.log('props', props.petInfo)
   return (
     <Paper className={classes.root}>
       <Typography variant="h5" component="h3">
         
       </Typography>
       <Typography component="p">
-        {props.petInfo}
-
+        {props.petInfo.name}
+        <br></br>
+        {props.petInfo.breed}
+        <br></br>
+        {props.petInfo.quirky_fact}
       </Typography>
     </Paper>
   );
