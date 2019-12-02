@@ -21,12 +21,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function UserProfile(props) {
-  console.log('props',props)
-  //define states
+  // console.log('props',props)
   const [userAvatar, setUserAvatar] = useState('')
   const [userName, setUserName] = useState('')
   const [petData, setPetData] = useState([])
-
 
   useEffect(()=> {
     // id is the user_id that comes from the cookie
