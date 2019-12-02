@@ -6,6 +6,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import axios from "axios";
 
 import './App.scss';
 import BottomNav from './components/BottomNav';
@@ -16,7 +17,6 @@ import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfo from './components/PetInfo';
 import Login from './components/Login';
-import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
@@ -211,6 +211,10 @@ function Profile(props) {
     })
   }
 
+  const handleCreatePet = function(){
+    setShowForm(false)
+  }
+
   return (
     <div>
       <div className={ classes.profileStyles }>
@@ -219,7 +223,7 @@ function Profile(props) {
         <PetsIcon onClick={()=> setShowForm(true)}/>
     </div>
       <hr></hr>
-      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} onAddPet={addNewPet} /> : 
+      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} onAddPet={addNewPet} handleCreatePet={handleCreatePet}/> : 
       <UserProfile userId={props.userId} />}
     </div>
   )

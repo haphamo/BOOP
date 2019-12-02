@@ -70,7 +70,7 @@ module.exports = db => {
     db.query(
       `SELECT pets.name AS pet,
               pet_favourites.category AS category, 
-              pet_favourites.name AS name
+              pet_favourites.name AS favourite_item
       FROM pet_favourites
       JOIN pets ON pets.id = pet_id`)
     .then(result => {
@@ -88,6 +88,7 @@ module.exports = db => {
   })
 
   // Get a single pet's profile information 
+  // should do a check first if that pet:id exists
   router.get("/:id", (req, res) => {
     const userId = req.session.user_id
     const petId = parseInt(req.params.id)
@@ -256,7 +257,7 @@ module.exports = db => {
     db.query(
       `INSERT INTO pet_favourites (name, category, pet_id)
       VALUES($1, $2, $3)`
-      , [req.body.name, req.body.category, petId])
+      , [req.body.favourite_item, req.body.category, petId])
     .then(result => {
       res.status(200)
       res.json({ 

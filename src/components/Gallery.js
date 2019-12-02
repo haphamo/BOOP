@@ -15,10 +15,10 @@ const useStyles = makeStyles(theme => ({
     paddingRight: '1em',
     paddingLeft: '1em'
   },
-  gridList: {
-    width: '100',
+  // gridList: {
+  //   width: '100',
    
-  }
+  // },
 }));
 
 export default function Gallery(props) {
@@ -26,7 +26,7 @@ export default function Gallery(props) {
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight={200} className={classes.gridList} cols={1} >
+      <GridList cols={1} >
         {props.petGallery.map(img => (
           <GridListTile key={img.image_id} cols={img.cols || 1} >
             <img src={img.photo} alt={img.image_id} />

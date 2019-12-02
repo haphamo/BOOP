@@ -18,6 +18,12 @@ const useStyles = makeStyles(theme => ({
   input: {
     display: 'none',
   },
+  styles: {
+    display: 'flex',
+    'justifyContent': 'space-around',
+    'alignItems': 'center'
+  },
+
 }));
 
 export default function PetPage(props) {
@@ -27,7 +33,6 @@ export default function PetPage(props) {
   // initial state of fav bar will always have an add button
   const addFav = { category: 'Add', favourite_id: 0}
 
-  // hidden button style
   const classes = useStyles();
   
   // define my states
@@ -38,11 +43,12 @@ export default function PetPage(props) {
   const [petGallery, setPetGallery] = useState([])
   const [lastUploaded, setLastUploaded] = useState('')
   const [showPetFavForm, setShowPetFavForm] = useState(true)
-
+  console.log('line46', petFavs)
   useEffect(() => {
     Promise.all([
       axios.get(`/api/pets/${id}`),
-      axios.get(`/api/pets/${id}/images`)
+      axios.get(`/api/pets/${id}/images`),
+      axios.get(`/api/pets/${id}/favourites`)
 
     ])
     .then(res => {
@@ -56,10 +62,9 @@ export default function PetPage(props) {
       // setPetInfo(all[0].data.result[0].quirky_fact)
       // setPetGallery(all[1].data.result)
       // console.log('this one', all[0].data.result[0])
-      let category = res[0].data.result
-      // const fav = {}
-      // category.map(item => {fav[item.category]=item.favourite_item}) 
-      setPetFavs([addFav, ...category]);
+      let favourites = res[2].data.result
+
+      setPetFavs([addFav, ...favourites]);
     })
     .catch(err => {
       console.log('error:', err)
@@ -67,22 +72,24 @@ export default function PetPage(props) {
     
   }, [lastUploaded, id])
 
-  const submitPetFav = function(name, category) {
-    const newFav = { name, category, id }
+  const submitPetFav = function(favourite_item, category) {
+    const newFav = { favourite_item, category, id }
     axios.post(`/api/pets/${id}/favourites`, newFav)
     .then(() => {
+      console.log('line79', petFavs)
       setPetFavs([...petFavs, newFav])
+      setShowPetFavForm(true)
     })
     .catch(err => {
       console.log(err)
     })
   }
 
-  const styles = {
-    display: 'flex',
-    'justifyContent': 'space-around',
-    'alignItems': 'center'
-  }
+  // const styles = {
+  //   display: 'flex',
+  //   'justifyContent': 'space-around',
+  //   'alignItems': 'center'
+  // }
   //the first button in the header is hidden to center the name of the pet
   const hidden = {
     visibility: 'hidden'
@@ -90,7 +97,7 @@ export default function PetPage(props) {
   
   return(
     <Fragment>
-      <div className="header" style={ styles }>
+      <div className={classes.styles}>
         <Button variant="contained" style={hidden} className={classes.button}>
         Default
         </Button>
