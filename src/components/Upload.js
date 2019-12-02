@@ -20,7 +20,7 @@ export default function Upload(props) {
     <Fragment>
       <div className="upload">
         <Widget 
-          publicKey='e409ed1db8c88f8b8083'
+          publicKey='9aed545b12b2a131d196'
           onChange={onUpload} 
           clearable
           previewStep='true'
