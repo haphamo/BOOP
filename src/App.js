@@ -30,7 +30,6 @@ export default function App() {
   setUserId(id)
  }
 
- 
   return (
     <Router>
       <div>
@@ -246,7 +245,7 @@ function Notifications(props) {
     reRender()
   }
 
-
+  // this function re renders the notifications once you've either accepted or declined
   const reRender = function(){
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {
@@ -256,7 +255,7 @@ function Notifications(props) {
       console.log(err)
     })
   }
-
+  //this is the first request to retrieve the notifications
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {

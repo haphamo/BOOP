@@ -6,10 +6,12 @@ export default function PetInfoDashboard(props) {
   console.log(props)
   return (
     <Paper >
+    <br></br>
     <Typography component="p">
 
       {props.petInfo}
     </Typography>
+    <br></br>
   </Paper>
   )
 }
