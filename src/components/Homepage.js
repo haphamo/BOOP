@@ -101,7 +101,13 @@ export default function Homepage (props) {
           {/* <Player>
             <source src="" />
           </Player> */}
-        <button onClick={()=> setShowLogin(true)}>click here to login</button>
+        {/* <button onClick={()=> setShowLogin(true)}>Login</button> */}
+        <Button variant="contained" 
+            color="primary" 
+            className={classes.button}
+            onClick={() => setShowLogin(true)}>
+              Log In
+          </Button>
       </div>
       }
     </div>
