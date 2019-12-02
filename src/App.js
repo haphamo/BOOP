@@ -119,9 +119,9 @@ const connect = function(userId, receiverId, status, callback){
 
 const declineFriendRequest = function( userId, receiver_id, status){
   axios.post(`api/users/${userId}/notifications/decline`, { sender_id: receiver_id, status: status })
-  
   .then(res => {
     console.log('res', res)
+    
   })
   .catch(err => {
     console.log(err)
@@ -234,13 +234,28 @@ function Profile(props) {
 // PENDING Friend Requests
 function Notifications(props) {
   const classes = useStyles();
+  const [notifications, setNotifications] = useState([])
+
   const declineRequest = function(userId, receiver_id) {
     declineFriendRequest(userId, receiver_id, 'DECLINED')
+    reRender()
   }
+
    const acceptRequest = function(userId, receiver_id){
     acceptFriendRequest(userId, receiver_id, 'ACCEPTED')
+    reRender()
   }
-  const [notifications, setNotifications] = useState([])
+
+
+  const reRender = function(){
+    axios.get(`/api/users/${props.userId}/notifications`)
+    .then(res => {
+      setNotifications(res.data.result)
+      
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/notifications`)
