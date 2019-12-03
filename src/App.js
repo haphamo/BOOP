@@ -90,8 +90,9 @@ const useStyles = makeStyles(theme => ({
   buttonStyle: {
     justifyContent: 'space-around',
     display: 'flex',
-    height: '300px',
-    marginTop: '10%'
+    height: 'fit-content',
+    marginTop: '10%',
+    
   },
   profileStyles: {
     display: 'flex',
@@ -161,7 +162,9 @@ function DogsNearby(props) {
   }, [])
   
   const petNameTextStyle = {
-    'textAlign': 'center'
+    'textAlign': 'center',
+    'fontFamily': 'Permanent Marker, cursive',
+    'fontSize': 'xx-large',
   }
   const requestConnection = function(ownerId) {
     const callback = () => setCurrentDogIndex(prev => prev+1)
@@ -284,7 +287,7 @@ function Notifications(props) {
       <div className={classes.marginBottom} key={notification.pet_id}>
         <div className={classes.root}>
           <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.petAvatar} />
-          <div className="right-side">
+          <div className={classes.petAvatar}>
             <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
             <div className={classes.buttonStyle}>
             <input style={test} type="image" src="https://image.flaticon.com/icons/svg/148/148766.svg" alt="decline" onClick={()=> declineRequest(props.userId, notification.receiver_id)}></input>

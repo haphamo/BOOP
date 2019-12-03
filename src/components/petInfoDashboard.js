@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 const infoBox = {
   'marginRight': '5%',
   'marginLeft': '5%',
-
+  'fontFamily': 'Permanent Marker, cursive',
 }
 export default function PetInfoDashboard(props) {
   console.log(props)
