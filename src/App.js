@@ -103,7 +103,7 @@ const useStyles = makeStyles(theme => ({
     visibility: 'hidden'
   },
   marginBottom : {
-    marginBottom: '20%'
+    marginBottom: '25%'
   },
   header: {
     fontFamily: 'Lobster'
@@ -223,7 +223,13 @@ function Profile(props) {
 
   const handleCreatePet = function(){
     setShowForm(false)
-
+    axios.get(`/api/users/${props.userId}/pets`)
+    .then(res => {
+      console.log('this one', res)
+    })
+    .catch(err => {
+      console.error(err)
+    })
   }
 
   return (
