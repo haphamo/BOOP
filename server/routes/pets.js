@@ -233,7 +233,8 @@ module.exports = db => {
               pet_favourites.category AS category
       FROM pets
       JOIN pet_favourites ON pet_id = pets.id
-      WHERE pet_id = $1`
+      WHERE pet_id = $1
+      ORDER BY favourite_id DESC`
       , [petId])
     .then(result => {
       res.status(200)
