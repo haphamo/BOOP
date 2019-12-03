@@ -90,8 +90,9 @@ const useStyles = makeStyles(theme => ({
   buttonStyle: {
     justifyContent: 'space-around',
     display: 'flex',
-    height: '300px',
-    marginTop: '10%'
+    height: 'fit-content',
+    marginTop: '10%',
+    
   },
   profileStyles: {
     display: 'flex',
