@@ -41,7 +41,30 @@ VALUES ('Dentastix', 'Treat', 1),
 ('Pizza', 'Treat', 9);
 
 INSERT INTO images (url, pet_id)
-VALUES ('https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage20191114at170028.jpeg', 1);
+VALUES ('https://ucarecdn.com/f3979415-b86b-4030-9cbb-e59c83593f13/', 10),
+('https://ucarecdn.com/d5a85a69-f66e-4a50-97e9-811e31388719/', 10),
+('https://ucarecdn.com/d0316afe-f7c1-4e71-950c-3aa6ad79eeca/', 10),
+('https://ucarecdn.com/78b4b6af-d144-42bd-8aec-723828a9580f/', 11),
+('https://ucarecdn.com/f33422db-6d97-4412-b8b8-d3af83ea940d/', 11),
+('https://ucarecdn.com/ed612be4-d35c-4719-90ff-b9b863f09d1c/', 11),
+('https://ucarecdn.com/ca8d2044-7737-454a-88af-d5d3eaa1b300/', 12),
+('https://ucarecdn.com/181464dd-15be-4d22-98ed-60be1889671a/', 12),
+('https://ucarecdn.com/2c4fc014-34c9-449d-952f-2e94d9fa2006/', 12),
+('https://ucarecdn.com/0a2dd43f-8e12-4251-8f51-8e2301fe9055/', 13),
+('https://ucarecdn.com/b0bada66-5010-4350-b8c5-7bd5674890b4/', 13),
+('https://ucarecdn.com/7d4b6b9f-33af-4688-a0e2-08f3325071ec/', 13),
+('https://ucarecdn.com/3ef2a881-97a5-4746-9c9d-8b6d67cb9ea0/', 13),
+('https://ucarecdn.com/cfb8ad26-829e-40c0-a5bf-acfef943814f/', 13),
+('https://ucarecdn.com/370f18ad-aead-4556-ab89-62eee20ac652/', 13),
+('https://ucarecdn.com/9f265f48-3a4c-4656-80d3-3dea33119706/', 13),
+('https://ucarecdn.com/02889b46-9263-49ad-90c5-2b0c473b7a74/', 13),
+('https://ucarecdn.com/c4080dbd-0b6b-4f8f-864d-d78c7e112075/', 13),
+('https://ucarecdn.com/976e82b8-8269-440c-85e5-570c496cfebb/', 13),
+('https://ucarecdn.com/c70666e5-8b68-4570-b4d3-1215578d0ba2/', 13),
+('https://ucarecdn.com/fbd97ffc-a0f8-4cae-bbe6-1bdc1077bb13/', 13),
+('https://ucarecdn.com/9c6e0cc2-11d4-4f9d-b687-027ab7e47834/', 13),
+('https://ucarecdn.com/62ef33c7-623f-429b-85e8-5e85c9a30f93/', 13),
+('https://ucarecdn.com/78b288b9-b1f6-45c8-8d4b-67a47edea336/', 13);
 
 -- Status can be PENDING, ACCEPTED or PASSED
 INSERT INTO connections (sender_id, receiver_id, status)
