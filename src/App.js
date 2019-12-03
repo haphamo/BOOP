@@ -103,6 +103,9 @@ const useStyles = makeStyles(theme => ({
   },
   marginBottom : {
     marginBottom: '15%'
+  },
+  header: {
+    fontFamily: 'Lobster'
   }
 }))
 
@@ -171,7 +174,7 @@ function DogsNearby(props) {
 
   return (
     <div>
-      <h2 className="header">Nearby</h2>
+      <h2 className={classes.header}>Dogboard</h2>
       <hr></hr>
       { dogsNearby && dogsNearby.length > 0 && dogsNearby[currentDogIndex] ? 
         <div className={classes.marginBottom} key={dogsNearby[currentDogIndex].owner_id}>
@@ -207,8 +210,8 @@ function Profile(props) {
     axios.post('api/pets', newPet)
     .then(res => {
       console.log("Added a new pet: ", res)
-      setPet(res.config.data)
-      // setPet(pet)
+      // setPet(res.config.data)
+      setPet(pet)
     })
     .catch(err => {
       console.log(err)
@@ -224,7 +227,7 @@ function Profile(props) {
     <div className={classes.marginBottom}>
       <div className={ classes.profileStyles }>
         <PetsIcon className={ classes.hidden }/>
-        <h2 className="my-profile-text">My Profile</h2>
+        <h2 className={classes.header}>My Profile</h2>
         <PetsIcon onClick={()=> setShowForm(true)}/>
       </div>
       <hr></hr>
@@ -297,7 +300,7 @@ function Notifications(props) {
 
   return (
     <div className="header">
-      <h2>Notifications</h2>
+      <h2 className={classes.header}>Notifications</h2>
       <hr></hr>
       <div className="container">
       {friendRequests}
@@ -332,7 +335,7 @@ function Friends(props) {
   })
   return (
     <div className={classes.marginBottom}>
-      <h2>Friends</h2>
+      <h2 className={classes.header}>Friends</h2>
       <hr></hr>
       {furryFriends}
     </div>
