@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import PetsOnUserPage from './PetOnUserPage';
@@ -12,13 +12,15 @@ const useStyles = makeStyles(theme => ({
     },
     'justifyContent': 'center',
     'flexDirection': 'column',
-    'alignItems': 'center'
+    'alignItems': 'center',
   },
   bigAvatar: {
     width: 150,
     height: 150,
   },
+
 }));
+
 
 export default function UserProfile(props) {
   // console.log('props',props)
@@ -44,12 +46,16 @@ export default function UserProfile(props) {
   
   console.log('petData', petData)
   return (
-    <Fragment>
-    <div className={classes.root}>
-      <Avatar alt={userName} src={userAvatar} className={classes.bigAvatar} />
-    <strong>{userName}</strong>
+    
+    <div>
+      <div className={classes.root}>
+        <Avatar alt={userName} src={userAvatar} className={classes.bigAvatar} />
+      <strong>{userName}</strong>
+      </div>
+      <div>
+        <PetsOnUserPage petData={petData}/>
+      </div>
     </div>
-    <PetsOnUserPage petData={petData}/>
-    </Fragment>
+   
   );
 }
