@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect , useState} from "react";
+import React, { useEffect , useState} from "react";
 import {useParams} from 'react-router-dom';
 import axios from "axios";
 
@@ -47,8 +47,6 @@ export default function PetPage(props) {
   const [lastUploaded, setLastUploaded] = useState('')
   const [showPetFavForm, setShowPetFavForm] = useState(true)
   const [listOfPets, setListOfPets] = useState([])
-  const [userAvatar, setUserAvatar] = useState('')
-
 
   useEffect(() => {
     Promise.all([
