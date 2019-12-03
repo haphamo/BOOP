@@ -16,11 +16,7 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: '1em',
     height: 'auto',
     
-  },
-  // fillWidth: {
-  //   width: '100',
-   
-  // },
+  }
 }));
 
 const fillWidth = {
