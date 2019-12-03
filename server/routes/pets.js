@@ -222,6 +222,7 @@ module.exports = db => {
   })
 
   // Get a single pet's favourite items by id
+  // ORDER BY favourite_id DESC (add later)
   router.get("/:id/favourites", (req, res) => {
     const userId = req.session.user_id
     const petId = parseInt(req.params.id)
@@ -233,8 +234,7 @@ module.exports = db => {
               pet_favourites.category AS category
       FROM pets
       JOIN pet_favourites ON pet_id = pets.id
-      WHERE pet_id = $1
-      ORDER BY favourite_id DESC`
+      WHERE pet_id = $1`
       , [petId])
     .then(result => {
       res.status(200)
