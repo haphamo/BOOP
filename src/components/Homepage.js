@@ -3,6 +3,8 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import { Input } from '@material-ui/core';
+// import CardMedia from '@material-ui/core/CardMedia';
 // import { Player } from 'video-react';
 // import '~video-react/styles/scss/video-react';
 
@@ -94,7 +96,9 @@ export default function Homepage (props) {
     </div>
       : 
     <div>
-    <h1>Homepage</h1>
+    {/* <video width="384" height="216" autoplay loop muted webkit-playsinline playsinline>
+    <source src="https://ucarecdn.com/af0136cc-c60a-49a3-a10f-f9319f0ce7e1/gif2video/-/format/mp4/road.gif" type="video/mp4"/>
+    </video> */}
     <Button variant="contained" 
           color="primary" 
           className={classes.button}

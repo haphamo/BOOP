@@ -111,6 +111,14 @@ export default function PetForm(props) {
           value={profilePhoto}
         />
         {/* <Upload onUpload={handleUpload}/> */}
+        <input
+          name="Profile Photo"
+          value={profilePhoto}
+          type="hidden"
+          role="uploadcare-uploader"
+          data-images-only
+          data-crop
+        />
           <Button variant="outlined" className={classes.button} onClick={() => props.setShowForm(false)}>
             Cancel
           </Button>
