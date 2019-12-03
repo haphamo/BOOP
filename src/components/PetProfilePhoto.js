@@ -1,15 +1,19 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
 
-// pass in props to change the url in src
+
 export default function PetProfilePhoto(props) {
   const imgStyle = {
-    display: "flex",
+    display: "block",
     "justifyContent": "center",
-    width: '100%'
+
+    width:'100%',
+    height:'auto',
+    objectFit: 'cover',
+    overflow: 'hidden',
   }
   const imgFillWidth = {
-    width: '100%'
+    width: '100%',
   }
 
   return (

@@ -3,6 +3,7 @@ import { Widget } from '@uploadcare/react-widget';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
+
 // Upload images to Pet Gallery
 // Assisted by Guy Tonye(mentor)
 export default function Upload(props) {
