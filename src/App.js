@@ -226,8 +226,8 @@ function Profile(props) {
         <PetsIcon className={ classes.hidden }/>
         <h2 className="my-profile-text">My Profile</h2>
         <PetsIcon onClick={()=> setShowForm(true)}/>
-    </div>
-    
+      </div>
+      <hr></hr>
       {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} onAddPet={addNewPet} handleCreatePet={handleCreatePet}/> : 
       <UserProfile userId={props.userId} />}
     </div>
@@ -271,6 +271,11 @@ function Notifications(props) {
     })
   }, [props.userId])
 
+  const test = {
+    height: '30%',
+    width: '30%'
+  }
+
   const friendRequests = notifications.map(notification => {
     return (
       <div className={classes.marginBottom} key={notification.pet_id}>
@@ -279,8 +284,10 @@ function Notifications(props) {
           <div className="right-side">
             <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
             <div className={classes.buttonStyle}>
-              <ClearIcon className={classes.largeButton} onClick={()=> declineRequest(props.userId, notification.receiver_id)}/>
-              <PetsIcon className={classes.largeButton} onClick={()=> acceptRequest(props.userId, notification.receiver_id)}/>
+            <input style={test} type="image" src="https://image.flaticon.com/icons/svg/148/148766.svg" alt="decline" onClick={()=> declineRequest(props.userId, notification.receiver_id)}></input>
+            <input style={test} type="image" src="https://image.flaticon.com/icons/svg/148/148767.svg" alt="accept" onClick={()=> acceptRequest(props.userId, notification.receiver_id)}></input>
+             {/* <ClearIcon  onClick={()=> declineRequest(props.userId, notification.receiver_id)}/>
+             <PetsIcon  onClick={()=> acceptRequest(props.userId, notification.receiver_id)}/> */}
             </div>
           </div>
         </div>
