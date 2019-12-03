@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
 import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
@@ -117,6 +118,7 @@ export default function Homepage (props) {
         {/* <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div> */}
     </div>
       : 
+      <Container maxWidth="xl">
       <div>
       <h1 style={header}>Puppr</h1>
       <Button variant="contained" 
@@ -126,6 +128,7 @@ export default function Homepage (props) {
         Log In
       </Button>
     </div>
+    </Container>
     }
   </div>
   );
