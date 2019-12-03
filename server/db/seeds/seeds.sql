@@ -8,7 +8,7 @@ VALUES ('Maria', 'Fern', 'mariafern@gmail.com', 'maria', 'Toronto', 'M6G3X4', 'h
 ('Shirley', 'Braha', 'sbraha@gmail.com', 'shirley', 'Toronto', 'M5V1L3', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
 ('Louisa', 'Smith', 'lsmith@gmail.com', 'louisa', 'Toronto', 'M5V1L6', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
 ('Tammie', 'Chung', 'tchung@gmail.com', 'tammie', 'Toronto', 'M5V1L7', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
-('BIG COHORT', '2019', 'bigcohort19@gmail.com', 'synergy', 'Toronto', 'M5V1L7', 'https://image.flaticon.com/icons/png/512/32/32441.png');
+('LIGHTHOUSE LABS', '2019', 'bigcohort19@gmail.com', 'synergy', 'Toronto', 'M5V1L7', 'https://pbs.twimg.com/profile_images/1197911268939550720/33RhGxsO_400x400.jpg'),
 ('Justin', 'Richardsson', 'jrichardsson@gmail.com', 'justin', 'Toronto', 'M5V1L3', 'https://secure.meetupstatic.com/photos/member/8/3/0/9/highres_254553545.jpeg');
 
 INSERT INTO pets (name, age, breed, quirky_fact, owner_id, profile_photo)
@@ -21,8 +21,10 @@ VALUES ('Yoyo', 5, 'Maltese', 'I do not like belly rubs.', 1, 'https://www.rover
 ('Doug the Pug', 7, 'Pug', 'I have appeared in several music videos.', 5, 'https://images-na.ssl-images-amazon.com/images/I/51or1XtdsYL._SX258_BO1,204,203,200_.jpg'),
 ('Winston', 7, 'Corgi', 'I am the unicorn of corgis.', 6, 'http://www.puchic.com/pics/winston-corgi.jpg'),
 ('Marnie', 18, 'Shih Tzu', 'I have my own book.', 7, 'https://shortyawards.imgix.net/entries/8th/screen-shot-2016-01-19-at-125145-a.png?auto=format&fit=crop&h=400&q=65&w=400&s=b26d616ab5a53478b99509be499d3838'),
-('Moo', 10, 'Rescue', 'I may have a dozen toys lying around the house but receipts I find on the floor have got to be my favourite.', 8, 'https://files.slack.com/files-pri/T2G8TE2E5-FQYEU2SDN/snapchat-1162879987.jpg'),
-('Cava', 6, 'Medium Hair Domestic', 'I love yoga and the rain.', 9, 'https://files.slack.com/files-pri/T2G8TE2E5-FQQKRNNDP/snapchat-1669074930.jpg');
+('Moo', 10, 'Rescue', 'I may have a dozen toys lying around the house but receipts I find on the floor have got to be my favourite.', 8, 'https://ucarecdn.com/1e8a97e3-9eac-4def-8789-ba7400d67685/'),
+('Cava', 6, 'Medium Hair Domestic', 'I love yoga and the rain.', 9, 'https://ucarecdn.com/8a563b04-e3f0-45d2-a50d-527026a53bcb/'),
+('Juno', 9, 'Alsatian Husky', 'I sleep with my legs up against the wall.', 11, 'https://ucarecdn.com/181464dd-15be-4d22-98ed-60be1889671a/'),
+('BIG COHORT', 2019, 'Mixed', 'SYNERGYYYYYYY', 10, 'https://image.flaticon.com/icons/png/512/32/32441.png');
 
 INSERT INTO pet_favourites (name, category, pet_id)
 VALUES ('Dentastix', 'Treat', 1),
@@ -43,8 +45,7 @@ VALUES ('https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage
 
 -- Status can be PENDING, ACCEPTED or PASSED
 INSERT INTO connections (sender_id, receiver_id, status)
-VALUES (1, 2, 'ACCEPTED'),
-(3, 1, 'PENDING'),
+VALUES (3, 1, 'PENDING'),
 (4, 1, 'PENDING'),
 (2, 3, 'PENDING'),
 (2, 4, 'ACCEPTED'),
