@@ -84,13 +84,14 @@ const useStyles = makeStyles(theme => ({
     height: 170,
   },
   largeButton: {
-    transform: 'scale(0.4)',
+    // transform: 'scale(0.9)',
     height: '20%'
   },
   buttonStyle: {
     justifyContent: 'space-around',
     display: 'flex',
-    // height: '300px'
+    height: '300px',
+    marginTop: '10%'
   },
   profileStyles: {
     display: 'flex',
@@ -166,7 +167,6 @@ function DogsNearby(props) {
   const declineConnection = function(ownerId) {
     const callback = () => setCurrentDogIndex(prev => prev+1)
     connect(props.userId, ownerId, 'DECLINED', callback)
-   
   }
 
   return (
@@ -207,8 +207,8 @@ function Profile(props) {
     axios.post('api/pets', newPet)
     .then(res => {
       console.log("Added a new pet: ", res)
-      // setPet(res.config.data)
-      setPet(pet)
+      setPet(res.config.data)
+      // setPet(pet)
     })
     .catch(err => {
       console.log(err)
@@ -217,6 +217,7 @@ function Profile(props) {
 
   const handleCreatePet = function(){
     setShowForm(false)
+
   }
 
   return (
