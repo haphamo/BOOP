@@ -179,7 +179,8 @@ module.exports = db => {
               images.url AS photo 
       FROM pets
       JOIN images ON images.pet_id = pets.id
-      WHERE pets.id = $1`
+      WHERE pets.id = $1
+      ORDER BY image_id DESC`
       , [petId])
     .then(result => {
       res.status(200)
@@ -221,6 +222,7 @@ module.exports = db => {
   })
 
   // Get a single pet's favourite items by id
+  // ORDER BY favourite_id DESC (add later)
   router.get("/:id/favourites", (req, res) => {
     const userId = req.session.user_id
     const petId = parseInt(req.params.id)
