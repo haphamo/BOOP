@@ -3,12 +3,17 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Image from 'material-ui-image';
+import '../index.css'
 import axios from 'axios';
+
 
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -23,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     height: 48,
     padding: '0 30px',
-    margin: theme.spacing(1),
+    margin: '8px 0 8px 8px'
   },
   input: {
     display: 'none',
@@ -32,6 +37,13 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
+  },
+  login: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  header: {
+    fontFamily: 'Lobster'
   }
 }));
 
@@ -46,13 +58,6 @@ const useStyles = makeStyles(theme => ({
 //     padding: '0 30px',
 //   },
 // });
-
-const header = {
-  color: "white",
-  backgroundColor: "DodgerBlue",
-  padding: "10px",
-  fontFamily: "Arial"
-}
 
 export default function Homepage (props) {
   const classes = useStyles();
@@ -88,7 +93,7 @@ export default function Homepage (props) {
   <div>
     {showLogin ? 
     <div className="header">
-      <h2>Login</h2>
+      <h1>Login</h1>
       <form className={ classes.formStyle } onSubmit={onSubmit}>
         <TextField
           id="email"
@@ -119,15 +124,18 @@ export default function Homepage (props) {
     </div>
       : 
       <Container maxWidth="xl">
-      <div>
-      <h1 style={header}>Puppr</h1>
-      <Button variant="contained" 
-        color="primary" 
-        className={classes.button}
-        onClick={() => setShowLogin(true)}>
-        Log In
-      </Button>
-    </div>
+        <div className={classes.login}>
+          <h2 className={classes.header}>Puppr</h2>
+        <Button variant="contained" 
+          color="primary" 
+          className={classes.button}
+          onClick={() => setShowLogin(true)}>
+          Log In
+        </Button>
+        </div>
+        <Image
+          src="https://images.unsplash.com/photo-1521247560470-d2cbfe2f7b47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+        />
     </Container>
     }
   </div>
