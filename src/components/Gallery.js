@@ -13,13 +13,24 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     marginTop: '1em',
     paddingRight: '1em',
-    paddingLeft: '1em'
+    paddingLeft: '1em',
+    height: 'auto',
+    
   },
-  // gridList: {
+  // fillWidth: {
   //   width: '100',
    
   // },
 }));
+
+const fillWidth = {
+  width: '100%',
+  
+}
+
+const autoHeight = {
+  height: 'inherit'
+}
 
 export default function Gallery(props) {
   const classes = useStyles();
@@ -28,8 +39,8 @@ export default function Gallery(props) {
     <div className={classes.root}>
       <GridList cols={1} >
         {props.petGallery.map(img => (
-          <GridListTile key={img.image_id} cols={img.cols || 1} >
-            <img src={img.photo} alt={img.image_id} />
+          <GridListTile style={autoHeight} key={img.image_id} cols={img.cols || 1} >
+            <img style={fillWidth} src={img.photo} alt={img.image_id} />
 
           </GridListTile>
         ))}

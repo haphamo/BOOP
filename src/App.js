@@ -52,7 +52,7 @@ export default function App() {
             <Notifications userId={userId} />
           </Route>
           <Route path="/pets/:id">
-            <PetPage />
+            <PetPage userId={userId} />
           </Route>
         </Switch>
       </div>
@@ -85,7 +85,7 @@ const useStyles = makeStyles(theme => ({
     height: 170,
   },
   largeButton: {
-    // transform: 'scale(0.4)'
+    transform: 'scale(0.4)',
     height: '20%'
   },
   buttonStyle: {
@@ -183,9 +183,9 @@ function DogsNearby(props) {
           />
           <div className={classes.buttonStyle}>
 
-            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/585/585956.svg" alt="skip" onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)}>
+            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/148/148766.svg" alt="skip" onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)}>
             </input>
-            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/585/585962.svg" alt="addFriend" onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}>
+            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/148/148767.svg" alt="addFriend" onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}>
             </input>
     
            </div>
@@ -246,6 +246,7 @@ function Notifications(props) {
   }
 
   // this function re renders the notifications once you've either accepted or declined
+  // this is a bug, only calls function once
   const reRender = function(){
     axios.get(`/api/users/${props.userId}/notifications`)
     .then(res => {
@@ -312,7 +313,7 @@ function Friends(props) {
     return (
       <div className="friend-card" key={friend.pet_id}>
         <div className={classes.root}>
-          <Link to={`/pets/${friend.pet_id}`} ><Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} /></Link>
+          <Link to={`/pets/${friend.pet_id}`} ><Avatar alt={friend.pet} src={friend.pet_photo} className={classes.petAvatar} /></Link>
           <h4>{friend.owner} and {friend.pet}</h4>
         </div>
       </div>
