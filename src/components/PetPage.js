@@ -23,6 +23,9 @@ const useStyles = makeStyles(theme => ({
     'justifyContent': 'space-around',
     'alignItems': 'center'
   },
+  marginBottom: {
+    marginBottom: '15%'
+  }
 
 }));
 
@@ -101,7 +104,8 @@ export default function PetPage(props) {
  
 
   return(
-    <Fragment>
+    <div className={classes.marginBottom}>
+    
       <div className={classes.styles}>
         <Button variant="contained" style={hidden} className={classes.button}>
         Default
@@ -133,7 +137,7 @@ export default function PetPage(props) {
       </div>
       }
 
-    </Fragment>
     
+    </div>
   )
 }

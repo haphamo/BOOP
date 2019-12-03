@@ -19,7 +19,6 @@ import PetInfoDashboard from './components/petInfoDashboard';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import ClearIcon from '@material-ui/icons/Clear';
 import Homepage from './components/Homepage';
 
 export default function App() {

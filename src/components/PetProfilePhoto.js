@@ -9,7 +9,8 @@ export default function PetProfilePhoto(props) {
     width: '100%'
   }
   const imgFillWidth = {
-    width: '100%'
+    width: '100%',
+    height:'auto',
   }
 
   return (
