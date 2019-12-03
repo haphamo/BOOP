@@ -109,13 +109,9 @@ export default function PetPage(props) {
         <h2>{petName}</h2>
         {/* Add LOGIC: if the id in useparams exists in the array of users pets, show else, do not show */}
         { allPets.includes(Number(id)) ? <Upload setLastUploaded={setLastUploaded} onUpload={props.onUpload} />  : 
-      <Button variant="contained" style={hidden} className={classes.button}>
-      Default
-      </Button>}
-        
-         
-        
-        
+        <Button variant="contained" style={hidden} className={classes.button}>
+        Default
+        </Button>}
       </div>
       <hr></hr>
       { showPetFavForm ?
