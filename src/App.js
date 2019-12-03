@@ -103,7 +103,7 @@ const useStyles = makeStyles(theme => ({
     visibility: 'hidden'
   },
   marginBottom : {
-    marginBottom: '15%'
+    marginBottom: '20%'
   },
   header: {
     fontFamily: 'Lobster'
@@ -176,7 +176,7 @@ function DogsNearby(props) {
   }
 
   return (
-    <div>
+    <div className={classes.marginBottom}>
       <h2 className={classes.header}>Dogboard</h2>
       <hr></hr>
       { dogsNearby && dogsNearby.length > 0 && dogsNearby[currentDogIndex] ? 
