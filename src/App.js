@@ -100,6 +100,9 @@ const useStyles = makeStyles(theme => ({
   },
   hidden: {
     visibility: 'hidden'
+  },
+  marginBottom : {
+    marginBottom: '15%'
   }
 }))
 
@@ -172,7 +175,7 @@ function DogsNearby(props) {
       <h2 className="header">Nearby</h2>
       <hr></hr>
       { dogsNearby && dogsNearby.length > 0 && dogsNearby[currentDogIndex] ? 
-        <div key={dogsNearby[currentDogIndex].owner_id}>
+        <div className={classes.marginBottom} key={dogsNearby[currentDogIndex].owner_id}>
           <h3 style={petNameTextStyle}>{dogsNearby[currentDogIndex].pet}</h3>
           <PetProfilePhoto 
             petId={dogsNearby[currentDogIndex].pet_id}
@@ -217,7 +220,7 @@ function Profile(props) {
   }
 
   return (
-    <div>
+    <div className={classes.marginBottom}>
       <div className={ classes.profileStyles }>
         <PetsIcon className={ classes.hidden }/>
         <h2 className="my-profile-text">My Profile</h2>
@@ -269,7 +272,7 @@ function Notifications(props) {
 
   const friendRequests = notifications.map(notification => {
     return (
-      <div className="notification-card" key={notification.pet_id}>
+      <div className={classes.marginBottom} key={notification.pet_id}>
         <div className={classes.root}>
           <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.petAvatar} />
           <div className="right-side">
@@ -320,7 +323,7 @@ function Friends(props) {
     )
   })
   return (
-    <div className="header">
+    <div className={classes.marginBottom}>
       <h2>Friends</h2>
       <hr></hr>
       {furryFriends}
