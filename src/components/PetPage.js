@@ -94,14 +94,19 @@ export default function PetPage(props) {
     visibility: 'hidden'
   }
 
-
+  
+  //this variable stores the pet ids of the current user
   let allPets = listOfPets.map(pet => (pet.pet_id))
   console.log('allPets', allPets)
-  console.log('id', Number(id))
-  console.log('test', allPets.includes(Number(id)))
+  // console.log('id', Number(id))
+  // console.log('test', allPets.includes(Number(id)))
 
-  //this function will check if the user is allowed to upload images for the given pet
- 
+  
+  // console.log('petFavs', petFavs.shift())
+  
+
+
+ // if allPets.includes(Number(id)) is true then show as is, if false, remove the first element in petFavs 
 
   return(
     <div className={classes.marginBottom}>
@@ -111,7 +116,7 @@ export default function PetPage(props) {
         Default
         </Button>
         <h2>{petName}</h2>
-        {/* Add LOGIC: if the id in useparams exists in the array of users pets, show else, do not show */}
+        {/* if the id in useparams exists in the array of users pets, allow upload else do not */}
         { allPets.includes(Number(id)) ? <Upload setLastUploaded={setLastUploaded} onUpload={props.onUpload} />  : 
         <Button variant="contained" style={hidden} className={classes.button}>
         Default
