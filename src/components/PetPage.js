@@ -47,6 +47,7 @@ export default function PetPage(props) {
   const [lastUploaded, setLastUploaded] = useState('')
   const [showPetFavForm, setShowPetFavForm] = useState(true)
   const [listOfPets, setListOfPets] = useState([])
+  const [userAvatar, setUserAvatar] = useState('')
 
 
   useEffect(() => {
@@ -55,7 +56,6 @@ export default function PetPage(props) {
       axios.get(`/api/pets/${id}/images`),
       axios.get(`/api/pets/${id}/favourites`),
       axios.get(`/api/users/${props.userId}/pets`)
-
     ])
     .then(res => {
       // console.log("What is the response", res)
@@ -63,6 +63,7 @@ export default function PetPage(props) {
       setPetAvatar(res[0].data.result[0].profile_photo)
       setPetInfo(res[0].data.result[0])
       setPetGallery(res[1].data.result)
+      
       let favourites = res[2].data.result
 
       setPetFavs([addFav, ...favourites]);
@@ -101,7 +102,7 @@ export default function PetPage(props) {
   // console.log('id', Number(id))
   // console.log('test', allPets.includes(Number(id)))
 
-  
+
   // console.log('petFavs', petFavs.shift())
   
 
