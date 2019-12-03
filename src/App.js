@@ -159,7 +159,7 @@ function DogsNearby(props) {
     .catch(err => {
       console.log(err)
     })
-  }, [])
+  }, [props.userId])
   
   const petNameTextStyle = {
     'textAlign': 'center',
