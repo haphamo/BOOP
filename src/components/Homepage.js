@@ -3,10 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { Input } from '@material-ui/core';
-// import CardMedia from '@material-ui/core/CardMedia';
-// import { Player } from 'video-react';
-// import '~video-react/styles/scss/video-react';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -19,6 +15,13 @@ const useStyles = makeStyles(theme => ({
     width: '70%',
   },
   button: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
     margin: theme.spacing(1),
   },
   input: {
@@ -30,6 +33,25 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center'
   }
 }));
+
+// const useStyles = makeStyles({
+//   root: {
+//     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+//     border: 0,
+//     borderRadius: 3,
+//     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+//     color: 'white',
+//     height: 48,
+//     padding: '0 30px',
+//   },
+// });
+
+const header = {
+  color: "white",
+  backgroundColor: "DodgerBlue",
+  padding: "10px",
+  fontFamily: "Arial"
+}
 
 export default function Homepage (props) {
   const classes = useStyles();
@@ -95,15 +117,13 @@ export default function Homepage (props) {
         {/* <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div> */}
     </div>
       : 
-    <div>
-    {/* <video width="384" height="216" autoplay loop muted webkit-playsinline playsinline>
-    <source src="https://ucarecdn.com/af0136cc-c60a-49a3-a10f-f9319f0ce7e1/gif2video/-/format/mp4/road.gif" type="video/mp4"/>
-    </video> */}
-    <Button variant="contained" 
-          color="primary" 
-          className={classes.button}
-          onClick={() => setShowLogin(true)}>
-            Log In
+      <div>
+      <h1 style={header}>Puppr</h1>
+      <Button variant="contained" 
+        color="primary" 
+        className={classes.button}
+        onClick={() => setShowLogin(true)}>
+        Log In
       </Button>
     </div>
     }
