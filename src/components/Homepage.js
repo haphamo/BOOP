@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Image from 'material-ui-image';
-import '../index.css'
+import '../index.css';
 import axios from 'axios';
 
 

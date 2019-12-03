@@ -17,3 +17,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.uploadcare--widget__button, .uploadcare--widget__button:hover {
+	/* padding: 20px; */
+	background-color: #fecb05;
+	border-radius: 0;
+	font-family: Sans-serif;
+	font-weight: 800;
+}
+
+.uploadcare--widget__button:hover {
+	background-color: #000;
+}
