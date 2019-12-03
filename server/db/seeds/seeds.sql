@@ -8,7 +8,7 @@ VALUES ('Maria', 'Fern', 'mariafern@gmail.com', 'maria', 'Toronto', 'M6G3X4', 'h
 ('Shirley', 'Braha', 'sbraha@gmail.com', 'shirley', 'Toronto', 'M5V1L3', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
 ('Louisa', 'Smith', 'lsmith@gmail.com', 'louisa', 'Toronto', 'M5V1L6', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
 ('Tammie', 'Chung', 'tchung@gmail.com', 'tammie', 'Toronto', 'M5V1L7', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
-('BIG COHORT', '2019', 'bigcohort19@gmail.com', 'synergy', 'Toronto', 'M5V1L7', 'https://image.flaticon.com/icons/png/512/32/32441.png');
+('BIG COHORT', '2019', 'bigcohort19@gmail.com', 'synergy', 'Toronto', 'M5V1L7', 'https://image.flaticon.com/icons/png/512/32/32441.png'),
 ('Justin', 'Richardsson', 'jrichardsson@gmail.com', 'justin', 'Toronto', 'M5V1L3', 'https://secure.meetupstatic.com/photos/member/8/3/0/9/highres_254553545.jpeg');
 
 INSERT INTO pets (name, age, breed, quirky_fact, owner_id, profile_photo)
