@@ -14,8 +14,13 @@ const useStyles = makeStyles({
     width: '100%',
     position: 'fixed',
     bottom: 0,
-    
+    height: '10%',
+    borderTop: '1px solid',
+    borderTopColor: 'grey'
   },
+  bottomNavIcon: {
+    height: '100%'
+  }
   
 });
 
@@ -27,10 +32,10 @@ export default function BottomNav() {
      
       className={classes.stickToBottom}
     >
-      <Link to='/'><BottomNavigationAction label="Dashboard" icon={<PetsIcon />} /></Link>
-      <Link to='/profile'><BottomNavigationAction label="User" icon={<PersonIcon />} /></Link>
-      <Link to='/friends'><BottomNavigationAction label="Friends" icon={<GroupIcon />} /></Link>
-      <Link to='/Notifications'><BottomNavigationAction label="Notifications" icon={<NotificationsIcon />} /></Link>
+      <Link to='/'><BottomNavigationAction className={classes.bottomNavIcon} label="Dashboard" icon={<PetsIcon />} /></Link>
+      <Link to='/profile'><BottomNavigationAction className={classes.bottomNavIcon} label="User" icon={<PersonIcon />} /></Link>
+      <Link to='/friends'><BottomNavigationAction className={classes.bottomNavIcon} label="Friends" icon={<GroupIcon />} /></Link>
+      <Link to='/notifications'><BottomNavigationAction className={classes.bottomNavIcon} label="Notifications" icon={<NotificationsIcon />} /></Link>
     </BottomNavigation>
   );
 }
