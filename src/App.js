@@ -313,7 +313,7 @@ function Friends(props) {
     return (
       <div className="friend-card" key={friend.pet_id}>
         <div className={classes.root}>
-          <Link to={`/pets/${friend.pet_id}`} ><Avatar alt={friend.pet} src={friend.pet_photo} className={classes.bigAvatar} /></Link>
+          <Link to={`/pets/${friend.pet_id}`} ><Avatar alt={friend.pet} src={friend.pet_photo} className={classes.petAvatar} /></Link>
           <h4>{friend.owner} and {friend.pet}</h4>
         </div>
       </div>
