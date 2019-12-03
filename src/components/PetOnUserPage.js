@@ -18,22 +18,29 @@ const useStyles = makeStyles(theme => ({
     width: 170,
     height: 170,
   },
+  removePadding: {
+    'paddingLeft': 0
+  }
 }));
+
 
 export default function PetOnUserPage(props) {
   const classes = useStyles();
 
   const allPets = props.petData.map(pet => {
     return(
-      <div key={pet.pet} className={classes.root} >
-      <Link to={`/pets/${pet.pet_id}`} ><Avatar alt={pet.pet} src={pet.pet_avatar} className={classes.bigAvatar} /></Link>
-      <em>{pet.pet}</em>
-      </div>
+      
+      <li key={pet.pet} className={classes.root} >
+        <Link to={`/pets/${pet.pet_id}`} ><Avatar alt={pet.pet} src={pet.pet_avatar} className={classes.bigAvatar} /></Link>
+        <em>{pet.pet}</em>
+      </li>
+
+    
     )
   })
   return(
-    <div>
+    <ul className={classes.removePadding}>
       {allPets}
-    </div>
+    </ul>
   )
 }
