@@ -28,14 +28,20 @@ export default function UserProfile(props) {
   const [userName, setUserName] = useState('')
   const [petData, setPetData] = useState([])
 
+
   useEffect(()=> {
     // id is the user_id that comes from the cookie
-    axios.get(`/api/users/${props.userId}/pets`)
+    Promise.all([
+      axios.get(`/api/users/${props.userId}/pets`),
+      axios.get(`/api/users/${props.userId}`)
+    ])
+    
     .then(res => {
-      setUserAvatar(res.data.result[0].user_avatar)
-      setUserName(res.data.result[0].owner)
-      setPetData(res.data.result)
-      // console.log('res.data.result', res.data.result)
+      setUserAvatar(res[1].data.result[0].profile_photo)
+      setUserName(res[1].data.result[0].first_name)
+      setPetData(res[0].data.result)
+   
+      console.log('res.data.result', res)
     })
     .catch(err => {
       console.log('error:', err)
