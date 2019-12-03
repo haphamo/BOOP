@@ -41,7 +41,16 @@ VALUES ('Dentastix', 'Treat', 1),
 ('Pizza', 'Treat', 9);
 
 INSERT INTO images (url, pet_id)
-VALUES ('https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage20191114at170028.jpeg', 1);
+VALUES ('https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage20191114at170028.jpeg', 1),
+('https://ucarecdn.com/f3979415-b86b-4030-9cbb-e59c83593f13/', 10),
+('https://ucarecdn.com/d5a85a69-f66e-4a50-97e9-811e31388719/', 10),
+('https://ucarecdn.com/d0316afe-f7c1-4e71-950c-3aa6ad79eeca/', 10),
+('https://ucarecdn.com/78b4b6af-d144-42bd-8aec-723828a9580f/', 11),
+('https://ucarecdn.com/f33422db-6d97-4412-b8b8-d3af83ea940d/', 11),
+('https://ucarecdn.com/ed612be4-d35c-4719-90ff-b9b863f09d1c/', 11),
+('https://ucarecdn.com/ca8d2044-7737-454a-88af-d5d3eaa1b300/', 12),
+('https://ucarecdn.com/181464dd-15be-4d22-98ed-60be1889671a/', 12),
+('https://ucarecdn.com/2c4fc014-34c9-449d-952f-2e94d9fa2006/', 12);
 
 -- Status can be PENDING, ACCEPTED or PASSED
 INSERT INTO connections (sender_id, receiver_id, status)
