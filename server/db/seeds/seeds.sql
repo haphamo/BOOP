@@ -8,7 +8,7 @@ VALUES ('Maria', 'Fern', 'mariafern@gmail.com', 'maria', 'Toronto', 'M6G3X4', 'h
 ('Shirley', 'Braha', 'sbraha@gmail.com', 'shirley', 'Toronto', 'M5V1L3', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
 ('Louisa', 'Smith', 'lsmith@gmail.com', 'louisa', 'Toronto', 'M5V1L6', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
 ('Tammie', 'Chung', 'tchung@gmail.com', 'tammie', 'Toronto', 'M5V1L7', 'https://image.flaticon.com/icons/svg/920/920963.svg'),
-('BIG COHORT', '2019', 'bigcohort19@gmail.com', 'synergy', 'Toronto', 'M5V1L7', 'https://www.ntaskmanager.com/wp-content/uploads/2019/07/diversified-culture-is-sign-of-good-teamwork.-1.jpg');
+('BIG COHORT', '2019', 'bigcohort19@gmail.com', 'synergy', 'Toronto', 'M5V1L7', 'https://image.flaticon.com/icons/png/512/32/32441.png');
 
 INSERT INTO pets (name, age, breed, quirky_fact, owner_id, profile_photo)
 VALUES ('Yoyo', 5, 'Maltese', 'I do not like belly rubs.', 1, 'https://www.rover.com/blog/wp-content/uploads/2018/07/animal-753418_1280-960x540.jpg'),
@@ -38,7 +38,7 @@ VALUES ('Dentastix', 'Treat', 1),
 ('Pizza', 'Treat', 9);
 
 INSERT INTO images (url, pet_id)
-VALUES ('https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage20191114at170028.jpeg', 1).
+VALUES ('https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage20191114at170028.jpeg', 1);
 
 -- Status can be PENDING, ACCEPTED or PASSED
 INSERT INTO connections (sender_id, receiver_id, status)
