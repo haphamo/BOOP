@@ -16,7 +16,7 @@ import PetForm from './components/PetForm';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfoDashboard from './components/petInfoDashboard';
-import Card from '@material-ui/core/Avatar'
+// import Card from '@material-ui/core/Avatar'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
