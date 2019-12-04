@@ -53,9 +53,6 @@ const useStyles = makeStyles(theme => ({
   },
   registerLogin: {
     flexDirection: 'row'
-  },
-  background: {
-    height: 'auto'
   }
 }));
 
@@ -217,9 +214,9 @@ export default function Homepage (props) {
       : 
       <Container maxWidth="xl">
         <div className={classes.homepage}>
-          <h2 className={classes.header}>Puppr</h2>
+          <h1 className={classes.header}>Boop</h1>
         </div>
-        <Image className={classes.background} imageStyle={{height: 'auto'}}
+        <Image imageStyle={{height: 'auto'}}
           src="https://fsb.zobj.net/crop.php?r=CwI3Lth_X1tKRypKBXpdk_pFkIpLGncG2KqQrg5-rzZFtFDqYj68LS6L_XuIp0MRImIH1JJJXWBUxbaOYxHotbD9yBU7PDZxjzd37xuVKMihkyrmV0nRvCm83SAJGe5OIjspmOrviYBcwPMA"
         />
         <div className={classes.homepageButton}>
