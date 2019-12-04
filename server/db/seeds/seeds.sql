@@ -74,4 +74,8 @@ VALUES (3, 1, 'PENDING'),
 (4, 1, 'PENDING'),
 (2, 3, 'PENDING'),
 (2, 4, 'ACCEPTED'),
-(1, 7, 'ACCEPTED');
+(1, 7, 'ACCEPTED'),
+(8, 1, 'ACCEPTED'),
+(9, 1, 'ACCEPTED'),
+(10, 1, 'ACCEPTED'),
+(11, 1, 'ACCEPTED');
