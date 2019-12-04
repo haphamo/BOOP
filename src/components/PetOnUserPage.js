@@ -13,10 +13,8 @@ const useStyles = makeStyles(theme => ({
     },
     'justify-content': 'center',
     'flex-direction': 'column',
-   
+    'alignItems': 'center',
     'background': 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    
-    
   },
   bigAvatar: {
     width: 170,
@@ -34,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   fontStyle: {
     'fontFamily': 'Permanent Marker, cursive',
     color: 'white',
-    letterSapcing: '.04em'
+  
   }
 }));
 
