@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row'
   },
   background: {
-    autoHeight: 'inherit'
+    height: 'auto'
   }
 }));
 
@@ -219,7 +219,7 @@ export default function Homepage (props) {
         <div className={classes.homepage}>
           <h2 className={classes.header}>Puppr</h2>
         </div>
-        <Image className={classes.background}
+        <Image className={classes.background} imageStyle={{height: 'auto'}}
           src="https://fsb.zobj.net/crop.php?r=CwI3Lth_X1tKRypKBXpdk_pFkIpLGncG2KqQrg5-rzZFtFDqYj68LS6L_XuIp0MRImIH1JJJXWBUxbaOYxHotbD9yBU7PDZxjzd37xuVKMihkyrmV0nRvCm83SAJGe5OIjspmOrviYBcwPMA"
         />
         <div className={classes.homepageButton}>
