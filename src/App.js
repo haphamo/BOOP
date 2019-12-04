@@ -73,7 +73,7 @@ const useStyles = makeStyles(theme => ({
     '& > *': {
       margin: theme.spacing(1),
     },
-    'justifyContent': 'center',
+    'justifyContent': 'space-evenly',
     'flexDirection': 'row',
     'alignItems': 'center'
   },
@@ -107,10 +107,23 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'Lobster'
   },
   textField: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontFamily: 'Permanent Marker, cursive'
   },
   fillWidth: {
     width:'100%'
+  },
+  friendCard: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  fixedHeight: {
+    height: '20px'
+  },
+  border:{
+    border: '2px solid',
+    borderRadius: '10px',
+    borderColor: '#FF8E53'
   }
 }))
 
@@ -206,7 +219,7 @@ function DogsNearby(props) {
         <div>
           <img className={classes.fillWidth} src="https://i.giphy.com/media/xT0GqFhyNd0Wmfo6sM/giphy.webp" alt="no-more-good-boys-and-girls-in-your-area"></img>
           <div className={classes.textField}>
-            <em>No more good boys and girls nearby</em>
+            <em className={classes.textField}>No more good boys and girls nearby</em>
           </div>
       </div> }
     </div>
@@ -301,7 +314,6 @@ function Notifications(props) {
 
   const friendRequests = notifications.map(notification => {
     return (
-      
         <div className={classes.marginBottom} key={notification.pet_id}>
           <div className={classes.root}>
             <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.petAvatar} />
@@ -314,7 +326,6 @@ function Notifications(props) {
             </div>
           </div>
         </div>
-    
     )
   })
 
@@ -347,10 +358,17 @@ function Friends(props) {
 
   const furryFriends = friends.map(friend => {
     return (
-      <div className="friend-card" key={friend.pet_id}>
+      <div key={friend.pet_id}>
         <div className={classes.root}>
           <Link to={`/pets/${friend.pet_id}`} ><Avatar alt={friend.pet} src={friend.pet_photo} className={classes.petAvatar} /></Link>
-          <h4>{friend.owner} and {friend.pet}</h4>
+            <div className={classes.friendCard}>
+              <img className={classes.fixedHeight} alt="owner" src="https://image.flaticon.com/icons/svg/561/561102.svg" ></img>
+              <strong className={classes.textField}>{friend.owner}</strong>
+              <br></br>
+              <br></br>
+              <img className={classes.fixedHeight} alt="pet" src="https://image.flaticon.com/icons/svg/1152/1152450.svg"></img>
+              <strong className={classes.textField}>{friend.pet}</strong>
+            </div>
         </div>
       </div>
     )

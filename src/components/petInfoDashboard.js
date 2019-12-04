@@ -14,7 +14,6 @@ export default function PetInfoDashboard(props) {
     <Paper >
     <br></br>
     <Typography component="p" style={infoBox}>
-
       {props.petInfo}
     </Typography>
     <br></br>

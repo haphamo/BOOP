@@ -77,8 +77,6 @@ export default function PetPage(props) {
     
   }, [lastUploaded, id])
 
-  // console.log()
-
   const submitPetFav = function(favourite_item, category) {
     const newFav = { favourite_item, category, id }
     axios.post(`/api/pets/${id}/favourites`, newFav)
@@ -102,11 +100,6 @@ export default function PetPage(props) {
   console.log('allPets', allPets)
   // console.log('id', Number(id))
   // console.log('test', allPets.includes(Number(id)))
-
-
-  // console.log('petFavs', petFavs.shift())
-  
-
 
  // if allPets.includes(Number(id)) is true then show as is, if false, remove the first element in petFavs 
 
@@ -143,8 +136,6 @@ export default function PetPage(props) {
         <Gallery petGallery={petGallery}/>
       </div>
       }
-
-    
     </div>
   )
 }
