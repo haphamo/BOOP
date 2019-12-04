@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-// import { Input } from 'antd';
-import { Widget } from '@uploadcare/react-widget';
-import axios from 'axios';
+// import { Widget } from '@uploadcare/react-widget';
+// import axios from 'axios';
 // import Upload from './Upload';
 
 const useStyles = makeStyles(theme => ({
@@ -68,6 +67,11 @@ export default function PetForm(props) {
     setProfilePhoto(e.target.value)
   }
 
+  // Will use the Upload component once we successfully add a new pet into the database
+  // const handleUpload = function(info) {
+  //   setProfilePhoto(info.originalUrl)
+  // }
+  
   // const handleProfilePhotoChange = (info) => {
   //   axios.post('api/pets', {
   //     url: info.originalUrl
@@ -75,10 +79,6 @@ export default function PetForm(props) {
   //   .then(() => {
   //     setProfilePhoto(info.originalUrl)
   //   })
-  // }
-  // Will use the Upload component once we successfully add a new pet into the database
-  // const handleUpload = function(info) {
-  //   setProfilePhoto(info.originalUrl)
   // }
 
   return (
