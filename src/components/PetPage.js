@@ -25,6 +25,9 @@ const useStyles = makeStyles(theme => ({
   },
   marginBottom: {
     marginBottom: '15%'
+  },
+  header: {
+    'fontFamily': 'Permanent Marker, cursive'
   }
 
 }));
@@ -114,7 +117,7 @@ export default function PetPage(props) {
         <Button variant="contained" style={hidden} className={classes.button}>
         Default
         </Button>
-        <h2>{petName}</h2>
+        <h2 className={classes.header}>{petName}</h2>
         {/* if the id in useparams exists in the array of users pets, allow upload else do not */}
         { allPets.includes(Number(id)) ? <Upload setLastUploaded={setLastUploaded} onUpload={props.onUpload} />  : 
         <Button variant="contained" style={hidden} className={classes.button}>
