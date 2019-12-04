@@ -108,6 +108,12 @@ const useStyles = makeStyles(theme => ({
   },
   header: {
     fontFamily: 'Lobster'
+  },
+  textField: {
+    textAlign: 'center'
+  },
+  fillWidth: {
+    width:'100%'
   }
 }))
 
@@ -200,7 +206,12 @@ function DogsNearby(props) {
     
            </div>
         </div> : 
-        <small>No More furry friends left !</small> }
+        <div>
+          <img className={classes.fillWidth} src="https://i.giphy.com/media/xT0GqFhyNd0Wmfo6sM/giphy.webp" alt="no-more-good-boys-and-girls-in-your-area"></img>
+          <div className={classes.textField}>
+            <em>No more good boys and girls nearby</em>
+          </div>
+      </div> }
     </div>
   );
 }

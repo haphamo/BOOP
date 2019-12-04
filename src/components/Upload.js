@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Widget } from '@uploadcare/react-widget';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-
+import '../index.css';
 
 // Upload images to Pet Gallery
 // Assisted by Guy Tonye(mentor)
