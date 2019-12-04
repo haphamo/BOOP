@@ -39,9 +39,6 @@ export default function App() {
             userId={userId}
             /> : <Homepage onLogin={handleLogin} />} 
           </Route>
-          <Route path="/homepage">
-            <Homepage />
-            </Route>
           <Route path="/profile">
             <Profile userId={userId}/>
           </Route>
