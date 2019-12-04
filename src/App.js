@@ -172,7 +172,7 @@ function DogsNearby(props) {
   const petNameTextStyle = {
     'textAlign': 'center',
     'fontFamily': 'Permanent Marker, cursive',
-    'fontSize': 'xx-large',
+    'fontSize': 'x-large',
   }
   const requestConnection = function(ownerId) {
     const callback = () => setCurrentDogIndex(prev => prev+1)
