@@ -59,7 +59,7 @@ export default function PetFav(props) {
 
   return (
     <div className={classes.root} >
-      <GridList className={classes.listItemStyle} className={classes.gridList} cols={2.5}>
+      <GridList className={classes.gridList} cols={2.5}>
         
         {props.petFavs.map(item => (
           <GridListTile className={ classes.fixedHeight } onClick={()=> props.setShowPetFavForm(false)}>
