@@ -32,3 +32,15 @@ code {
 .uploadcare--widget__button:hover {
   box-shadow: inset 150px 0px 0px #2F3B47;
 }
+
+.uploadcare--link.uploadcare--widget__file-name {
+  visibility: hidden;
+}
+
+.uploadcare--widget__file-size {
+  visibility: hidden;
+}
+
+.uploadcare--widget__button.uploadcare--widget__button_type_remove {
+  margin-left: 50%;
+}
