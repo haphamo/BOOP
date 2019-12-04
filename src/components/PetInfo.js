@@ -7,6 +7,10 @@ const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3, 2),
   },
+  fontStyle: {
+    
+    fontFamily: 'Permanent Marker, cursive',
+  }
 }));
 
 export default function PetInfo(props) {
@@ -14,17 +18,12 @@ export default function PetInfo(props) {
 
   return (
     <Paper className={classes.root}>
-      <Typography variant="h5" component="h3">
-        
-      </Typography>
-
-      <Typography component="p">
+      <Typography component="p" className={classes.fontStyle}>
         {props.petInfo.breed}
         <br></br>
         {props.petInfo.age} {props.petInfo.age > 1 ? <em>years old</em> : <em>year old</em>}
         <br></br>
         {props.petInfo.quirky_fact}
-        {/* {props.petInfo} */}
       </Typography>
     </Paper>
   );

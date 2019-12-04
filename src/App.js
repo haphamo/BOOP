@@ -73,9 +73,9 @@ const useStyles = makeStyles(theme => ({
     '& > *': {
       margin: theme.spacing(1),
     },
-    'justifyContent': 'space-evenly',
-    'flexDirection': 'row',
-    'alignItems': 'center'
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   petAvatar: {
     width: 170,
@@ -83,19 +83,16 @@ const useStyles = makeStyles(theme => ({
   },
   largeButton: {
     transform: 'scale(0.5)',
-    // height: '20%'
   },
   buttonStyle: {
     justifyContent: 'space-around',
     display: 'flex',
     height: 'fit-content',
-    // marginTop: '10%',
-    
   },
   profileStyles: {
     display: 'flex',
-    'justifyContent': 'space-around',
-    'alignItems': 'center'
+    justifyContent: 'space-around',
+    alignItems: 'center'
   },
   hidden: {
     visibility: 'hidden'
@@ -124,6 +121,10 @@ const useStyles = makeStyles(theme => ({
     border: '2px solid',
     borderRadius: '10px',
     borderColor: '#FF8E53'
+  },
+  adjustSize: {
+    height: '30%',
+    width: '30%'
   }
 }))
 
@@ -144,7 +145,6 @@ const declineFriendRequest = function( userId, receiver_id, status){
   axios.post(`api/users/${userId}/notifications/decline`, { sender_id: receiver_id, status: status })
   .then(res => {
     console.log('res', res)
-    
   })
   .catch(err => {
     console.log(err)
@@ -208,12 +208,10 @@ function DogsNearby(props) {
             petInfo={dogsNearby[currentDogIndex].quirky_fact}
           />
           <div className={classes.buttonStyle}>
-
             <input className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/148/148766.svg" alt="skip" onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)}>
             </input>
             <input className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/148/148767.svg" alt="addFriend" onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}>
             </input>
-    
            </div>
         </div> : 
         <div>
@@ -307,10 +305,10 @@ function Notifications(props) {
     })
   }, [props.userId])
 
-  const test = {
-    height: '30%',
-    width: '30%'
-  }
+  // const test = {
+  //   height: '30%',
+  //   width: '30%'
+  // }
 
   const friendRequests = notifications.map(notification => {
     return (
@@ -320,8 +318,8 @@ function Notifications(props) {
             <div className={classes.petAvatar}>
               <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
               <div className={classes.buttonStyle}>
-              <input style={test} type="image" src="https://image.flaticon.com/icons/svg/148/148766.svg" alt="decline" onClick={()=> declineRequest(props.userId, notification.receiver_id)}></input>
-              <input style={test} type="image" src="https://image.flaticon.com/icons/svg/148/148767.svg" alt="accept" onClick={()=> acceptRequest(props.userId, notification.receiver_id)}></input>
+              <input className={classes.adjustSize} type="image" src="https://image.flaticon.com/icons/svg/148/148766.svg" alt="decline" onClick={()=> declineRequest(props.userId, notification.receiver_id)}></input>
+              <input className={classes.adjustSize} type="image" src="https://image.flaticon.com/icons/svg/148/148767.svg" alt="accept" onClick={()=> acceptRequest(props.userId, notification.receiver_id)}></input>
               </div>
             </div>
           </div>

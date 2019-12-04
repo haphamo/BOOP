@@ -19,19 +19,17 @@ const useStyles = makeStyles(theme => ({
   },
   bigAvatar: {
 
-    width: '100%',
-    height: 'auto',
+    width: 'auto%',
+    height: '20vh',
   },
   whiteBorder: {
     border: '3px solid',
     borderColor: 'white',
     borderRadius: '10px',
-    width:'100%',
   },
   fontStyle: {
     'fontFamily': 'Permanent Marker, cursive',
     color: 'white',
-    
   }
 
 }));

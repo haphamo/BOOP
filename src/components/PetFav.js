@@ -14,7 +14,6 @@ const useStyles = makeStyles(theme => ({
   },
   gridList: {
     flexWrap: 'nowrap',
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
   },
   title: {
@@ -26,7 +25,7 @@ const useStyles = makeStyles(theme => ({
   },
   imgStyle: {
     height: '60%',
-    "paddingTop": '10%',
+    paddingTop: '10%',
     width: 'fit-content'
   },
   listItemStyle: {
@@ -34,7 +33,8 @@ const useStyles = makeStyles(theme => ({
     height:"100px"
   },
   categoryTextStyle: {
-    "textAlign": "center"
+    textAlign: 'center',
+    fontFamily: 'Permanent Marker, cursive'
   },
   fixedHeight: {
     height:'100px',

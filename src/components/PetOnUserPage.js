@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
     height: 170,
   },
   removePadding: {
-    'paddingLeft': 0
+    'paddingLeft': 0,
+    marginTop: 0,
   },
   imgStyle: {
     'borderRadius': '10px',
