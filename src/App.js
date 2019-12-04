@@ -16,6 +16,7 @@ import PetForm from './components/PetForm';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfoDashboard from './components/petInfoDashboard';
+import Card from '@material-ui/core/Avatar'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -84,14 +85,14 @@ const useStyles = makeStyles(theme => ({
     height: 170,
   },
   largeButton: {
-    // transform: 'scale(0.9)',
-    height: '20%'
+    transform: 'scale(0.5)',
+    // height: '20%'
   },
   buttonStyle: {
     justifyContent: 'space-around',
     display: 'flex',
     height: 'fit-content',
-    marginTop: '10%',
+    // marginTop: '10%',
     
   },
   profileStyles: {
@@ -139,6 +140,7 @@ const acceptFriendRequest = function(userId, receiver_id, status) {
   
   .then(res => {
     console.log('res', res)
+    //call function in here to
   })
   .catch(err => {
     console.log(err)
@@ -191,9 +193,9 @@ function DogsNearby(props) {
           />
           <div className={classes.buttonStyle}>
 
-            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/148/148766.svg" alt="skip" onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)}>
+            <input className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/148/148766.svg" alt="skip" onClick={() => declineConnection(dogsNearby[currentDogIndex].owner_id)}>
             </input>
-            <input  className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/148/148767.svg" alt="addFriend" onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}>
+            <input className={classes.largeButton} type="image" src="https://image.flaticon.com/icons/svg/148/148767.svg" alt="addFriend" onClick={() => requestConnection(dogsNearby[currentDogIndex].owner_id)}>
             </input>
     
            </div>
@@ -247,20 +249,10 @@ function Profile(props) {
 }
 
 // PENDING Friend Requests
+
 function Notifications(props) {
   const classes = useStyles();
   const [notifications, setNotifications] = useState([])
-
-  const declineRequest = function(userId, receiver_id) {
-    declineFriendRequest(userId, receiver_id, 'DECLINED')
-    reRender()
-  }
-
-   const acceptRequest = function(userId, receiver_id){
-    acceptFriendRequest(userId, receiver_id, 'ACCEPTED')
-    reRender()
-  }
-
   // this function re renders the notifications once you've either accepted or declined
   // this is a bug, only calls function once
   const reRender = function(){
@@ -272,6 +264,17 @@ function Notifications(props) {
       console.log(err)
     })
   }
+  const declineRequest = function(userId, receiver_id) {
+    declineFriendRequest(userId, receiver_id, 'DECLINED')
+    reRender()
+  }
+
+   const acceptRequest = function(userId, receiver_id){
+    acceptFriendRequest(userId, receiver_id, 'ACCEPTED')
+    reRender()
+  }
+
+
   //this is the first request to retrieve the notifications
   useEffect(() => {
     axios.get(`/api/users/${props.userId}/notifications`)
@@ -290,20 +293,20 @@ function Notifications(props) {
 
   const friendRequests = notifications.map(notification => {
     return (
-      <div className={classes.marginBottom} key={notification.pet_id}>
-        <div className={classes.root}>
-          <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.petAvatar} />
-          <div className={classes.petAvatar}>
-            <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
-            <div className={classes.buttonStyle}>
-            <input style={test} type="image" src="https://image.flaticon.com/icons/svg/148/148766.svg" alt="decline" onClick={()=> declineRequest(props.userId, notification.receiver_id)}></input>
-            <input style={test} type="image" src="https://image.flaticon.com/icons/svg/148/148767.svg" alt="accept" onClick={()=> acceptRequest(props.userId, notification.receiver_id)}></input>
-             {/* <ClearIcon  onClick={()=> declineRequest(props.userId, notification.receiver_id)}/>
-             <PetsIcon  onClick={()=> acceptRequest(props.userId, notification.receiver_id)}/> */}
+      
+        <div className={classes.marginBottom} key={notification.pet_id}>
+          <div className={classes.root}>
+            <Avatar alt={notification.pet} src={notification.pet_photo} className={classes.petAvatar} />
+            <div className={classes.petAvatar}>
+              <h4>{notification.owner} and {notification.pet} want to connect with you.</h4>
+              <div className={classes.buttonStyle}>
+              <input style={test} type="image" src="https://image.flaticon.com/icons/svg/148/148766.svg" alt="decline" onClick={()=> declineRequest(props.userId, notification.receiver_id)}></input>
+              <input style={test} type="image" src="https://image.flaticon.com/icons/svg/148/148767.svg" alt="accept" onClick={()=> acceptRequest(props.userId, notification.receiver_id)}></input>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+    
     )
   })
 
@@ -312,7 +315,9 @@ function Notifications(props) {
       <h2 className={classes.header}>Notifications</h2>
       <hr></hr>
       <div className="container">
-      {friendRequests}
+        <ul>
+          {friendRequests}
+        </ul>
       </div>
     </div>
   );
