@@ -14,7 +14,7 @@ VALUES ('Maria', 'Fern', 'mariafern@gmail.com', 'maria', 'Toronto', 'M6G3X4', 'h
 INSERT INTO pets (name, age, breed, quirky_fact, owner_id, profile_photo)
 VALUES ('Yoyo', 5, 'Maltese', 'I do not like belly rubs.', 1, 'https://ucarecdn.com/99b9ada1-1c45-4feb-95ee-acd5dad5288b/WhatsAppImage20191114at170028.jpeg'),
 ('Kiki',11, 'Maltipoo', 'I am very shy.', 2, 'https://scontent-yyz1-1.xx.fbcdn.net/v/t1.15752-9/79371858_446557809618599_3908629833764044800_n.png?_nc_cat=102&_nc_ohc=IJD-Pswso-kAQnsehz6xBZRuASFubhmIXtrss7ojn-oExXBccihVVNDkA&_nc_ht=scontent-yyz1-1.xx&oh=96ae919e000d958aea1fd0a8ffb1b823&oe=5E7B9FC3'),
-('Hunter', 6, 'German Shepherd', 'I really like whipped cream.', 3, 'https://www.perfectdogbreeds.com/wp-content/uploads/2018/10/German-Shepherd.jpg'),
+('Hunter', 6, 'German Shepherd', 'I really like whipped cream.', 3, 'https://i.imgur.com/DQkHHcF.jpg'),
 ('Bo', 11, 'Portuguese Water Dog', 'I am the former first dog of the United States.', 4, 'https://upload.wikimedia.org/wikipedia/commons/e/eb/Bo_official_portrait.jpg'),
 ('Bruno', 1, 'Maltese', 'My favourite toy is a shoe.', 1, 'https://thehappypuppysite.com/wp-content/uploads/2016/09/The-Maltese-HP-long.jpg'),
 ('Sunny', 7, 'Portuguese Water Dog', 'I am the younger sister of Bo.', 4, 'https://dcist.com/wp-content/uploads/sites/3/2013/09/sunnyobama-thumb-640xauto-807922-600x400.jpg'),
