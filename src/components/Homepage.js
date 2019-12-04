@@ -53,6 +53,9 @@ const useStyles = makeStyles(theme => ({
   },
   registerLogin: {
     flexDirection: 'row'
+  },
+  background: {
+    autoHeight: 'inherit'
   }
 }));
 
@@ -216,8 +219,8 @@ export default function Homepage (props) {
         <div className={classes.homepage}>
           <h2 className={classes.header}>Puppr</h2>
         </div>
-        <Image alt="background"
-          src="https://images.unsplash.com/photo-1521247560470-d2cbfe2f7b47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+        <Image className={classes.background}
+          src="https://fsb.zobj.net/crop.php?r=CwI3Lth_X1tKRypKBXpdk_pFkIpLGncG2KqQrg5-rzZFtFDqYj68LS6L_XuIp0MRImIH1JJJXWBUxbaOYxHotbD9yBU7PDZxjzd37xuVKMihkyrmV0nRvCm83SAJGe5OIjspmOrviYBcwPMA"
         />
         <div className={classes.homepageButton}>
         <Button variant="contained" 
@@ -238,3 +241,9 @@ export default function Homepage (props) {
   </div>
   );
 }
+
+// https://images.unsplash.com/photo-1521247560470-d2cbfe2f7b47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80
+// https://fsb.zobj.net/crop.php?r=qyT8w54_TtfLDRrdZvyRJKn7GxNRDlHoEB4XrBfFhQb8Zunb6mlmBc10IU6B-3HL6xYSXydqDz_M_UpugDlwthiXBA0X9t2ZkJUHAqNMKb8TYQWTqm5yViiTPkTysLj5XR4dn0WgGE03vcaS
+// https://fsb.zobj.net/crop.php?r=990ng_gqpTI2FynuMOGgy_e3cGl6Uk3ucAFVZwIVx_9EZaTXmR-hkfN-8Wd9RdBvzEdH6IxxILYN2c1AA9UN6CqRPN1FbnzwswgRleIE_59QwOOrvmZh3Bm15jlFWWnW8TVQC-oT6jg1i61w
+// https://fsb.zobj.net/crop.php?r=e_KQoNmLTXTOJoQnsrzfD7Z9PRTb-Of-UMSd_ZJff5TrTkcCFLqqtYjE4pKYUhDTpO6RGvpGWG6qgOUs81ob_8SWO-XxA6lrXTA8gu-J6kaHrsdmm5MklDrekOeRFJeU_DlqXk9QW6RWv2Zc
+// https://fsb.zobj.net/crop.php?r=CwI3Lth_X1tKRypKBXpdk_pFkIpLGncG2KqQrg5-rzZFtFDqYj68LS6L_XuIp0MRImIH1JJJXWBUxbaOYxHotbD9yBU7PDZxjzd37xuVKMihkyrmV0nRvCm83SAJGe5OIjspmOrviYBcwPMA
