@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+// import { Widget } from '@uploadcare/react-widget';
+// import axios from 'axios';
 // import Upload from './Upload';
 
 const useStyles = makeStyles(theme => ({
@@ -61,12 +63,22 @@ export default function PetForm(props) {
   const handleQuirkyFactChange = e => {
     setQuirkyFact(e.target.value)
   }
-   const handleProfilePhotoChange = e => {
+  const handleProfilePhotoChange = e => {
     setProfilePhoto(e.target.value)
   }
+
   // Will use the Upload component once we successfully add a new pet into the database
   // const handleUpload = function(info) {
   //   setProfilePhoto(info.originalUrl)
+  // }
+  
+  // const handleProfilePhotoChange = (info) => {
+  //   axios.post('api/pets', {
+  //     url: info.originalUrl
+  //   })
+  //   .then(() => {
+  //     setProfilePhoto(info.originalUrl)
+  //   })
   // }
 
   return (
@@ -118,6 +130,13 @@ export default function PetForm(props) {
           value={profilePhoto}
         />
         {/* <Upload onUpload={handleUpload}/> */}
+        {/* <Widget 
+          publicKey='9aed545b12b2a131d196'
+          onChange={handleProfilePhotoChange} 
+          clearable
+          previewStep='true'
+          crop='true'
+        /> */}
         <div>
           <Button variant="outlined" className={classes.button} onClick={() => props.setShowForm(false)}>
             Cancel
