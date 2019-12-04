@@ -6,6 +6,7 @@ const infoBox = {
   'marginRight': '5%',
   'marginLeft': '5%',
   'fontFamily': 'Permanent Marker, cursive',
+  'textAlign': 'center'
 }
 export default function PetInfoDashboard(props) {
   console.log(props)
