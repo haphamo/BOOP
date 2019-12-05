@@ -232,27 +232,25 @@ function Profile(props) {
     axios.post('api/pets', newPet)
     .then(res => {
       console.log("Added a new pet: ", res.config.data)
-
-      //setPet(res.config.data)
-      setPet(...pet, newPet)
-
+      setPet({...pet, newPet})
+      setShowForm(false)
     })
     .catch(err => {
       console.log(err)
     })
   }
 
-  const handleCreatePet = function(){
-    setShowForm(false)
-    axios.get(`/api/users/${props.userId}/pets`)
-    .then(res => {
-      // console.log('this one', res)
-      setPet(...pet, res.data.result)
-    })
-    .catch(err => {
-      console.error(err)
-    })
-  }
+  // const handleCreatePet = function(){
+  //   setShowForm(false)
+  //   axios.get(`/api/users/${props.userId}/pets`)
+  //   .then(res => {
+  //     // console.log('this one', res)
+  //     // setPet({...pet, res.data.result})
+  //   })
+  //   .catch(err => {
+  //     console.error(err)
+  //   })
+  // }
 
   return (
     <div className={classes.marginBottom}>
@@ -262,7 +260,7 @@ function Profile(props) {
         <PetsIcon onClick={()=> setShowForm(true)}/>
       </div>
       <hr></hr>
-      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} onAddPet={addNewPet} handleCreatePet={handleCreatePet}/> : 
+      {showForm ? <PetForm setShowForm={setShowForm} userId={props.userId} onAddPet={addNewPet} /> : 
       <UserProfile userId={props.userId} />}
     </div>
   )

@@ -49,7 +49,7 @@ export default function PetForm(props) {
   const onSubmit = function (evt) {
     evt.preventDefault();
     props.onAddPet(name, age, breed, quirkyFact, userId, profilePhoto)
-    props.handleCreatePet()
+    // props.handleCreatePet()
   }
   const handleNameChange = e => {
     setName(e.target.value)
