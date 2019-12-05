@@ -16,7 +16,6 @@ import PetForm from './components/PetForm';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfoDashboard from './components/petInfoDashboard';
-// import Card from '@material-ui/core/Avatar'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -24,7 +23,6 @@ import Homepage from './components/Homepage';
 
 export default function App() {
  const [userId, setUserId] = useState(undefined)
- console.log("Current user who is logged in: ", userId)
 
  const handleLogin = function(id){
   setUserId(id)
@@ -233,9 +231,9 @@ function Profile(props) {
     const newPet = { name, age, breed, quirky_fact, owner_id: userId, profile_photo }
     axios.post('api/pets', newPet)
     .then(res => {
-      console.log("Added a new pet: ", res)
+      // console.log("Added a new pet: ", res.config.data)
       // setPet(res.config.data)
-      setPet(pet)
+      // setPet(pet)
     })
     .catch(err => {
       console.log(err)
@@ -246,7 +244,8 @@ function Profile(props) {
     setShowForm(false)
     axios.get(`/api/users/${props.userId}/pets`)
     .then(res => {
-      console.log('this one', res)
+      // console.log('this one', res)
+      setPet(res.data.result)
     })
     .catch(err => {
       console.error(err)

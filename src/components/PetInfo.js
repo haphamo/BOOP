@@ -8,7 +8,6 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3, 2),
   },
   fontStyle: {
-    
     fontFamily: 'Permanent Marker, cursive',
   }
 }));

@@ -5,7 +5,6 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import PersonIcon from '@material-ui/icons/Person';
 import PetsIcon from '@material-ui/icons/Pets';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-
 import GroupIcon from '@material-ui/icons/Group';
 import { Link } from "react-router-dom";
 
@@ -21,7 +20,6 @@ const useStyles = makeStyles({
   bottomNavIcon: {
     height: '100%'
   }
-  
 });
 
 export default function BottomNav() {

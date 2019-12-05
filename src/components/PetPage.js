@@ -72,7 +72,7 @@ export default function PetPage(props) {
     
     })
     .catch(err => {
-      console.log('error:', err)
+      console.error(err)
     })
     
   }, [lastUploaded, id])
@@ -85,7 +85,7 @@ export default function PetPage(props) {
       setShowPetFavForm(true)
     })
     .catch(err => {
-      console.log(err)
+      console.error(err)
     })
   }
 
@@ -94,10 +94,9 @@ export default function PetPage(props) {
     visibility: 'hidden'
   }
 
-  
   //this variable stores the pet ids of the current user
   let allPets = listOfPets.map(pet => (pet.pet_id))
-  console.log('allPets', allPets)
+  // console.log('allPets', allPets)
   // console.log('id', Number(id))
   // console.log('test', allPets.includes(Number(id)))
 

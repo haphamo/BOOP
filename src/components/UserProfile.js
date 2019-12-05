@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-// import Avatar from '@material-ui/core/Avatar';
 import PetsOnUserPage from './PetOnUserPage';
 import axios from 'axios';
 
@@ -35,11 +34,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function UserProfile(props) {
-  // console.log('props',props)
   const [userAvatar, setUserAvatar] = useState('')
   const [userName, setUserName] = useState('')
   const [petData, setPetData] = useState([])
-
 
   useEffect(()=> {
     // id is the user_id that comes from the cookie
@@ -52,8 +49,6 @@ export default function UserProfile(props) {
       setUserAvatar(res[1].data.result[0].profile_photo)
       setUserName(res[1].data.result[0].first_name)
       setPetData(res[0].data.result)
-   
-      console.log('res.data.result', res)
     })
     .catch(err => {
       console.log('error:', err)
@@ -62,14 +57,13 @@ export default function UserProfile(props) {
   
   const classes = useStyles();
   
-  console.log('petData', petData)
+  // console.log('petData', petData)
   return (
     
     <div>
       <div className={classes.root}>
         <div className={classes.whiteBorder}>
         <img alt={userName} src={userAvatar} className={classes.bigAvatar} />
-
         </div>
       <h1 className={classes.fontStyle}>{userName}</h1>
       </div>
@@ -77,6 +71,5 @@ export default function UserProfile(props) {
         <PetsOnUserPage petData={petData}/>
       </div>
     </div>
-   
   );
 }

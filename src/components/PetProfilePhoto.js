@@ -5,8 +5,7 @@ import Container from '@material-ui/core/Container';
 export default function PetProfilePhoto(props) {
   const imgStyle = {
     display: "block",
-    "justifyContent": "center",
-
+    justifyContent: "center",
     width:'100%',
     height:'auto',
     objectFit: 'cover',
