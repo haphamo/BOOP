@@ -232,8 +232,8 @@ function Profile(props) {
     axios.post('api/pets', newPet)
     .then(res => {
       console.log("Added a new pet: ", res.config.data)
-      setPet(res.config.data)
-      setPet(pet)
+      //setPet(res.config.data)
+      setPet(...pet, newPet)
     })
     .catch(err => {
       console.log(err)
@@ -245,7 +245,7 @@ function Profile(props) {
     axios.get(`/api/users/${props.userId}/pets`)
     .then(res => {
       // console.log('this one', res)
-      setPet(res.data.result)
+      //setPet(res.data.result)
     })
     .catch(err => {
       console.error(err)
