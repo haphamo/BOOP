@@ -231,9 +231,9 @@ function Profile(props) {
     const newPet = { name, age, breed, quirky_fact, owner_id: userId, profile_photo }
     axios.post('api/pets', newPet)
     .then(res => {
-      // console.log("Added a new pet: ", res.config.data)
+      console.log("Added a new pet: ", res.config.data)
       setPet(res.config.data)
-      // setPet(pet)
+      setPet(pet)
     })
     .catch(err => {
       console.log(err)
