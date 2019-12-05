@@ -245,7 +245,7 @@ function Profile(props) {
     axios.get(`/api/users/${props.userId}/pets`)
     .then(res => {
       // console.log('this one', res)
-      //setPet(res.data.result)
+      setPet(...pet, res.data.result)
     })
     .catch(err => {
       console.error(err)
