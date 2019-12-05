@@ -233,7 +233,7 @@ function Profile(props) {
     .then(res => {
       console.log("Added a new pet: ", res.config.data)
       setPet(res.config.data)
-      setPet(pet)
+      setPet(newPet)
     })
     .catch(err => {
       console.log(err)
