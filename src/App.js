@@ -268,7 +268,6 @@ function Profile(props) {
 }
 
 // PENDING Friend Requests
-
 function Notifications(props) {
   const classes = useStyles();
   const [notifications, setNotifications] = useState([])
@@ -304,11 +303,6 @@ function Notifications(props) {
       console.log(err)
     })
   }, [props.userId])
-
-  // const test = {
-  //   height: '30%',
-  //   width: '30%'
-  // }
 
   const friendRequests = notifications.map(notification => {
     return (
@@ -379,5 +373,3 @@ function Friends(props) {
     </div>
   )
 }
-
-

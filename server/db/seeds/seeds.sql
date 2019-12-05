@@ -40,7 +40,6 @@ VALUES ('Dentastix', 'Treat', 1),
 
 INSERT INTO images (url, pet_id)
 VALUES ('https://ucarecdn.com/f3979415-b86b-4030-9cbb-e59c83593f13/', 9),
-('https://ucarecdn.com/f3979415-b86b-4030-9cbb-e59c83593f13/', 9),
 ('https://ucarecdn.com/d5a85a69-f66e-4a50-97e9-811e31388719/', 9),
 ('https://ucarecdn.com/d0316afe-f7c1-4e71-950c-3aa6ad79eeca/', 9),
 ('https://ucarecdn.com/78b4b6af-d144-42bd-8aec-723828a9580f/', 10),
@@ -63,7 +62,8 @@ VALUES ('https://ucarecdn.com/f3979415-b86b-4030-9cbb-e59c83593f13/', 9),
 ('https://ucarecdn.com/fbd97ffc-a0f8-4cae-bbe6-1bdc1077bb13/', 12),
 ('https://ucarecdn.com/9c6e0cc2-11d4-4f9d-b687-027ab7e47834/', 12),
 ('https://ucarecdn.com/62ef33c7-623f-429b-85e8-5e85c9a30f93/', 12),
-('https://ucarecdn.com/78b288b9-b1f6-45c8-8d4b-67a47edea336/', 12);
+('https://ucarecdn.com/78b288b9-b1f6-45c8-8d4b-67a47edea336/', 12),
+('https://ucarecdn.com/f01c71fe-a0de-4d0f-b831-6224ef86d04b/', 12);
 
 
 -- Status can be PENDING, ACCEPTED or PASSED
