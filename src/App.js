@@ -232,7 +232,7 @@ function Profile(props) {
     axios.post('api/pets', newPet)
     .then(res => {
       // console.log("Added a new pet: ", res.config.data)
-      // setPet(res.config.data)
+      setPet(res.config.data)
       // setPet(pet)
     })
     .catch(err => {
