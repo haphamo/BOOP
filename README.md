@@ -1,4 +1,29 @@
+# Boop
+
+**Boop** is a social media platform connecting dog owners, with an emphasis on showcasing a dog's personality through pictures and their favourite things.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Screenshots
+
+###### Boop
+!["Boop's Homepage"](url)
+
+###### Dogboard
+!["This page shows all the dogs you can connect with."](url)
+
+###### My Profile
+!["An example of a user's profile."](url)
+
+###### Pet's Profile
+!["An example of a pet's profile: their own profile picture and a little description about them."](url)
+!["An example of a pet's profile: some of their favourite things and a gallery."](url)
+
+###### Friends
+!["The dogs (and other animals) you are already friends with."](url)
+
+###### Notifications
+!["All your pending friend requests!"](url)
 
 ## Available Scripts
 
@@ -66,3 +91,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Contributors
+
+@mariahfernnn, @haphamo
