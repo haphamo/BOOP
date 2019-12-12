@@ -63,7 +63,9 @@ VALUES ('https://ucarecdn.com/f3979415-b86b-4030-9cbb-e59c83593f13/', 9),
 ('https://ucarecdn.com/9c6e0cc2-11d4-4f9d-b687-027ab7e47834/', 12),
 ('https://ucarecdn.com/62ef33c7-623f-429b-85e8-5e85c9a30f93/', 12),
 ('https://ucarecdn.com/78b288b9-b1f6-45c8-8d4b-67a47edea336/', 12),
-('https://ucarecdn.com/f01c71fe-a0de-4d0f-b831-6224ef86d04b/', 12);
+('https://ucarecdn.com/f01c71fe-a0de-4d0f-b831-6224ef86d04b/', 12),
+('https://ucarecdn.com/c6f07069-f5d3-49a6-96d1-93ba187ea10b/', 12),
+('https://ucarecdn.com/48a2f9f3-a7b0-43c4-a7f7-46c9039c158a/', 12);
 
 
 -- Status can be PENDING, ACCEPTED or PASSED
