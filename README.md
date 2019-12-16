@@ -4,26 +4,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Screenshots
+## Preview
 
-###### Boop
-!["Boop's Homepage"](https://github.com/haphamo/BOOP/blob/master/docs/boop-homepage.png?raw=true)
-
-###### Dogboard
-!["This page shows all the dogs you can connect with."](https://github.com/haphamo/BOOP/blob/master/docs/dogboard.png?raw=true)
-
-###### My Profile
-!["An example of a user's profile."](https://github.com/haphamo/BOOP/blob/master/docs/user-profile.png?raw=true)
-
-###### Pet's Profile
-!["An example of a pet's profile: their own profile picture and a little description about them."](https://github.com/haphamo/BOOP/blob/master/docs/pet-profile.png?raw=true)
-!["An example of a pet's profile: some of their favourite things and a gallery."](https://github.com/haphamo/BOOP/blob/master/docs/pet-profile2.png?raw=true)
-
-###### Friends
-!["The dogs (and other animals) you are already friends with."](https://github.com/haphamo/BOOP/blob/master/docs/friends.png?raw=true)
-
-###### Notifications
-!["All your pending friend requests!"](https://github.com/haphamo/BOOP/blob/master/docs/notify.png?raw=true)
+![](boop.gif)
 
 ## Available Scripts
 
