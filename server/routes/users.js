@@ -16,6 +16,22 @@ module.exports = db => {
       res.json({ error: err.message })
     })
   })
+
+  // Create a new user
+  router.post("/", (req, res) => {
+    db.query(`SELECT * FROM users`)
+    .then(result => {
+      res.json({
+        status: 'Success',
+        result: result.rows,
+        message: 'Created a new user'
+      })
+    })
+    .catch(err => {
+      res.status(500)
+      res.json({ error: err.message })
+    })
+  })
   
   // Get a single user
   router.get("/:id", (req, res) => {
