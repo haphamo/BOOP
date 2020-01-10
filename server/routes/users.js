@@ -19,7 +19,10 @@ module.exports = db => {
 
   // Create a new user
   router.post("/", (req, res) => {
-    db.query(`SELECT * FROM users`)
+    db.query(
+      `INSERT INTO users (first_name, last_name, email, password, city, post_code, profile_photo)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)`
+      , [req.body.first_name, req.body.last_name, req.body.email, req.body.password, req.body.city, req.body.post_code, req.body.profile_photo])
     .then(result => {
       res.json({
         status: 'Success',
