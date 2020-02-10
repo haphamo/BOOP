@@ -57,37 +57,63 @@ const useStyles = makeStyles(theme => ({
 
 export default function Homepage (props) {
   const classes = useStyles();
-  
-  const [name, setName] = useState('')
+  // state for register
+  const [registerFirstName, setRegisterFirstName] = useState('')
+  const [registerLastName, setRegisterLastName] = useState('')
+  const [registerEmail, setRegisterEmail] = useState('')
+  const [registerPassword, setRegisterPassword] = useState('')
+  const [city, setCity] = useState('')
+  const [post_code, setPost_Code] = useState('')
+  const [profile_photo, setProfilePhoto] = useState('')
+  // state for login
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [city, setCity] = useState('')
-  const [postcode, setPostCode] = useState('')
-  const [profilePhoto, setProfilePhoto] = useState('')
+  // conditional rendering
   const [showLogin, setShowLogin] = useState(false)
   const [showRegister, setShowRegister] = useState(false)
 
+  // for login
   const onSubmit = function (evt) {
     evt.preventDefault();
     //validations here
     userLogin();
   }
-  const handleNameChange = function(e) {
-    setName(e.target.value)
-  }
+
   const handleEmailChange = function(e) {
     setEmail(e.target.value)
   }
+
   const handlePasswordChange = function(e) {
     setPassword(e.target.value)
   }
-  const handleCityChange = function(e) {
+
+  // for register
+  const onRegister = function(evt) {
+    evt.preventDefault();
+    userRegister()
+  }
+
+  const handleRegisterFirstName = function(e) {
+    setRegisterFirstName(e.target.value)
+  }
+  const handleRegisterLastName = function(e) {
+    setRegisterLastName(e.target.value)
+  }
+
+  const handleRegisterEmail = function(e) {
+    setRegisterEmail(e.target.value)
+  }
+  const handleRegisterPassword = function(e) {
+    setRegisterPassword(e.target.value)
+  }
+
+  const handleRegisterCity = function(e) {
     setCity(e.target.value)
   }
-  const handlePostCodeChange = function(e) {
-    setPostCode(e.target.value)
+  const handleRegisterPostCode = function(e) {
+    setPost_Code(e.target.value)
   }
-  const handleProfilePhotoChange = e => {
+  const handleRegisterProfilePhoto = e => {
     setProfilePhoto(e.target.value)
   }
 
@@ -95,10 +121,18 @@ export default function Homepage (props) {
   // useEffect(()=> {
   // }, [])
 
+  // handles login
  let userLogin = function () {
    axios.post(`/login`, {email, password}, { withCredentials: true})
    .then(res => {
       props.onLogin(res.data.userId)
+   })
+ }
+ // handles register
+ const userRegister = function() {
+   axios.post(`/register`, { registerFirstName, registerLastName, registerEmail, registerPassword, city, post_code, profile_photo }, { withCredentials: true })
+   .then(res => {
+     console.log('here')
    })
  }
 
@@ -107,22 +141,30 @@ export default function Homepage (props) {
     { showRegister ?
       <div>
         <h2 className={classes.header}>Register</h2>
-        <form className={ classes.formStyle } onSubmit={onSubmit}>
+        <form className={ classes.formStyle } onRegister={onRegister}>
         <TextField
-          id="name"
-          label="Name"
+          id="firstName"
+          label="First Name"
           className={classes.textField}
           margin="normal"
-          onChange={handleNameChange}
-          value={name}
+          onChange={handleRegisterFirstName}
+          value={registerFirstName}
+        />
+        <TextField
+          id="lastName"
+          label="Last Name"
+          className={classes.textField}
+          margin="normal"
+          onChange={handleRegisterLastName}
+          value={registerLastName}
         />
          <TextField
           id="email"
           label="Email"
           className={classes.textField}
           margin="normal"
-          onChange={handleEmailChange}
-          value={email}
+          onChange={handleRegisterEmail}
+          value={registerEmail}
         />
         <TextField
           id="standard-password-input"
@@ -131,15 +173,15 @@ export default function Homepage (props) {
           type="password"
           autoComplete="current-password"
           margin="normal"
-          value={password}
-          onChange={handlePasswordChange}
+          value={registerPassword}
+          onChange={handleRegisterPassword}
         />
         <TextField
           id="city"
           label="City"
           className={classes.textField}
           margin="normal"
-          onChange={handleCityChange}
+          onChange={handleRegisterCity}
           value={city}
         />
         <TextField
@@ -147,8 +189,8 @@ export default function Homepage (props) {
           label="Postal Code"
           className={classes.textField}
           margin="normal"
-          onChange={handlePostCodeChange}
-          value={postcode}
+          onChange={handleRegisterPostCode}
+          value={post_code}
         />
         <TextField
           required
@@ -156,8 +198,8 @@ export default function Homepage (props) {
           label="Profile Photo Url"
           className={classes.textField}
           margin="normal"
-          onChange={handleProfilePhotoChange}
-          value={profilePhoto}
+          onChange={handleRegisterProfilePhoto}
+          value={profile_photo}
         />
         <div className={classes.registerLogin}>
           <Button variant="contained" 
