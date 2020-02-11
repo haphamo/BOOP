@@ -130,9 +130,10 @@ export default function Homepage (props) {
  }
  // handles register
  const userRegister = function() {
-   axios.post(`/register`, { registerFirstName, registerLastName, registerEmail, registerPassword, city, post_code, profile_photo }, { withCredentials: true })
+   console.log('line 133', registerFirstName)
+   axios.post(`/register`, { registerFirstName, registerLastName, registerEmail, registerPassword, city, post_code, profile_photo })
    .then(res => {
-     console.log('here')
+     console.log('this', res) 
    })
  }
 
@@ -141,7 +142,7 @@ export default function Homepage (props) {
     { showRegister ?
       <div>
         <h2 className={classes.header}>Register</h2>
-        <form className={ classes.formStyle } onRegister={onRegister}>
+        <form className={ classes.formStyle } onSubmit={onRegister}>
         <TextField
           id="firstName"
           label="First Name"
@@ -209,7 +210,7 @@ export default function Homepage (props) {
             Cancel
           </Button>
           <Button variant="contained" className={classes.button} type="submit" >
-              Create
+            Create
           </Button>
         </div>
       </form>
