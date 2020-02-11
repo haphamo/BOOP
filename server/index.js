@@ -39,7 +39,7 @@ const petsRoutes = require("./routes/pets");
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.use(logger('dev'));
 
-// DEPLOYING BOOP - TEST
+// DEPLOYING BOOP - TESTING
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, 'client/build')))
 // Anything that doesn't match the above, send back index.html
