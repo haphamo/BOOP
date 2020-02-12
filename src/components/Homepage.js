@@ -134,7 +134,6 @@ export default function Homepage (props) {
    axios.post(`/register`, { registerFirstName, registerLastName, registerEmail, registerPassword, city, post_code, profile_photo }, { withCredentials: true})
    .then(res => {
      props.onLogin(res.data.userId)
-     console.log('res', res)
      if(res.data.message) {
       setEmailError(true)
      }

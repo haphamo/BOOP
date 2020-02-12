@@ -96,7 +96,7 @@ app.use(cors({
 // Create a new user
 // POST /register
 app.post("/register", (req, res) => {
-  console.log('req.body',req.body)
+
   // Check if the user exists in the the database, if not create a new user
   db.query(`SELECT email FROM users WHERE email = $1`, [req.body.registerEmail])
   .then(data => {
