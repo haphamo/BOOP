@@ -100,12 +100,10 @@ app.post("/register", (req, res) => {
   // Check if the user exists in the the database, if not create a new user
   db.query(`SELECT email FROM users WHERE email = $1`, [req.body.registerEmail])
   .then(data => {
-    if(data.rows[0].email === req.body.registerEmail) {
-      console.log('finally')
-      
-     
+    console.log(data.rows.length)
+    console.log(req.body.registerEmail)
+    if(data.rows.length > 0) {
       res.json({
-        status: 401,
         message: "Email already exists!"
       })
     } else {
@@ -121,16 +119,19 @@ app.post("/register", (req, res) => {
            req.body.profile_photo])
         .then(data => {
           // set cookie
-         res.send(data)
-      })
-        .catch(err => {
-          res.json({ 
-            status: 500,
-            error: err.message,
-            message: "second"
-        })
+          let newUser = data.rows[0]
+          req.session.user_id = newUser.id
+         res.json({
+          loggedIn: true, 
+          userId: newUser.id,
+          data: newUser
+         })
+         
       })
     }
+  })
+  .catch(err => {
+    console.error(err)
   })
 })
 
