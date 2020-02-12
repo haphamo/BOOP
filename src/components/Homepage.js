@@ -71,6 +71,7 @@ export default function Homepage (props) {
   // conditional rendering
   const [showLogin, setShowLogin] = useState(false)
   const [showRegister, setShowRegister] = useState(false)
+  const [emailError, setEmailError] = useState(false)
 
   // for login
   const onSubmit = function (evt) {
@@ -132,7 +133,11 @@ export default function Homepage (props) {
  const userRegister = function() {
    axios.post(`/register`, { registerFirstName, registerLastName, registerEmail, registerPassword, city, post_code, profile_photo }, { withCredentials: true})
    .then(res => {
-     props.onLogin(res.data.userId) 
+     props.onLogin(res.data.userId)
+     console.log('res', res)
+     if(res.data.message) {
+      setEmailError(true)
+     }
    })
  }
 
@@ -158,6 +163,7 @@ export default function Homepage (props) {
           onChange={handleRegisterLastName}
           value={registerLastName}
         />
+        {emailError && <small className="email-error">Email already exists!</small>}
          <TextField
           id="email"
           label="Email"

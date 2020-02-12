@@ -100,11 +100,10 @@ app.post("/register", (req, res) => {
   // Check if the user exists in the the database, if not create a new user
   db.query(`SELECT email FROM users WHERE email = $1`, [req.body.registerEmail])
   .then(data => {
-    console.log(data.rows.length)
-    console.log(req.body.registerEmail)
     if(data.rows.length > 0) {
       res.json({
-        message: "Email already exists!"
+        message: "Email already exists!",
+        
       })
     } else {
       db.query(
@@ -124,7 +123,6 @@ app.post("/register", (req, res) => {
          res.json({
           loggedIn: true, 
           userId: newUser.id,
-          data: newUser
          })
          
       })
