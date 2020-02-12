@@ -96,46 +96,42 @@ app.use(cors({
 // Create a new user
 // POST /register
 app.post("/register", (req, res) => {
-  
   console.log('req.body',req.body)
-  
   // Check if the user exists in the the database, if not create a new user
-  const existingUser = db.query(`SELECT * FROM users WHERE email = $1`, [req.body.registerEmail])
-  if(!existingUser) {
-    console.log('exist',existingUser)
-    res.status(400)
-    res.json({
-      status: 400,
-      message: 'Email already exists!'
-    })
-  } else {
-    db.query(
-      `INSERT INTO users (first_name, last_name, email, password, city, post_code, profile_photo)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)`
-      , [req.body.first_name, 
-         req.body.last_name, 
-         req.body.registerEmail, 
-         req.body.registerPassword, 
-         req.body.city, 
-         req.body.post_code, 
-         req.body.profile_photo])
-      .then(res => {
-        console.log('abc',res)
-        res.status(201)
-        res.json({ 
-          status: 'Success',
-          result: result.rows,
-          message: 'Created a new user' 
+  db.query(`SELECT email FROM users WHERE email = $1`, [req.body.registerEmail])
+  .then(data => {
+    if(data.rows[0].email === req.body.registerEmail) {
+      console.log('finally')
+      
+     
+      res.json({
+        status: 401,
+        message: "Email already exists!"
       })
-    })
-      .catch(err => {
-        
-        res.json({ 
-          status: 500,
-          error: err.message 
+    } else {
+      db.query(
+        `INSERT INTO users (first_name, last_name, email, password, city, post_code, profile_photo)
+        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`
+        , [req.body.registerFirstName, 
+           req.body.registerLastName, 
+           req.body.registerEmail, 
+           req.body.registerPassword, 
+           req.body.city, 
+           req.body.post_code, 
+           req.body.profile_photo])
+        .then(data => {
+          // set cookie
+         res.send(data)
       })
-    })
-  }
+        .catch(err => {
+          res.json({ 
+            status: 500,
+            error: err.message,
+            message: "second"
+        })
+      })
+    }
+  })
 })
 
 // POST /login

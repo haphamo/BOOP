@@ -130,10 +130,9 @@ export default function Homepage (props) {
  }
  // handles register
  const userRegister = function() {
-   console.log('line 133', registerFirstName)
-   axios.post(`/register`, { registerFirstName, registerLastName, registerEmail, registerPassword, city, post_code, profile_photo })
+   axios.post(`/register`, { registerFirstName, registerLastName, registerEmail, registerPassword, city, post_code, profile_photo }, { withCredentials: true})
    .then(res => {
-     console.log('this', res) 
+     props.onLogin(res.data.userId) 
    })
  }
 
