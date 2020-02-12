@@ -5,7 +5,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3001;
 const express = require('express');
 const passport = require('passport');
-const FacebookStrategy = require('passport-facebook').Strategy;
+// const FacebookStrategy = require('passport-facebook').Strategy;
 const pino = require('express-pino-logger')();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -70,67 +70,67 @@ app.use(cors({
 }))
 // app.use(fileUpload());
 
-passport.use(new FacebookStrategy({
-  clientID: process.env.FACEBOOK_CLIENT_ID,
-  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/",
-  profileFields: ['id', 'displayName','email'],
-  enableProof: true
-},
-  function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      return cb(err, user);
-    })
-  }
-))
+// passport.use(new FacebookStrategy({
+//   clientID: process.env.FACEBOOK_CLIENT_ID,
+//   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+//   callbackURL: "http://localhost:3000/",
+//   profileFields: ['id', 'displayName','email'],
+//   enableProof: true
+// },
+//   function(accessToken, refreshToken, profile, cb) {
+//     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+//       return cb(err, user);
+//     })
+//   }
+// ))
 
-passport.serializeUser(function(user, cb) {
-  cb(null, user)
-})
+// passport.serializeUser(function(user, cb) {
+//   cb(null, user)
+// })
 
-passport.deserializeUser(function(obj, cb) {
-  cb(null, obj)
-})
+// passport.deserializeUser(function(obj, cb) {
+//   cb(null, obj)
+// })
 
 // Register, Login and Logout Routes
 // Create a new user
 // POST /register
 app.post("/register", (req, res) => {
+
   // Check if the user exists in the the database, if not create a new user
-  const existingUser = db.query(`SELECT * FROM users WHERE email = $1`, [req.body.email])
-  if(existingUser) {
-    res.status(400)
-    res.json({
-      status: 400,
-      message: 'Email already exists!'
-    })
-  } else {
-    db.query(
-      `INSERT INTO users (first_name, last_name, email, password, city, post_code, profile_photo)
-      VALUES ($1, $2, $3, $4, $5, $6)`
-      , [req.body.first_name, 
-         req.body.last_name, 
-         req.body.email, 
-         req.body.password, 
-         req.body.city, 
-         req.body.post_code, 
-         req.body.profile_photo])
-      .then(result => {
-        res.status(201)
-        res.json({ 
-          status: 'Success',
-          result: result.rows,
-          message: 'Created a new user' 
+  db.query(`SELECT email FROM users WHERE email = $1`, [req.body.registerEmail])
+  .then(data => {
+    if(data.rows.length > 0) {
+      res.json({
+        message: "Email already exists!",
+        
       })
-    })
-      .catch(err => {
-        res.status(500)
-        res.json({ 
-          status: 500,
-          error: err.message 
+    } else {
+      db.query(
+        `INSERT INTO users (first_name, last_name, email, password, city, post_code, profile_photo)
+        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`
+        , [req.body.registerFirstName, 
+           req.body.registerLastName, 
+           req.body.registerEmail, 
+           req.body.registerPassword, 
+           req.body.city, 
+           req.body.post_code, 
+           req.body.profile_photo])
+        .then(data => {
+          // set cookie
+          let newUser = data.rows[0]
+          req.session.user_id = newUser.id
+         res.json({
+          loggedIn: true, 
+          userId: newUser.id,
+         })
+         
       })
-    })
-  }
+    }
+  })
+  .catch(err => {
+    console.error(err)
+  })
 })
 
 // POST /login
@@ -166,22 +166,22 @@ app.post("/logout", (req, res) => {
 // Route for authenticating with Facebook 
 // In auth-routes.js - will test to see if it works from there before deleting
 // Session cookie is not being recognized in the log in
-app.get('/auth/facebook', 
-  passport.authenticate('facebook'),
-  function(req, res) {
-    console.log("What is the request?", req)
-    console.log("What is the response?", res)
-    res.json({ 
-      loggedIn: true,
-      id: req.session.user_id, 
-      username: req.user.username 
-    })
-  }
-)
+// app.get('/auth/facebook', 
+//   passport.authenticate('facebook'),
+//   function(req, res) {
+//     console.log("What is the request?", req)
+//     console.log("What is the response?", res)
+//     res.json({ 
+//       loggedIn: true,
+//       id: req.session.user_id, 
+//       username: req.user.username 
+//     })
+//   }
+// )
 
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { successRedirect: 'http://localhost:3000/',
-                                      failureRedirect: '/login' }))
+// app.get('/auth/facebook/callback',
+//   passport.authenticate('facebook', { successRedirect: 'http://localhost:3000/',
+//                                       failureRedirect: '/login' }))
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`)
