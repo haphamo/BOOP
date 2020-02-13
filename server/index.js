@@ -35,9 +35,6 @@ const petsRoutes = require("./routes/pets");
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static('src/build'));
-}
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -46,6 +43,9 @@ if (process.env.NODE_ENV === 'production') {
 // DEPLOYING BOOP - TESTING
 // Serve static files from the React frontend app
 // app.use(express.static(path.join(__dirname, 'src/build')))
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('src/build'));
+}
 // // Anything that doesn't match the above, send back index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/src/build/index.html'))
