@@ -16,6 +16,7 @@
     "express-fileupload": "^1.1.6",
     "express-session": "^1.17.0",
     "helmet": "^3.21.2",
+    "http-proxy-middleware": "^0.20.0",
     "material-ui-image": "^3.2.2",
     "node": "^13.1.0",
     "passport": "^0.4.0",
@@ -36,8 +37,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node-env-run server --exec nodemon | pino-colada",
-    "dev": "run-p server start",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "dev": "run-p server start"
   },
   "eslintConfig": {
     "extends": "react-app"
