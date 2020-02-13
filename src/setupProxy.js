@@ -1,6 +1,11 @@
 const proxy = require("http-proxy-middleware");
 
 module.exports = function(app) {
-  app.use(proxy('/api/', { target: 'http://localhost:3001', secure: false,
-  changeOrigin: true }));
-};
+  app.use(
+    '/api',
+    proxy({
+      target: 'http://localhost:3001',
+      changeOrigin: true,
+    })
+  );
+}
