@@ -64,7 +64,7 @@ app.use(passport.session());
 
 // Use CORS and File Upload modules here
 app.use(cors({
-  origin: "http://localhost:3000/",
+  origin: "https://lhl-final-boop.herokuapp.com",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   optionsSuccessStatus: 204
 }))
