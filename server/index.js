@@ -63,32 +63,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
-// app.use(fileUpload());
-
-// passport.use(new FacebookStrategy({
-//   clientID: process.env.FACEBOOK_CLIENT_ID,
-//   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-//   callbackURL: "http://localhost:3000/",
-//   profileFields: ['id', 'displayName','email'],
-//   enableProof: true
-// },
-//   function(accessToken, refreshToken, profile, cb) {
-//     User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-//       return cb(err, user);
-//     })
-//   }
-// ))
-
-// passport.serializeUser(function(user, cb) {
-//   cb(null, user)
-// })
-
-// passport.deserializeUser(function(obj, cb) {
-//   cb(null, obj)
-// })
-
 // Register, Login and Logout Routes
 // Create a new user
 // POST /register
@@ -159,26 +133,6 @@ app.post("/logout", (req, res) => {
     loggedOut: true
   })
 })
-
-// Route for authenticating with Facebook 
-// In auth-routes.js - will test to see if it works from there before deleting
-// Session cookie is not being recognized in the log in
-// app.get('/auth/facebook', 
-//   passport.authenticate('facebook'),
-//   function(req, res) {
-//     console.log("What is the request?", req)
-//     console.log("What is the response?", res)
-//     res.json({ 
-//       loggedIn: true,
-//       id: req.session.user_id, 
-//       username: req.user.username 
-//     })
-//   }
-// )
-
-// app.get('/auth/facebook/callback',
-//   passport.authenticate('facebook', { successRedirect: 'http://localhost:3000/',
-//                                       failureRedirect: '/login' }))
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`)
