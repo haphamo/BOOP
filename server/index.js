@@ -5,7 +5,6 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3001;
 const express = require('express');
 const passport = require('passport');
-// const FacebookStrategy = require('passport-facebook').Strategy;
 const pino = require('express-pino-logger')();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -13,12 +12,6 @@ const cookieSession = require('cookie-session');
 const path = require('path');
 const cors = require('cors'); 
 const app = express();
-// const bcrypt = require('bcrypt');
-// const session = require('express-session');
-// const config = require('../configuration/config');
-// const favicon = require('serve-favicon');
-// const logger = require('morgan');
-// const fileUpload = require('express-fileupload'); 
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -29,15 +22,6 @@ db.connect();
 // Routes
 const usersRoutes = require("./routes/users");
 const petsRoutes = require("./routes/pets");
-// const authRoutes = require("./routes/auth-routes");
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// app.use(logger('dev'));
 
 app.use(cookieSession({
   name: 'session',
@@ -62,12 +46,25 @@ app.use(passport.initialize());
 // Deserialize cookie from the browser
 app.use(passport.session());
 
+app.get("/*", function (req, res) {
+  res.sendFile(path.resolve(__dirname, '/build', 'index.html'));
+})
 // Use CORS and File Upload modules here
-app.use(cors({
-  origin: "https://lhl-final-boop.herokuapp.com",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  optionsSuccessStatus: 204
-}))
+
+app.use(cors());
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
+
+
+
 // app.use(fileUpload());
 
 // passport.use(new FacebookStrategy({
