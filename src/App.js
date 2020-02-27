@@ -11,6 +11,7 @@ import axios from "axios";
 import './App.scss';
 import BottomNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PetPage from './components/PetPage';
 import PetForm from './components/PetForm';
 import UserProfile from './components/UserProfile';
@@ -255,7 +256,8 @@ function Profile(props) {
   return (
     <div className={classes.marginBottom}>
       <div className={ classes.profileStyles }>
-        <PetsIcon className={ classes.hidden }/>
+        {/* <PetsIcon className={ classes.hidden }/> */}
+        <ExitToAppIcon />
         <h2 className={classes.header}>My Profile</h2>
         <PetsIcon onClick={()=> setShowForm(true)}/>
       </div>
