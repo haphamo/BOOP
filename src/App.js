@@ -33,10 +33,11 @@ export default function App() {
   const handleLogout = function() {
     axios.post('/logout')
     .then(res => {
-      if(res.loggedOut) {
+      if(res.data.loggedOut) {
+        console.log("What is res?", res)
         setUserId(undefined)
+        console.log('userid', userId)
       }
-      console.log("What is res?", res)
       // props.history.push('/login');
     })
   }
