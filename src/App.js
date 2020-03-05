@@ -6,7 +6,6 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { withRouter } from "react-router";
 import axios from "axios";
 
 import './App.scss';
@@ -30,6 +29,18 @@ export default function App() {
   setUserId(id)
  }
 
+  // When user clicks on the logout button, set the id back to undefined and redirect to the landing page
+  const handleLogout = function() {
+    axios.post('/logout')
+    .then(res => {
+      if(res.loggedOut) {
+        setUserId(undefined)
+      }
+      console.log("What is res?", res)
+      // props.history.push('/login');
+    })
+  }
+
   return (
     <Router>
       <div>
@@ -40,7 +51,7 @@ export default function App() {
             /> : <Homepage onLogin={handleLogin} />} 
           </Route>
           <Route path="/profile">
-            <Profile userId={userId}/>
+            <Profile userId={userId} onLogout={handleLogout}/>
           </Route>
           <Route path="/friends">
             <Friends userId={userId}/>
@@ -228,17 +239,19 @@ function Profile(props) {
   const classes = useStyles();
   const [showForm, setShowForm] = useState(false)
   const [pet, setPet] = useState({})
-  const [userId, setUserId] = useState(props.userId)
+  // const [userId, setUserId] = useState(props.userId)
 
-  // When user clicks on the logout button, set the id back to undefined and redirect to the landing page
-  const handleLogout = function() {
-    axios.post('/logout')
-    .then(res => {
-      setUserId(undefined)
-      console.log("What is res?", res)
-      // props.history.push('/login');
-    })
-  }
+  // // When user clicks on the logout button, set the id back to undefined and redirect to the landing page
+  // const handleLogout = function() {
+  //   axios.post('/logout')
+  //   .then(res => {
+  //     if(res.loggedOut) {
+  //       setUserId(undefined)
+  //     }
+  //     console.log("What is res?", res)
+  //     // props.history.push('/login');
+  //   })
+  // }
 
   const addNewPet = function(name, age, breed, quirky_fact, userId, profile_photo) {
     const newPet = { name, age, breed, quirky_fact, owner_id: userId, profile_photo }
@@ -269,7 +282,7 @@ function Profile(props) {
     <div className={classes.marginBottom}>
       <div className={ classes.profileStyles }>
         <Link to ="/">
-          <ExitToAppIcon onClick={()=> handleLogout()} />
+          <ExitToAppIcon onClick={()=> props.onLogout()} />
         </Link>
         <h2 className={classes.header}>My Profile</h2>
         <PetsIcon onClick={()=> setShowForm(true)}/>
