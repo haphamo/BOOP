@@ -227,13 +227,12 @@ function Profile(props) {
   const classes = useStyles();
   const [showForm, setShowForm] = useState(false)
   const [pet, setPet] = useState({})
-  const [userId, setUserId] = useState(props.userId)
+  // const [userId, setUserId] = useState(props.userId)
 
   // When user clicks on the logout button, set the id back to undefined and redirect to the landing page
-  const handleLogout = function(id){
-   setUserId(undefined)
-   
-  }
+  // const handleLogout = function(id){
+  //  setUserId(undefined)
+  // }
 
   const addNewPet = function(name, age, breed, quirky_fact, userId, profile_photo) {
     const newPet = { name, age, breed, quirky_fact, owner_id: userId, profile_photo }
@@ -263,7 +262,7 @@ function Profile(props) {
   return (
     <div className={classes.marginBottom}>
       <div className={ classes.profileStyles }>
-        <ExitToAppIcon onClick={() => handleLogout()} />
+        <ExitToAppIcon />
         <h2 className={classes.header}>My Profile</h2>
         <PetsIcon onClick={()=> setShowForm(true)}/>
       </div>
