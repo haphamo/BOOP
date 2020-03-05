@@ -29,6 +29,19 @@ export default function App() {
   setUserId(id)
  }
 
+  // When user clicks on the logout button, set the id back to undefined and redirect to the landing page
+  const handleLogout = function() {
+    axios.post('/logout')
+    .then(res => {
+      if(res.data.loggedOut) {
+        console.log("What is res?", res)
+        setUserId(undefined)
+        console.log('userid', userId)
+      }
+      // props.history.push('/login');
+    })
+  }
+
   return (
     <Router>
       <div>
@@ -39,7 +52,7 @@ export default function App() {
             /> : <Homepage onLogin={handleLogin} />} 
           </Route>
           <Route path="/profile">
-            <Profile userId={userId}/>
+            <Profile userId={userId} onLogout={handleLogout}/>
           </Route>
           <Route path="/friends">
             <Friends userId={userId}/>
@@ -229,9 +242,16 @@ function Profile(props) {
   const [pet, setPet] = useState({})
   // const [userId, setUserId] = useState(props.userId)
 
-  // When user clicks on the logout button, set the id back to undefined and redirect to the landing page
-  // const handleLogout = function(id){
-  //  setUserId(undefined)
+  // // When user clicks on the logout button, set the id back to undefined and redirect to the landing page
+  // const handleLogout = function() {
+  //   axios.post('/logout')
+  //   .then(res => {
+  //     if(res.loggedOut) {
+  //       setUserId(undefined)
+  //     }
+  //     console.log("What is res?", res)
+  //     // props.history.push('/login');
+  //   })
   // }
 
   const addNewPet = function(name, age, breed, quirky_fact, userId, profile_photo) {
@@ -262,7 +282,9 @@ function Profile(props) {
   return (
     <div className={classes.marginBottom}>
       <div className={ classes.profileStyles }>
-        <ExitToAppIcon />
+        <Link to ="/">
+          <ExitToAppIcon onClick={()=> props.onLogout()} />
+        </Link>
         <h2 className={classes.header}>My Profile</h2>
         <PetsIcon onClick={()=> setShowForm(true)}/>
       </div>
