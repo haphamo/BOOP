@@ -4,6 +4,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+A hosted version is available [here](https://lhl-boop.netlify.com/).
+
 ## Preview
 
 ![](boop.gif)
