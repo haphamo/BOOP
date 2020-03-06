@@ -2,8 +2,6 @@
 
 **Boop** is a social media platform connecting dog owners, with an emphasis on showcasing a dog's personality through pictures and their favourite things.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 A hosted version is available [here](https://lhl-boop.netlify.com/).
 
 ## Preview
