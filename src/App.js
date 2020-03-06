@@ -29,7 +29,7 @@ export default function App() {
   setUserId(id)
  }
 
-  // When user clicks on the logout button, set the id back to undefined and redirect to the landing page
+  // When user clicks the logout button, set the id back to undefined and redirect to the landing page
   const handleLogout = function() {
     axios.post('/logout')
     .then(res => {
@@ -38,7 +38,6 @@ export default function App() {
         setUserId(undefined)
         console.log('userid', userId)
       }
-      // props.history.push('/login');
     })
   }
 
@@ -240,19 +239,6 @@ function Profile(props) {
   const classes = useStyles();
   const [showForm, setShowForm] = useState(false)
   const [pet, setPet] = useState({})
-  // const [userId, setUserId] = useState(props.userId)
-
-  // // When user clicks on the logout button, set the id back to undefined and redirect to the landing page
-  // const handleLogout = function() {
-  //   axios.post('/logout')
-  //   .then(res => {
-  //     if(res.loggedOut) {
-  //       setUserId(undefined)
-  //     }
-  //     console.log("What is res?", res)
-  //     // props.history.push('/login');
-  //   })
-  // }
 
   const addNewPet = function(name, age, breed, quirky_fact, userId, profile_photo) {
     const newPet = { name, age, breed, quirky_fact, owner_id: userId, profile_photo }
@@ -266,18 +252,6 @@ function Profile(props) {
       console.log(err)
     })
   }
-
-  // const handleCreatePet = function(){
-  //   setShowForm(false)
-  //   axios.get(`/api/users/${props.userId}/pets`)
-  //   .then(res => {
-  //     // console.log('this one', res)
-  //     // setPet({...pet, res.data.result})
-  //   })
-  //   .catch(err => {
-  //     console.error(err)
-  //   })
-  // }
 
   return (
     <div className={classes.marginBottom}>
@@ -319,7 +293,6 @@ function Notifications(props) {
     acceptFriendRequest(userId, receiver_id, 'ACCEPTED')
     reRender()
   }
-
 
   //this is the first request to retrieve the notifications
   useEffect(() => {
