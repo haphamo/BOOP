@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,25 +6,19 @@ import {
   Link
 } from "react-router-dom";
 import axios from "axios";
-
 import './App.scss';
 import BottomNav from './components/BottomNav';
-import PetsIcon from '@material-ui/icons/Pets';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
-// import DialogActions from '@material-ui/core/DialogActions';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
-// import DialogTitle from '@material-ui/core/DialogTitle';
 import PetPage from './components/PetPage';
 import PetForm from './components/PetForm';
 import UserProfile from './components/UserProfile';
 import PetProfilePhoto from './components/PetProfilePhoto';
 import PetInfoDashboard from './components/petInfoDashboard';
-
+import Homepage from './components/Homepage';
+import PetsIcon from '@material-ui/icons/Pets';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import Homepage from './components/Homepage';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@material-ui/core';
 
 export default function App() {
  const [userId, setUserId] = useState(undefined)
@@ -244,6 +237,7 @@ function Profile(props) {
   const classes = useStyles();
   const [showForm, setShowForm] = useState(false)
   const [pet, setPet] = useState({})
+  const [open, setOpen] = useState(false)
 
   const addNewPet = function(name, age, breed, quirky_fact, userId, profile_photo) {
     const newPet = { name, age, breed, quirky_fact, owner_id: userId, profile_photo }
@@ -258,41 +252,43 @@ function Profile(props) {
     })
   }
 
+  // Handles open/close of pop-up dialogue box for logging out
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
     <div className={classes.marginBottom}>
       <div className={ classes.profileStyles }>
-      <div>
-        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-          Open alert dialog
-        </Button>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Disagree
-            </Button>
-            <Button onClick={handleClose} color="primary" autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-
-        <Link to ="/">
-          <ExitToAppIcon onClick={()=> props.onLogout()} />
-        </Link>
-
+        <div>
+          <ExitToAppIcon onClick={handleClickOpen} />
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Are you sure you want to log out from Boop?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={()=> props.onLogout()} color="primary" autoFocus>
+                <Link to ="/">
+                  Logout
+                </Link>
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
         <h2 className={classes.header}>My Profile</h2>
         <PetsIcon onClick={()=> setShowForm(true)}/>
       </div>
