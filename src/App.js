@@ -12,6 +12,11 @@ import './App.scss';
 import BottomNav from './components/BottomNav';
 import PetsIcon from '@material-ui/icons/Pets';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+// import DialogActions from '@material-ui/core/DialogActions';
+// import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContentText from '@material-ui/core/DialogContentText';
+// import DialogTitle from '@material-ui/core/DialogTitle';
 import PetPage from './components/PetPage';
 import PetForm from './components/PetForm';
 import UserProfile from './components/UserProfile';
@@ -256,9 +261,38 @@ function Profile(props) {
   return (
     <div className={classes.marginBottom}>
       <div className={ classes.profileStyles }>
+      <div>
+        <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+          Open alert dialog
+        </Button>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Let Google help apps determine location. This means sending anonymous location data to
+              Google, even when no apps are running.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Disagree
+            </Button>
+            <Button onClick={handleClose} color="primary" autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+
         <Link to ="/">
           <ExitToAppIcon onClick={()=> props.onLogout()} />
         </Link>
+
         <h2 className={classes.header}>My Profile</h2>
         <PetsIcon onClick={()=> setShowForm(true)}/>
       </div>
