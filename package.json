@@ -26,7 +26,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.1",
     "sass": "^1.23.7",
-    "serialize-javascript": "^2.1.2",
+    "serialize-javascript": "^3.1.0",
     "uploadcare-widget": "^3.8.0",
     "video-react": "^0.14.1"
   },
