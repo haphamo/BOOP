@@ -7,7 +7,7 @@
     "@material-ui/icons": "^4.5.1",
     "@uploadcare/react-widget": "^1.2.0",
     "antd": "^3.25.2",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bcrypt": "^3.0.7",
     "bootstrap": "^4.3.1",
     "cookie-parser": "^1.4.4",
